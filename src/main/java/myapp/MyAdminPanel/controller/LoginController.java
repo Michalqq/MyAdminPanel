@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -39,6 +41,13 @@ public class LoginController {
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/chart")
+    public ModelAndView chart() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("chart");
         return modelAndView;
     }
 
@@ -73,34 +82,70 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping("/")
+    public ModelAndView findByName(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
+        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
+        List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
+        List<MyItem> myItems2 = new ArrayList<>();
+        int checkpoint = 0;
+        for (MyItem myItem : myItems) {
+            checkpoint = 0;
+            myItem.setQuantity(1);
+            for (Item item : items) {
+                if (item.getId() == myItem.getItemId() && item.getName().contains(name)) myItem.setName(item.getName());
+            }
+            for (MyItem uniqueItems : myItems2) {
+                if (uniqueItems.getItemId() == myItem.getItemId()) {
+                    checkpoint = 1;
+                    uniqueItems.addQuantity();
+                }
+            }
+            if (checkpoint == 0 && myItem.getName() != null) {
+                myItems2.add(myItem);
+            }
+        }
+        modelAndView = new ModelAndView();
+        modelAndView.addObject("myItems", myItems2);
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
+
+
     @RequestMapping(value = {"/", "/login", "/index"}, method = RequestMethod.GET)
-    public ModelAndView home() {
+    public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
+        System.out.println("---------------------Name: " + name);
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
             List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
-            List<MyItem> myItems = myItemRepository.findBySellPriceIsNull();
+            List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
+            List<MyItem> itemsInTransport = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIsNull();
             List<MyItem> myItems2 = new ArrayList<>();
             int checkpoint = 0;
-            for (MyItem myItem:myItems){
+            for (MyItem myItem : myItems) {
                 checkpoint = 0;
                 myItem.setQuantity(1);
-                for (Item item:items){
+                for (Item item : items) {
                     if (item.getId() == myItem.getItemId()) myItem.setName(item.getName());
                 }
-                for (MyItem uniqueItems: myItems2){
-                    if (uniqueItems.getItemId() == myItem.getItemId()){
+                for (MyItem uniqueItems : myItems2) {
+                    if (uniqueItems.getItemId() == myItem.getItemId()) {
                         checkpoint = 1;
-                        myItem.addQuantity();
+                        uniqueItems.addQuantity();
                     }
                 }
-                if (checkpoint == 0){
-                    myItems2.add(myItem);
+                if (checkpoint == 0) {
+                    if (name == null) myItems2.add(myItem);
+                    else if (myItem.getName().toLowerCase().contains(name.toLowerCase())){
+                        System.out.println(name);
+                        myItems2.add(myItem);
+                    }
                 }
             }
             modelAndView.addObject("myItems", myItems2);
+            modelAndView.addObject("itemsInTransport", itemsInTransport);
             //modelAndView.addObject("items", itemRepository.findByIdLessThan(10));
             modelAndView.setViewName("index");
         }

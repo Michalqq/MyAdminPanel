@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("myItemRepository")
 public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findBySellPriceIsNull();
+
+    List<MyItem> findBySellPriceIsNullAndDeliveredToPolandIs(int deliveryStatus);
+    List<MyItem> findBySellPriceIsNullAndDeliveredToPolandIsNull();
 }

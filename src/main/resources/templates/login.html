@@ -42,7 +42,7 @@
                 <div class="login-wrap">
                     <div class="login-content">
                         <div class="login-logo">
-                            <a href="#">
+                            <a href="/login">
                                 <img src="images/icon/logo.png" alt="CoolAdmin">
                             </a>
                         </div>
@@ -79,15 +79,28 @@
                                 <br/>
 
                                 <input type="text" id="email" name="email"  th:placeholder="Email"
-                                       class="form-control" /> <br/>
+                                       class="au-input au-input--full" /> <br/>
                                 <input type="password"  th:placeholder="Password"
-                                       id="password" name="password" class="form-control" /> <br />
-
+                                       id="password" name="password" class="au-input au-input--full" /> <br />
+                                <div class="login-checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember">Remember Me
+                                    </label>
+                                    <label>
+                                        <a href="#">Forgotten Password?</a>
+                                    </label>
+                                </div>
                                 <div align="center" th:if="${param.error}">
                                     <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
                                 </div>
                                 <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
                             </form>
+                            <div class="register-link">
+                                <p>
+                                    Don't you have account?
+                                    <a href="/registration">Sign Up Here</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
