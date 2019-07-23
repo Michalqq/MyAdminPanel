@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class LoginController {
@@ -77,14 +80,27 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            List<Item> items = itemRepository.findAll();
+            List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
             List<MyItem> myItems = myItemRepository.findBySellPriceIsNull();
+            List<MyItem> myItems2 = new ArrayList<>();
+            int checkpoint = 0;
             for (MyItem myItem:myItems){
+                checkpoint = 0;
+                myItem.setQuantity(1);
                 for (Item item:items){
                     if (item.getId() == myItem.getItemId()) myItem.setName(item.getName());
                 }
+                for (MyItem uniqueItems: myItems2){
+                    if (uniqueItems.getItemId() == myItem.getItemId()){
+                        checkpoint = 1;
+                        myItem.addQuantity();
+                    }
+                }
+                if (checkpoint == 0){
+                    myItems2.add(myItem);
+                }
             }
-            modelAndView.addObject("myItems", myItems);
+            modelAndView.addObject("myItems", myItems2);
             //modelAndView.addObject("items", itemRepository.findByIdLessThan(10));
             modelAndView.setViewName("index");
         }

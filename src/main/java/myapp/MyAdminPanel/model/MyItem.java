@@ -14,6 +14,9 @@ public class MyItem {
     @Transient
     private String name;
 
+    @Transient
+    private int quantity;
+
     @Column(name = "Item_ID")
     private Integer itemId;
 
@@ -61,6 +64,18 @@ public class MyItem {
 
     public Integer getId() {
         return id;
+    }
+
+    public void addQuantity(){
+        this.quantity++;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setId(Integer id) {
