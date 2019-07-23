@@ -1,7 +1,10 @@
 package myapp.MyAdminPanel.controller;
 
 
+import myapp.MyAdminPanel.model.Item;
+import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.model.User;
+import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class LoginController {
@@ -24,6 +28,9 @@ public class LoginController {
 
     @Autowired
     private MyItemRepository myItemRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -70,7 +77,15 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            modelAndView.addObject("myItems", myItemRepository.findById(1));
+            List<Item> items = itemRepository.findAll();
+            List<MyItem> myItems = myItemRepository.findBySellPriceIsNull();
+            for (MyItem myItem:myItems){
+                for (Item item:items){
+                    if (item.getId() == myItem.getItemId()) myItem.setName(item.getName());
+                }
+            }
+            modelAndView.addObject("myItems", myItems);
+            //modelAndView.addObject("items", itemRepository.findByIdLessThan(10));
             modelAndView.setViewName("index");
         }
         return modelAndView;

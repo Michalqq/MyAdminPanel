@@ -11,6 +11,9 @@ public class MyItem {
     @Column(name = "ID")
     private Integer id;
 
+    @Transient
+    private String name;
+
     @Column(name = "Item_ID")
     private Integer itemId;
 
@@ -54,6 +57,30 @@ public class MyItem {
         this.deliveredToPoland = deliveredToPoland;
         this.lastActionDate = lastActionDate;
         this.notes = notes;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
     }
 
     public Double getBuyPrice() {

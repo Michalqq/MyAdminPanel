@@ -349,12 +349,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <!--<tr th:each="item: ${items}">-->
+                                                <!--<td th:text="${item.id}"></td>-->
+                                                <!--<td th:text="${item.name}"></td>-->
+                                            <!--</tr>-->
                                             <tr th:each="myItem: ${myItems}">
+                                                <td th:text="${myItem.name}"></td>
                                                 <td th:text="${myItem.itemId}"></td>
-                                                <td th:text="${myItem.sellPrice}"></td>
                                                 <td th:text="${myItem.buyPrice}"></td>
                                                 <td th:text="${myItem.deliveredToPoland}"></td>
                                             </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
