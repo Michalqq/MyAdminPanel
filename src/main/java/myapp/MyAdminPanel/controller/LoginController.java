@@ -2,11 +2,13 @@ package myapp.MyAdminPanel.controller;
 
 
 import myapp.MyAdminPanel.model.User;
+import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,8 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MyItemRepository myItemRepository;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -66,8 +70,7 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-            modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+            modelAndView.addObject("myItems", myItemRepository.findById(1));
             modelAndView.setViewName("index");
         }
         return modelAndView;
