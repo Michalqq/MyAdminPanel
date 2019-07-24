@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class LoginController {
@@ -113,23 +110,23 @@ public class LoginController {
 
     @RequestMapping(value = {"/", "/login", "/index"}, method = RequestMethod.GET)
     public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
-        System.out.println("---------------------Name: " + name);
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
             List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
+            Map<Integer, String> itemMap = new HashMap<>();
+            for(Item item : items){
+                itemMap.put(item.getId(), item.getName());
+            }
             List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
-            List<MyItem> itemsInTransport = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIsNull();
+            myItems = getItemsNames(myItems, itemMap);
             List<MyItem> myItems2 = new ArrayList<>();
             int checkpoint = 0;
             for (MyItem myItem : myItems) {
                 checkpoint = 0;
                 myItem.setQuantity(1);
-                for (Item item : items) {
-                    if (item.getId() == myItem.getItemId()) myItem.setName(item.getName());
-                }
                 for (MyItem uniqueItems : myItems2) {
                     if (uniqueItems.getItemId() == myItem.getItemId()) {
                         checkpoint = 1;
@@ -145,12 +142,33 @@ public class LoginController {
                 }
             }
             modelAndView.addObject("myItems", myItems2);
-            modelAndView.addObject("itemsInTransport", itemsInTransport);
             //modelAndView.addObject("items", itemRepository.findByIdLessThan(10));
             modelAndView.setViewName("index");
         }
         return modelAndView;
     }
+    @RequestMapping(value = {"delivery"}, method = RequestMethod.GET)
+    public ModelAndView delivery(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
+        ModelAndView modelAndView = new ModelAndView();
+//        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
+//        Map<Integer, String> itemMap = new HashMap<>();
+//        for(Item item : items){
+//            itemMap.put(item.getId(), item.getName());
+//        }
+//        List<MyItem> itemsInTransport = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIsNull();
+//        itemsInTransport = getItemsNames(itemsInTransport, itemMap);
+//
+//        modelAndView.addObject("itemsInTransport", itemsInTransport);
+        return modelAndView;
+    }
+
+    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap){
+        for (MyItem myItem:itemList) {
+            myItem.setName(itemMap.get(myItem.getItemId()));
+        }
+        return itemList;
+    }
+
 
 
 }
