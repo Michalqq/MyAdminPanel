@@ -1,16 +1,21 @@
 package myapp.MyAdminPanel;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class test {
 
     public static void main(String[] args) {
-        Map<Integer, String> map = new HashMap<>();
-        map.put(1, "addco");
-        map.put(2, "defi");
-        map.put(10, "greddy");
+        Date current = Calendar.getInstance().getTime();
+        System.out.println(current);
 
-        System.out.println(map.get(2));
+
+
     }
 }

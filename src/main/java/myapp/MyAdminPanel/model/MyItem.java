@@ -2,6 +2,8 @@ package myapp.MyAdminPanel.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "wskazniki")
@@ -30,13 +32,13 @@ public class MyItem {
     private Double sellPrice;
 
     @Column(name = "Buy_date")
-    private Date buyDate;
+    private String buyDate;
 
     @Column(name = "Sell_date")
-    private Date sellDate;
+    private String sellDate;
 
     @Column(name = "Cash_on_delivery")
-    private Integer cashOnDelivery;
+    private Double cashOnDelivery;
 
     @Column(name = "If_cash_on_delivery")
     private Integer ifCashOnDelivery;
@@ -45,7 +47,7 @@ public class MyItem {
     private Integer deliveredToPoland;
 
     @Column(name = "Last_action_date")
-    private Date lastActionDate;
+    private LocalDateTime lastActionDate;
 
     @Column(name = "Notes")
     private String notes;
@@ -57,14 +59,14 @@ public class MyItem {
         this.itemId = itemId;
     }
 
-    public MyItem(int quantity, Double buyPrice, Date buyDate, Integer itemId) {
+    public MyItem(int quantity, Double buyPrice, String buyDate, Integer itemId) {
         this.quantity = quantity;
         this.buyPrice = buyPrice;
         this.buyDate = buyDate;
         this.itemId = itemId;
     }
 
-    public MyItem(Double buyPrice, Double sellPrice, Date buyDate, Date sellDate, Integer cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, Date lastActionDate, String notes) {
+    public MyItem(Double buyPrice, Double sellPrice, String buyDate, String sellDate, Double cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, LocalDateTime lastActionDate, String notes) {
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
         this.buyDate = buyDate;
@@ -134,27 +136,27 @@ public class MyItem {
         this.sellPrice = sellPrice;
     }
 
-    public Date getBuyDate() {
+    public String getBuyDate() {
         return buyDate;
     }
 
-    public void setBuyDate(Date buyDate) {
+    public void setBuyDate(String buyDate) {
         this.buyDate = buyDate;
     }
 
-    public Date getSellDate() {
+    public String getSellDate() {
         return sellDate;
     }
 
-    public void setSellDate(Date sellDate) {
+    public void setSellDate(String sellDate) {
         this.sellDate = sellDate;
     }
 
-    public Integer getCashOnDelivery() {
+    public Double getCashOnDelivery() {
         return cashOnDelivery;
     }
 
-    public void setCashOnDelivery(Integer cashOnDelivery) {
+    public void setCashOnDelivery(Double cashOnDelivery) {
         this.cashOnDelivery = cashOnDelivery;
     }
 
@@ -174,11 +176,11 @@ public class MyItem {
         this.deliveredToPoland = deliveredToPoland;
     }
 
-    public Date getLastActionDate() {
+    public LocalDateTime getLastActionDate() {
         return lastActionDate;
     }
 
-    public void setLastActionDate(Date lastActionDate) {
+    public void setLastActionDate(LocalDateTime lastActionDate) {
         this.lastActionDate = lastActionDate;
     }
 
@@ -187,6 +189,7 @@ public class MyItem {
     }
 
     public void setNotes(String notes) {
-        notes = notes;
+
+        this.notes = notes;
     }
 }

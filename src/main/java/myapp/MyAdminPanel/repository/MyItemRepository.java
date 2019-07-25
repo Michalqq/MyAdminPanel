@@ -4,11 +4,9 @@ import myapp.MyAdminPanel.model.MyItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 
 public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findBySellPriceIsNull();
@@ -27,4 +25,9 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(@Param("deliveryToPoland") int deliveryToPoland, @Param("itemId") int itemId);
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(@Param("itemId") int itemId);
+
+    Optional<MyItem> findById(Integer ID);
+
+    MyItem save(MyItem myItem);
+
 }
