@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class LoginController {
@@ -47,7 +48,6 @@ public class LoginController {
         modelAndView.setViewName("chart");
         return modelAndView;
     }
-
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration() {
@@ -115,60 +115,57 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
-            Map<Integer, String> itemMap = new HashMap<>();
-            for(Item item : items){
-                itemMap.put(item.getId(), item.getName());
+            List<MyItem> myItems = myItemRepository.findItemsOnStock(1);
+            myItems = getItemsNames(myItems, this.getItemsMap());
+            if (name != null && name != "") {
+                myItems = getByName(myItems, name);
             }
-            List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
-            myItems = getItemsNames(myItems, itemMap);
-            List<MyItem> myItems2 = new ArrayList<>();
-            int checkpoint = 0;
             for (MyItem myItem : myItems) {
-                checkpoint = 0;
-                myItem.setQuantity(1);
-                for (MyItem uniqueItems : myItems2) {
-                    if (uniqueItems.getItemId() == myItem.getItemId()) {
-                        checkpoint = 1;
-                        uniqueItems.addQuantity();
-                    }
-                }
-                if (checkpoint == 0) {
-                    if (name == null) myItems2.add(myItem);
-                    else if (myItem.getName().toLowerCase().contains(name.toLowerCase())){
-                        System.out.println(name);
-                        myItems2.add(myItem);
-                    }
-                }
+                myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
             }
-            modelAndView.addObject("myItems", myItems2);
-            //modelAndView.addObject("items", itemRepository.findByIdLessThan(10));
+            modelAndView.addObject("myItems", myItems);
             modelAndView.setViewName("index");
         }
         return modelAndView;
     }
-    @RequestMapping(value = {"delivery"}, method = RequestMethod.GET)
-    public ModelAndView delivery(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
+
+    @RequestMapping(value = {"/delivery"}, method = RequestMethod.GET)
+    public ModelAndView delivery(@RequestParam(value = "searchItem", required = false, defaultValue = "") String
+                                         name) {
         ModelAndView modelAndView = new ModelAndView();
-//        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
-//        Map<Integer, String> itemMap = new HashMap<>();
-//        for(Item item : items){
-//            itemMap.put(item.getId(), item.getName());
-//        }
-//        List<MyItem> itemsInTransport = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIsNull();
-//        itemsInTransport = getItemsNames(itemsInTransport, itemMap);
-//
-//        modelAndView.addObject("itemsInTransport", itemsInTransport);
+        List<MyItem> myItems = myItemRepository.findItemsInTransport();
+        myItems = getItemsNames(myItems, this.getItemsMap());
+        if (name != null && name != "") {
+            myItems = getByName(myItems, name);
+        }
+        for (MyItem myItem : myItems) {
+            myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
+        }
+        modelAndView.addObject("myItems", myItems);
+        modelAndView.setViewName("delivery");
         return modelAndView;
     }
 
-    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap){
-        for (MyItem myItem:itemList) {
+    public Map<Integer, String> getItemsMap(){
+        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
+        Map<Integer, String> itemMap = new HashMap<>();
+        for (Item item : items) {
+            itemMap.put(item.getId(), item.getName());
+        }
+        return itemMap;
+    }
+
+    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
+        for (MyItem myItem : itemList) {
             myItem.setName(itemMap.get(myItem.getItemId()));
         }
         return itemList;
     }
 
+    public static List<MyItem> getByName(List<MyItem> itemList, String name) {
+        return itemList.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+
+    }
 
 
 }

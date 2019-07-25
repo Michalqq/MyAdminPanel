@@ -80,11 +80,12 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <a class="js-arrow" href="index">
+                    <li>
+                        <a href="index">
                         <i class="fas fa-home"></i>Main</a>
                     </li>
                     <li class="active has-sub">
-                        <a href="delivery">
+                        <a class="js-arrow" href="delivery">
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
                 </ul>
@@ -151,7 +152,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="overview-wrap">
-                                <h2 class="title-1">overview</h2>
+                                <h2 class="title-1 m-b-25">In Transport</h2>
                                 <button class="au-btn au-btn-icon au-btn--blue">
                                     <i class="zmdi zmdi-plus"></i>add item
                                 </button>
@@ -159,8 +160,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <h2 class="title-1 m-b-25">In Transport</h2>
-                                <div class="table-responsive table--no-card m-b-40">
+                                <div class="table-responsive table--no-card m-b-20">
                                     <table class="table table-borderless table-striped table-earning">
                                         <thead>
                                         <tr>
@@ -168,14 +168,16 @@
                                             <th>Ilosc</th>
                                             <th>Cena zakupu</th>
                                             <th>Data zakupu</th>
+                                            <th>Ile zamowionych</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="itemsInTransp: ${itemsInTransport}">
-                                            <td th:text="${itemsInTransp.name}"></td>
-                                            <td th:text="${itemsInTransp.quantity}"></td>
-                                            <td th:text="${itemsInTransp.buyPrice}"></td>
-                                            <td th:text="${itemsInTransp.buyDate}"></td>
+                                        <tr th:each="myItem: ${myItems}">
+                                            <td th:text="${myItem.name}"></td>
+                                            <td th:text="${myItem.quantity}"></td>
+                                            <td th:text="${myItem.buyPrice}"></td>
+                                            <td th:text="${myItem.buyDate}"></td>
+                                            <td th:text="${myItem.deliveredToPoland}"></td>
                                         </tr>
 
                                         </tbody>

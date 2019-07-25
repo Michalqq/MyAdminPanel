@@ -18,7 +18,7 @@ public class MyItem {
     private int quantity;
 
     @Column(name = "Item_ID")
-    private Integer itemId;
+    private int itemId;
 
     @Column(name = "Buy_price")
     private Double buyPrice;
@@ -47,7 +47,18 @@ public class MyItem {
     @Column(name = "Notes")
     private String notes;
 
-    public MyItem(){
+    public MyItem() {
+    }
+
+    public MyItem(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public MyItem(int quantity, Double buyPrice, Date buyDate, Integer itemId) {
+        this.quantity = quantity;
+        this.buyPrice = buyPrice;
+        this.buyDate = buyDate;
+        this.itemId = itemId;
     }
 
     public MyItem(Double buyPrice, Double sellPrice, Date buyDate, Date sellDate, Integer cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, Date lastActionDate, String notes) {
@@ -66,7 +77,7 @@ public class MyItem {
         return id;
     }
 
-    public void addQuantity(){
+    public void addQuantity() {
         this.quantity++;
     }
 
@@ -90,11 +101,11 @@ public class MyItem {
         this.name = name;
     }
 
-    public Integer getItemId() {
+    public int getItemId() {
         return itemId;
     }
 
-    public void setItemId(Integer itemId) {
+    public void setItemId(int itemId) {
         this.itemId = itemId;
     }
 

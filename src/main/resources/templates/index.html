@@ -254,7 +254,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <h2 class="title-1 m-b-25">My Items</h2>
-                                <div class="table-responsive table--no-card m-b-40">
+                                <div class="table-responsive table--no-card m-b-20">
                                     <table class="table table-borderless table-striped table-earning">
                                         <thead>
                                         <tr>
@@ -279,179 +279,153 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <h2 class="title-1 m-b-25">In Transport</h2>
-                                    <div class="table-responsive table--no-card m-b-40">
-                                        <table class="table table-borderless table-striped table-earning">
-                                            <thead>
-                                            <tr>
-                                                <th>Nazwa</th>
-                                                <th>Ilosc</th>
-                                                <th>Cena zakupu</th>
-                                                <th>Data zakupu</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="itemsInTransp: ${itemsInTransport}">
-                                                <td th:text="${itemsInTransp.name}"></td>
-                                                <td th:text="${itemsInTransp.quantity}"></td>
-                                                <td th:text="${itemsInTransp.buyPrice}"></td>
-                                                <td th:text="${itemsInTransp.buyDate}"></td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="au-card recent-report">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2">recent reports</h3>
-                                        <div class="chart-info">
-                                            <div class="chart-info__left">
-                                                <div class="chart-note">
-                                                    <span class="dot dot--blue"></span>
-                                                    <span>products</span>
-                                                </div>
-                                                <div class="chart-note mr-0">
-                                                    <span class="dot dot--green"></span>
-                                                    <span>services</span>
-                                                </div>
-                                            </div>
-                                            <div class="chart-info__right">
-                                                <div class="chart-statis">
-                                                    <span class="index incre">
-                                                        <i class="zmdi zmdi-long-arrow-up"></i>25%</span>
-                                                    <span class="label">products</span>
-                                                </div>
-                                                <div class="chart-statis mr-0">
-                                                    <span class="index decre">
-                                                        <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
-                                                    <span class="label">services</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="recent-report__chart">
-                                            <canvas id="recent-rep-chart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="au-card chart-percent-card">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2 tm-b-5">char by %</h3>
-                                        <div class="row no-gutters">
-                                            <div class="col-xl-6">
-                                                <div class="chart-note-wrap">
-                                                    <div class="chart-note mr-0 d-block">
+                                <div class="col-lg-6">
+                                    <div class="au-card recent-report">
+                                        <div class="au-card-inner">
+                                            <h3 class="title-2">recent reports</h3>
+                                            <div class="chart-info">
+                                                <div class="chart-info__left">
+                                                    <div class="chart-note">
                                                         <span class="dot dot--blue"></span>
                                                         <span>products</span>
                                                     </div>
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--red"></span>
+                                                    <div class="chart-note mr-0">
+                                                        <span class="dot dot--green"></span>
                                                         <span>services</span>
                                                     </div>
                                                 </div>
+                                                <div class="chart-info__right">
+                                                    <div class="chart-statis">
+                                                    <span class="index incre">
+                                                        <i class="zmdi zmdi-long-arrow-up"></i>25%</span>
+                                                        <span class="label">products</span>
+                                                    </div>
+                                                    <div class="chart-statis mr-0">
+                                                    <span class="index decre">
+                                                        <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
+                                                        <span class="label">services</span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-xl-6">
-                                                <div class="percent-chart">
-                                                    <canvas id="percent-chart"></canvas>
+                                            <div class="recent-report__chart">
+                                                <canvas id="recent-rep-chart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="au-card chart-percent-card">
+                                        <div class="au-card-inner">
+                                            <h3 class="title-2 tm-b-5">char by %</h3>
+                                            <div class="row no-gutters">
+                                                <div class="col-xl-6">
+                                                    <div class="chart-note-wrap">
+                                                        <div class="chart-note mr-0 d-block">
+                                                            <span class="dot dot--blue"></span>
+                                                            <span>products</span>
+                                                        </div>
+                                                        <div class="chart-note mr-0 d-block">
+                                                            <span class="dot dot--red"></span>
+                                                            <span>services</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="percent-chart">
+                                                        <canvas id="percent-chart"></canvas>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <h2 class="title-1 m-b-25">Top countries</h2>
-                            <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
-                                <div class="au-card-inner">
-                                    <div class="table-responsive">
-                                        <table class="table table-top-countries">
-                                            <tbody>
-                                            <tr>
-                                                <td>United States</td>
-                                                <td class="text-right">$119,366.96</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Australia</td>
-                                                <td class="text-right">$70,261.65</td>
-                                            </tr>
-                                            <tr>
-                                                <td>United Kingdom</td>
-                                                <td class="text-right">$46,399.22</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Turkey</td>
-                                                <td class="text-right">$35,364.90</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Germany</td>
-                                                <td class="text-right">$20,366.96</td>
-                                            </tr>
-                                            <tr>
-                                                <td>France</td>
-                                                <td class="text-right">$10,366.96</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Australia</td>
-                                                <td class="text-right">$5,366.96</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Italy</td>
-                                                <td class="text-right">$1639.32</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                            <div class="col-lg-3">
+                                <h2 class="title-1 m-b-25">Top countries</h2>
+                                <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
+                                    <div class="au-card-inner">
+                                        <div class="table-responsive">
+                                            <table class="table table-top-countries">
+                                                <tbody>
+                                                <tr>
+                                                    <td>United States</td>
+                                                    <td class="text-right">$119,366.96</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Australia</td>
+                                                    <td class="text-right">$70,261.65</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>United Kingdom</td>
+                                                    <td class="text-right">$46,399.22</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Turkey</td>
+                                                    <td class="text-right">$35,364.90</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Germany</td>
+                                                    <td class="text-right">$20,366.96</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>France</td>
+                                                    <td class="text-right">$10,366.96</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Australia</td>
+                                                    <td class="text-right">$5,366.96</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Italy</td>
+                                                    <td class="text-right">$1639.32</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="copyright">
-                                <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a
-                                        href="https://colorlib.com">Colorlib</a>.</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="copyright">
+                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a
+                                            href="https://colorlib.com">Colorlib</a>.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
         </div>
-        <!-- END MAIN CONTENT-->
-        <!-- END PAGE CONTAINER-->
+
     </div>
 
-</div>
+    <!-- Jquery JS-->
+    <script src="vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="vendor/slick/slick.min.js">
+    </script>
+    <script src="vendor/wow/wow.min.js"></script>
+    <script src="vendor/animsition/animsition.min.js"></script>
+    <script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="vendor/select2/select2.min.js">
+    </script>
 
-<!-- Jquery JS-->
-<script src="vendor/jquery-3.2.1.min.js"></script>
-<!-- Bootstrap JS-->
-<script src="vendor/bootstrap-4.1/popper.min.js"></script>
-<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
-<!-- Vendor JS       -->
-<script src="vendor/slick/slick.min.js">
-</script>
-<script src="vendor/wow/wow.min.js"></script>
-<script src="vendor/animsition/animsition.min.js"></script>
-<script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-</script>
-<script src="vendor/counter-up/jquery.waypoints.min.js"></script>
-<script src="vendor/counter-up/jquery.counterup.min.js">
-</script>
-<script src="vendor/circle-progress/circle-progress.min.js"></script>
-<script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="vendor/select2/select2.min.js">
-</script>
-
-<!-- Main JS-->
-<script src="js/main.js"></script>
+    <!-- Main JS-->
+    <script src="js/main.js"></script>
 
 </body>
 
