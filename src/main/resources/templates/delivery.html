@@ -161,8 +161,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="table-responsive table--no-card m-b-20">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
+                                    <table class="table table-bordered table-striped table-sm">
+                                        <thead class="thead-dark">
                                         <tr>
                                             <th>Nazwa</th>
                                             <th>Ilosc</th>
@@ -177,7 +177,7 @@
                                             <td th:text="${myItem.quantity}"></td>
                                             <td th:text="${myItem.buyPrice}"></td>
                                             <td th:text="${myItem.buyDate}"></td>
-                                            <td th:text="${myItem.deliveredToPoland}"></td>
+                                            <td th:text="${myItem.quantInTransport}"></td>
                                         </tr>
 
                                         </tbody>

@@ -17,6 +17,9 @@ public class MyItem {
     @Transient
     private int quantity;
 
+    @Transient
+    private int quantInTransport;
+
     @Column(name = "Item_ID")
     private int itemId;
 
@@ -80,7 +83,13 @@ public class MyItem {
     public void addQuantity() {
         this.quantity++;
     }
+    public int getQuantInTransport() {
+        return quantInTransport;
+    }
 
+    public void setQuantInTransport(int quantInTransport) {
+        this.quantInTransport = quantInTransport;
+    }
     public int getQuantity() {
         return quantity;
     }

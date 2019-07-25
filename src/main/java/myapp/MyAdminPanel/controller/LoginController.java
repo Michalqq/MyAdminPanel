@@ -79,36 +79,36 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping("/")
-    public ModelAndView findByName(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
-        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
-        List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
-        List<MyItem> myItems2 = new ArrayList<>();
-        int checkpoint = 0;
-        for (MyItem myItem : myItems) {
-            checkpoint = 0;
-            myItem.setQuantity(1);
-            for (Item item : items) {
-                if (item.getId() == myItem.getItemId() && item.getName().contains(name)) myItem.setName(item.getName());
-            }
-            for (MyItem uniqueItems : myItems2) {
-                if (uniqueItems.getItemId() == myItem.getItemId()) {
-                    checkpoint = 1;
-                    uniqueItems.addQuantity();
-                }
-            }
-            if (checkpoint == 0 && myItem.getName() != null) {
-                myItems2.add(myItem);
-            }
-        }
-        modelAndView = new ModelAndView();
-        modelAndView.addObject("myItems", myItems2);
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
+//    @RequestMapping("/")
+//    public ModelAndView findByName(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
+//        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
+//        List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
+//        List<MyItem> myItems2 = new ArrayList<>();
+//        int checkpoint = 0;
+//        for (MyItem myItem : myItems) {
+//            checkpoint = 0;
+//            myItem.setQuantity(1);
+//            for (Item item : items) {
+//                if (item.getId() == myItem.getItemId() && item.getName().contains(name)) myItem.setName(item.getName());
+//            }
+//            for (MyItem uniqueItems : myItems2) {
+//                if (uniqueItems.getItemId() == myItem.getItemId()) {
+//                    checkpoint = 1;
+//                    uniqueItems.addQuantity();
+//                }
+//            }
+//            if (checkpoint == 0 && myItem.getName() != null) {
+//                myItems2.add(myItem);
+//            }
+//        }
+//        modelAndView = new ModelAndView();
+//        modelAndView.addObject("myItems", myItems2);
+//        modelAndView.setViewName("index");
+//        return modelAndView;
+//    }
 
 
-    @RequestMapping(value = {"/", "/login", "/index"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -122,6 +122,7 @@ public class LoginController {
             }
             for (MyItem myItem : myItems) {
                 myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
+                myItem.setQuantInTransport(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
             }
             modelAndView.addObject("myItems", myItems);
             modelAndView.setViewName("index");
@@ -139,7 +140,7 @@ public class LoginController {
             myItems = getByName(myItems, name);
         }
         for (MyItem myItem : myItems) {
-            myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
+            myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
         }
         modelAndView.addObject("myItems", myItems);
         modelAndView.setViewName("delivery");

@@ -26,4 +26,5 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem>  findItemsInTransport();
 
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(@Param("deliveryToPoland") int deliveryToPoland, @Param("itemId") int itemId);
+    int countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(@Param("itemId") int itemId);
 }
