@@ -169,283 +169,301 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-lg-9">
+                            <h2 class="title-1 m-b-25">My Items</h2>
+                            <div class="table-responsive table--no-card m-b-20">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th>Nazwa</th>
+                                        <th>Ilosc</th>
+                                        <th>Cena zakupu</th>
+                                        <th>Data zakupu</th>
+                                        <th>Ile zamowionych</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="myItem: ${myItems}">
+                                        <td th:text="${myItem.name}"></td>
+                                        <td th:text="${myItem.quantity}"></td>
+                                        <td th:text="${myItem.buyPrice}"></td>
+                                        <td th:text="${myItem.buyDate}"></td>
+                                        <td th:text="${myItem.quantInTransport}"></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="overview-wrap">
-                                <h2 class="title-1">overview</h2>
                                 <button class="au-btn au-btn-icon au-btn--blue">
                                     <i class="zmdi zmdi-plus"></i>add item
                                 </button>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <h2 class="title-1 m-b-25">My Items</h2>
-                                <div class="table-responsive table--no-card m-b-20">
-                                    <table class="table table-bordered table-striped table-sm">
-                                        <thead class="thead-dark">
-                                        <tr>
-                                            <th>Nazwa</th>
-                                            <th>Ilosc</th>
-                                            <th>Cena zakupu</th>
-                                            <th>Data zakupu</th>
-                                            <th>Ile zamowionych</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="myItem: ${myItems}">
-                                            <td th:text="${myItem.name}"></td>
-                                            <td th:text="${myItem.quantity}"></td>
-                                            <td th:text="${myItem.buyPrice}"></td>
-                                            <td th:text="${myItem.buyDate}"></td>
-                                            <td th:text="${myItem.quantInTransport}"></td>
-                                        </tr>
+                            <div class="col-md-12">
+                                <br>
+                            </div>
+                            <div class="overview-item overview-item--c4">
+                                <form action="#" method="GET">
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-tag"></i></span>
+                                        <input class="form-control" name="sellPriceInput" type="number"
+                                               placeholder="Sell price" required>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-percent"></i></span>
+                                        <input class="form-control" name="commissionInput" type="number"
+                                               placeholder="Commission">
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"
+                                              onclick="document.getElementById('cashOnDelivery').disabled=false"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input class="form-control" name="sellPriceInput" type="number"
+                                               id="cashOnDelivery"
+                                               placeholder="Cash on delivery" disabled>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="far fa-sticky-note"></i></span>
+                                        <input class="form-control" name="sellPriceInput" type="text"
+                                               placeholder="Note">
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary" type="submit">Sell</button>
+                                    </div>
+                                    <br>
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                </form>
                             </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <form class="form-header" action="#" method="GET">
-                                                <input class="au-input au-input--xl" type="text" name="sellPriceInput"
-                                                       placeholder="Sell price"/>
-                                                <input class="au-input au-input--xl" type="text" name="commissionInput"
-                                                       placeholder="Commission"/>
-                                                <input class="au-input au-input--xl" type="text" name="cashOnDeliveryInput"
-                                                       placeholder="Cash on delivery"/>
-                                                <button class="au-btn--submit" type="submit">
-                                                    <i class="zmdi zmdi-search"></i>
-                                                </button>
-                                            </form>
+                        </div>
+                    </div>
+                    <div class="row m-t-25">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="overview-item overview-item--c1">
+                                <div class="overview__inner">
+                                    <div class="overview-box clearfix">
+                                        <div class="icon">
+                                            <i class="zmdi zmdi-account-o"></i>
                                         </div>
+                                        <div class="text">
+                                            <h2>10368</h2>
+                                            <span>members online</span>
+                                        </div>
+                                    </div>
+                                    <div class="overview-chart">
+                                        <canvas id="widgetChart1"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            <div class="row m-t-25">
-                                <div class="col-sm-6 col-lg-3">
-                                    <div class="overview-item overview-item--c1">
-                                        <div class="overview__inner">
-                                            <div class="overview-box clearfix">
-                                                <div class="icon">
-                                                    <i class="zmdi zmdi-account-o"></i>
-                                                </div>
-                                                <div class="text">
-                                                    <h2>10368</h2>
-                                                    <span>members online</span>
-                                                </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart1"></canvas>
-                                            </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="overview-item overview-item--c2">
+                                <div class="overview__inner">
+                                    <div class="overview-box clearfix">
+                                        <div class="icon">
+                                            <i class="zmdi zmdi-shopping-cart"></i>
+                                        </div>
+                                        <div class="text">
+                                            <h2>388,688</h2>
+                                            <span>items solid</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-3">
-                                    <div class="overview-item overview-item--c2">
-                                        <div class="overview__inner">
-                                            <div class="overview-box clearfix">
-                                                <div class="icon">
-                                                    <i class="zmdi zmdi-shopping-cart"></i>
-                                                </div>
-                                                <div class="text">
-                                                    <h2>388,688</h2>
-                                                    <span>items solid</span>
-                                                </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart2"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-3">
-                                    <div class="overview-item overview-item--c3">
-                                        <div class="overview__inner">
-                                            <div class="overview-box clearfix">
-                                                <div class="icon">
-                                                    <i class="zmdi zmdi-calendar-note"></i>
-                                                </div>
-                                                <div class="text">
-                                                    <h2>1,086</h2>
-                                                    <span>this week</span>
-                                                </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart3"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-lg-3">
-                                    <div class="overview-item overview-item--c4">
-                                        <div class="overview__inner">
-                                            <div class="overview-box clearfix">
-                                                <div class="icon">
-                                                    <i class="zmdi zmdi-money"></i>
-                                                </div>
-                                                <div class="text">
-                                                    <h2>$1,060,386</h2>
-                                                    <span>total earnings</span>
-                                                </div>
-                                            </div>
-                                            <div class="overview-chart">
-                                                <canvas id="widgetChart4"></canvas>
-                                            </div>
-                                        </div>
+                                    <div class="overview-chart">
+                                        <canvas id="widgetChart2"></canvas>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="au-card recent-report">
-                                        <div class="au-card-inner">
-                                            <h3 class="title-2">recent reports</h3>
-                                            <div class="chart-info">
-                                                <div class="chart-info__left">
-                                                    <div class="chart-note">
-                                                        <span class="dot dot--blue"></span>
-                                                        <span>products</span>
-                                                    </div>
-                                                    <div class="chart-note mr-0">
-                                                        <span class="dot dot--green"></span>
-                                                        <span>services</span>
-                                                    </div>
-                                                </div>
-                                                <div class="chart-info__right">
-                                                    <div class="chart-statis">
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="overview-item overview-item--c3">
+                                <div class="overview__inner">
+                                    <div class="overview-box clearfix">
+                                        <div class="icon">
+                                            <i class="zmdi zmdi-calendar-note"></i>
+                                        </div>
+                                        <div class="text">
+                                            <h2>1,086</h2>
+                                            <span>this week</span>
+                                        </div>
+                                    </div>
+                                    <div class="overview-chart">
+                                        <canvas id="widgetChart3"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="overview-item overview-item--c4">
+                                <div class="overview__inner">
+                                    <div class="overview-box clearfix">
+                                        <div class="icon">
+                                            <i class="zmdi zmdi-money"></i>
+                                        </div>
+                                        <div class="text">
+                                            <h2>$1,060,386</h2>
+                                            <span>total earnings</span>
+                                        </div>
+                                    </div>
+                                    <div class="overview-chart">
+                                        <canvas id="widgetChart4"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="au-card recent-report">
+                                <div class="au-card-inner">
+                                    <h3 class="title-2">recent reports</h3>
+                                    <div class="chart-info">
+                                        <div class="chart-info__left">
+                                            <div class="chart-note">
+                                                <span class="dot dot--blue"></span>
+                                                <span>products</span>
+                                            </div>
+                                            <div class="chart-note mr-0">
+                                                <span class="dot dot--green"></span>
+                                                <span>services</span>
+                                            </div>
+                                        </div>
+                                        <div class="chart-info__right">
+                                            <div class="chart-statis">
                                                     <span class="index incre">
                                                         <i class="zmdi zmdi-long-arrow-up"></i>25%</span>
-                                                        <span class="label">products</span>
-                                                    </div>
-                                                    <div class="chart-statis mr-0">
+                                                <span class="label">products</span>
+                                            </div>
+                                            <div class="chart-statis mr-0">
                                                     <span class="index decre">
                                                         <i class="zmdi zmdi-long-arrow-down"></i>10%</span>
-                                                        <span class="label">services</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="recent-report__chart">
-                                                <canvas id="recent-rep-chart"></canvas>
+                                                <span class="label">services</span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="au-card chart-percent-card">
-                                        <div class="au-card-inner">
-                                            <h3 class="title-2 tm-b-5">char by %</h3>
-                                            <div class="row no-gutters">
-                                                <div class="col-xl-6">
-                                                    <div class="chart-note-wrap">
-                                                        <div class="chart-note mr-0 d-block">
-                                                            <span class="dot dot--blue"></span>
-                                                            <span>products</span>
-                                                        </div>
-                                                        <div class="chart-note mr-0 d-block">
-                                                            <span class="dot dot--red"></span>
-                                                            <span>services</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <div class="percent-chart">
-                                                        <canvas id="percent-chart"></canvas>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="recent-report__chart">
+                                        <canvas id="recent-rep-chart"></canvas>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <h2 class="title-1 m-b-25">Top countries</h2>
-                                <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
-                                    <div class="au-card-inner">
-                                        <div class="table-responsive">
-                                            <table class="table table-top-countries">
-                                                <tbody>
-                                                <tr>
-                                                    <td>United States</td>
-                                                    <td class="text-right">$119,366.96</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Australia</td>
-                                                    <td class="text-right">$70,261.65</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>United Kingdom</td>
-                                                    <td class="text-right">$46,399.22</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Turkey</td>
-                                                    <td class="text-right">$35,364.90</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Germany</td>
-                                                    <td class="text-right">$20,366.96</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>France</td>
-                                                    <td class="text-right">$10,366.96</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Australia</td>
-                                                    <td class="text-right">$5,366.96</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Italy</td>
-                                                    <td class="text-right">$1639.32</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="au-card chart-percent-card">
+                                <div class="au-card-inner">
+                                    <h3 class="title-2 tm-b-5">char by %</h3>
+                                    <div class="row no-gutters">
+                                        <div class="col-xl-6">
+                                            <div class="chart-note-wrap">
+                                                <div class="chart-note mr-0 d-block">
+                                                    <span class="dot dot--blue"></span>
+                                                    <span>products</span>
+                                                </div>
+                                                <div class="chart-note mr-0 d-block">
+                                                    <span class="dot dot--red"></span>
+                                                    <span>services</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="percent-chart">
+                                                <canvas id="percent-chart"></canvas>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a
-                                            href="https://colorlib.com">Colorlib</a>.</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <h2 class="title-1 m-b-25">Top countries</h2>
+                        <div class="au-card au-card--bg-blue au-card-top-countries m-b-40">
+                            <div class="au-card-inner">
+                                <div class="table-responsive">
+                                    <table class="table table-top-countries">
+                                        <tbody>
+                                        <tr>
+                                            <td>United States</td>
+                                            <td class="text-right">$119,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Australia</td>
+                                            <td class="text-right">$70,261.65</td>
+                                        </tr>
+                                        <tr>
+                                            <td>United Kingdom</td>
+                                            <td class="text-right">$46,399.22</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Turkey</td>
+                                            <td class="text-right">$35,364.90</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Germany</td>
+                                            <td class="text-right">$20,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>France</td>
+                                            <td class="text-right">$10,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Australia</td>
+                                            <td class="text-right">$5,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Italy</td>
+                                            <td class="text-right">$1639.32</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="copyright">
+                            <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a
+                                    href="https://colorlib.com">Colorlib</a>.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
-
     </div>
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+</div>
 
-    <!-- Jquery JS-->
-    <script src="vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="vendor/slick/slick.min.js">
-    </script>
-    <script src="vendor/wow/wow.min.js"></script>
-    <script src="vendor/animsition/animsition.min.js"></script>
-    <script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="vendor/select2/select2.min.js">
-    </script>
+</div>
 
-    <!-- Main JS-->
-    <script src="js/main.js"></script>
+<!-- Jquery JS-->
+<script src="vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="vendor/slick/slick.min.js">
+</script>
+<script src="vendor/wow/wow.min.js"></script>
+<script src="vendor/animsition/animsition.min.js"></script>
+<script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="vendor/circle-progress/circle-progress.min.js"></script>
+<script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="vendor/select2/select2.min.js">
+</script>
+
+<!-- Main JS-->
+<script src="js/main.js"></script>
 
 </body>
 
