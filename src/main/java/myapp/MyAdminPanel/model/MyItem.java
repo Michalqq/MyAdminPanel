@@ -1,10 +1,13 @@
 package myapp.MyAdminPanel.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Component
 @Entity
 @Table(name = "wskazniki")
 public class MyItem {

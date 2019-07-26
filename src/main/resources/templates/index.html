@@ -169,33 +169,33 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <h2 class="title-1 m-b-25">My Items</h2>
                             <div class="table-responsive table--no-card m-b-20">
                                 <table class="table table-bordered table-striped table-sm">
                                     <thead class="thead-dark">
                                     <tr>
                                         <th>Nazwa</th>
-                                        <th>Ilosc</th>
                                         <th>Cena zakupu</th>
+                                        <th>Ilosc</th>
                                         <th>Data zakupu</th>
-                                        <th>Ile zamowionych</th>
+                                        <th>Ile zam.</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="myItem: ${myItems}">
-                                        <td th:text="${myItem.name}"></td>
-                                        <td th:text="${myItem.quantity}"></td>
-                                        <td th:text="${myItem.buyPrice}"></td>
-                                        <td th:text="${myItem.buyDate}"></td>
-                                        <td th:text="${myItem.quantInTransport}"></td>
+                                        <td style="width:60%" th:text="${myItem.name}"></td>
+                                        <td style="width:15%" th:text="${myItem.buyPrice}"></td>
+                                        <td style="width:5%" th:text="${myItem.quantity}"></td>
+                                        <td style="width:12%" th:text="${myItem.buyDate}"></td>
+                                        <td style="width:8%" th:text="${myItem.quantInTransport}"></td>
                                     </tr>
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="overview-wrap">
                                 <button class="au-btn au-btn-icon au-btn--blue">
                                     <i class="zmdi zmdi-plus"></i>add item
@@ -204,15 +204,15 @@
                             <div class="col-md-12">
                                 <br>
                             </div>
-                            <div class="overview-item overview-item--c4">
-                                <form action="/sell#" method="GET">
+                            <div class="overview-item overview-item--c1">
+                                <form action="/sell#" method="POST">
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-tag"></i></span>
                                         <input class="form-control" name="sellPriceInput" type="number"
                                                placeholder="Sell price" required>
                                     </div>
                                     <br>
-                                    <div class="input-group col-sm-12">
+                                    <div class="input-group col-lg-12">
                                         <span class="input-group-addon"><i class="fas fa-percent"></i></span>
                                         <input class="form-control" name="commissionInput" type="number"
                                                placeholder="Commission">
@@ -233,10 +233,18 @@
                                                placeholder="Note">
                                     </div>
                                     <br>
-                                    <div class="col-sm-12">
-                                        <button class="btn btn-primary" type="submit">Sell</button>
+                                    <div class="input-footer">
+                                        <button name="sell" value="sell" type="submit" class="btn btn-primary btn-md">
+                                            <i class="far fa-check-circle"></i> Sell
+                                        </button>
+                                        <button name="add" value="add" type="submit" class="btn btn-primary btn-md">
+                                            <i class="fas fa-shopping-basket"></i> Add
+                                        </button>
                                     </div>
                                     <br>
+                                    <div class="col-sm-12">
+                                        <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
+                                    </div>
 
                                 </form>
                             </div>
