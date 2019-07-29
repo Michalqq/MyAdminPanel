@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.controller;
 
 import myapp.MyAdminPanel.model.Basket;
+import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,9 +24,9 @@ public class BasketController {
                              @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                              @RequestParam(name = "note", defaultValue = "") String note) {
         ModelAndView modelAndView = new ModelAndView();
-        System.out.println(myItemRepository.findById(343).get());
         basket.setName(basket.getName() + " " + "test");
-        modelAndView.addObject("SellInfo", basket.getName());
+        basket.add(new MyItem());
+        modelAndView.addObject("SellInfo", basket.getMyItemList().size());
         modelAndView.setViewName("index");
         return modelAndView;
     }

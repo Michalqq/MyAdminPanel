@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -14,13 +14,13 @@ import java.util.Optional;
 @Component
 public class Basket {
     private String name;
-    private List<String> myItemList;
+    private List<MyItem> myItemList = new ArrayList<>();
 
 //    public void addItemToMyList(Optional<MyItem> myItem){
 //        if (myItem.isPresent()) myItemList.add(myItem.get());
 //    }
 
-        public void add(String text){
-            this.myItemList.add(text);
+        public void add(MyItem myItem){
+            this.myItemList.add(myItem);
         }
 }
