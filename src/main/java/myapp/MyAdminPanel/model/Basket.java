@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -16,11 +17,11 @@ public class Basket {
     private String name;
     private List<MyItem> myItemList = new ArrayList<>();
 
-//    public void addItemToMyList(Optional<MyItem> myItem){
-//        if (myItem.isPresent()) myItemList.add(myItem.get());
-//    }
+    public void addItemToMyList(Optional<MyItem> myItem) {
+        if (myItem.isPresent()) myItemList.add(myItem.get());
+    }
 
-        public void add(MyItem myItem){
-            this.myItemList.add(myItem);
-        }
+    public void add(MyItem myItem) {
+        this.myItemList.add(myItem);
+    }
 }
