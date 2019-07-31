@@ -1,3 +1,36 @@
+function changeRowColorOnTable(x){
+    document.getElementById('checkedItemId').value = "";
+    if (x.className == 'null') {
+        iterateTableAndUncheck();
+    }
+    if (x.className != 'null'){
+        x.style = 'background-color:#FFFFFF';
+        x.className = 'null'
+    }else {
+        x.className = x.style.backgroundColor;
+        x.style = 'background-color:#63ff8d';
+    }
+    iterateTableGetChecked();
+}
+function iterateTableAndUncheck(){
+    let table = document.getElementById('mainTable');
+    for (let row of table.rows)
+    {
+		if (row.className != 'null' & row.className != 'header'){
+            row.style = 'background-color:#FFFFFF'
+            row.className = 'null'
+        }
+    }
+}
+function iterateTableGetChecked(){
+    let table = document.getElementById('mainTable');
+    for (let row of table.rows)
+    {
+		if (row.className != 'null' & row.className != 'header'){
+            document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
+        }
+    }
+}
 
 (function ($) {
   // USE STRICT

@@ -12,10 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -33,6 +30,7 @@ public class LoginController {
 
     @Autowired
     private ItemRepository itemRepository;
+
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -86,14 +84,14 @@ public class LoginController {
         if (user == null) modelAndView.setViewName("login");
         else {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
-            myItems = getItemsNames(myItems, this.getItemsMap());
+            myItems = (getItemsNames(myItems, this.getItemsMap()));
             if (name != null && name != "") {
-                myItems = getByName(myItems, name);
+                myItems = (getByName(myItems, name));
             }
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("test", myItems.get(0).getName());
-            System.out.println(myItems.get(0).getName());
+            //System.out.println(myItemList.get(0).getName());
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -116,7 +114,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    public Map<Integer, String> getItemsMap(){
+    public Map<Integer, String> getItemsMap() {
         List<Item> items = itemRepository.findAll();
         Map<Integer, String> itemMap = new HashMap<>();
         for (Item item : items) {
@@ -135,7 +133,8 @@ public class LoginController {
     public static List<MyItem> getByName(List<MyItem> itemList, String name) {
         return itemList.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
     }
-    public void getQuantityOfItems(List<MyItem> myItems){
+
+    public void getQuantityOfItems(List<MyItem> myItems) {
         for (MyItem myItem : myItems) {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
             myItem.setQuantInTransport(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));

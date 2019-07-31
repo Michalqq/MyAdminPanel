@@ -166,21 +166,24 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="table-responsive table--no-card m-b-20">
-                                <table class="table table-bordered table-striped table-sm">
+                                <table class="table table-bordered table-striped table-sm" id="mainTable">
                                     <thead class="thead-dark">
                                     <tr>
                                         <th>Nazwa</th>
                                         <th>Cena zakupu</th>
                                         <th>Data zakupu</th>
                                         <th>Cena sprzedaży</th>
+                                        <th>Uwagi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="myItem: ${myBasket}">
+                                    <tr th:each="myItem: ${myBasket}" class="" onclick="changeRowColorOnTable(this)">
                                         <td th:text="${myItem.name}"></td>
                                         <td th:text="${myItem.buyPrice}"></td>
                                         <td th:text="${myItem.buyDate}"></td>
-                                        <td th:text="${myItem.sellPrice}"></td>
+                                        <td><input class="form-control" name="sellPriceInput" type="number"
+                                                    placeholder="Sell price" th:value="${myItem.sellPrice}"></td>
+                                        <td th:text="${myItem.notes}"></td>
                                     </tr>
 
                                     </tbody>
