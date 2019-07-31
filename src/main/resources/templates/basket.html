@@ -84,12 +84,12 @@
                         <a href="index">
                             <i class="fas fa-home"></i>Main</a>
                     </li>
-                    <li class="active has-sub">
-                        <a class="js-arrow" href="delivery">
+                    <li>
+                        <a href="delivery">
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
-                    <li>
-                        <a href="basket">
+                    <li class="active has-sub">
+                        <a class="js-arrow" href="basket">
                             <i class="fas fa-shopping-basket"></i>Basket</a>
                     </li>
                 </ul>
@@ -170,17 +170,17 @@
                                     <thead class="thead-dark">
                                     <tr>
                                         <th>Nazwa</th>
-                                        <th>Ilosc</th>
                                         <th>Cena zakupu</th>
                                         <th>Data zakupu</th>
+                                        <th>Cena sprzedaży</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="myItem: ${myItems}">
+                                    <tr th:each="myItem: ${myBasket}">
                                         <td th:text="${myItem.name}"></td>
-                                        <td th:text="${myItem.quantity}"></td>
                                         <td th:text="${myItem.buyPrice}"></td>
                                         <td th:text="${myItem.buyDate}"></td>
+                                        <td th:text="${myItem.sellPrice}"></td>
                                     </tr>
 
                                     </tbody>

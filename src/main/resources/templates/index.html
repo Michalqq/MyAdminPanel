@@ -107,6 +107,10 @@
                         <a href="delivery">
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
+                    <li>
+                        <a href="basket">
+                            <i class="fas fa-shopping-basket"></i>Basket</a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -126,7 +130,7 @@
                             <button class="au-btn--submit" type="submit">
                                 <i class="zmdi zmdi-search"></i>
                             </button>
-                            <div class="header-button">
+                            <div class="header-button text-right">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
@@ -184,7 +188,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="myItem: ${myItems}">
-                                        <td style="width:60%" th:text="${myItem.name}"></td>
+                                        <td style="width:60%" th:text="${myItem.name}", th:value="${myItem.id}"></td>
                                         <td style="width:15%" th:text="${myItem.buyPrice}"></td>
                                         <td style="width:5%" th:text="${myItem.quantity}"></td>
                                         <td style="width:12%" th:text="${myItem.buyDate}"></td>
@@ -205,7 +209,7 @@
                                 <br>
                             </div>
                             <div class="overview-item overview-item--c1">
-                                <form action="/sell#" method="POST">
+                                <form action="/sell#" modelAttribute="${test}" method="POST">
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-tag"></i></span>
                                         <input class="form-control" name="sellPriceInput" type="number"

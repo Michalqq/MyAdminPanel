@@ -78,35 +78,6 @@ public class LoginController {
         return modelAndView;
     }
 
-//    @RequestMapping("/")
-//    public ModelAndView findByName(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
-//        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
-//        List<MyItem> myItems = myItemRepository.findBySellPriceIsNullAndDeliveredToPolandIs(1);
-//        List<MyItem> myItems2 = new ArrayList<>();
-//        int checkpoint = 0;
-//        for (MyItem myItem : myItems) {
-//            checkpoint = 0;
-//            myItem.setQuantity(1);
-//            for (Item item : items) {
-//                if (item.getId() == myItem.getItemId() && item.getName().contains(name)) myItem.setName(item.getName());
-//            }
-//            for (MyItem uniqueItems : myItems2) {
-//                if (uniqueItems.getItemId() == myItem.getItemId()) {
-//                    checkpoint = 1;
-//                    uniqueItems.addQuantity();
-//                }
-//            }
-//            if (checkpoint == 0 && myItem.getName() != null) {
-//                myItems2.add(myItem);
-//            }
-//        }
-//        modelAndView = new ModelAndView();
-//        modelAndView.addObject("myItems", myItems2);
-//        modelAndView.setViewName("index");
-//        return modelAndView;
-//    }
-
-
     @RequestMapping(value = {"/", "/index", "/sell"}, method = RequestMethod.GET)
     public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
         ModelAndView modelAndView = new ModelAndView();
@@ -114,16 +85,15 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            List<MyItem> myItems = myItemRepository.findItemsOnStock(1);
+            List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
             myItems = getItemsNames(myItems, this.getItemsMap());
             if (name != null && name != "") {
                 myItems = getByName(myItems, name);
             }
-            for (MyItem myItem : myItems) {
-                myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
-                myItem.setQuantInTransport(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
-            }
+            this.getQuantityOfItems(myItems);
             modelAndView.addObject("myItems", myItems);
+            modelAndView.addObject("test", myItems.get(0).getName());
+            System.out.println(myItems.get(0).getName());
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -147,7 +117,7 @@ public class LoginController {
     }
 
     public Map<Integer, String> getItemsMap(){
-        List<Item> items = itemRepository.findAll(); //TODO let's refactor below code
+        List<Item> items = itemRepository.findAll();
         Map<Integer, String> itemMap = new HashMap<>();
         for (Item item : items) {
             itemMap.put(item.getId(), item.getName());
@@ -164,7 +134,12 @@ public class LoginController {
 
     public static List<MyItem> getByName(List<MyItem> itemList, String name) {
         return itemList.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
-
+    }
+    public void getQuantityOfItems(List<MyItem> myItems){
+        for (MyItem myItem : myItems) {
+            myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
+            myItem.setQuantInTransport(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
+        }
     }
 
 

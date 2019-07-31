@@ -3,9 +3,8 @@ package myapp.MyAdminPanel.model;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @Entity
@@ -66,7 +65,7 @@ public class MyItem {
         this.quantity = quantity;
         this.buyPrice = buyPrice;
         this.buyDate = buyDate;
-        this.itemId = itemId;
+        //this.itemId = itemId;
     }
 
     public MyItem(Double buyPrice, Double sellPrice, String buyDate, String sellDate, Double cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, LocalDateTime lastActionDate, String notes) {
@@ -88,6 +87,7 @@ public class MyItem {
     public void addQuantity() {
         this.quantity++;
     }
+
     public int getQuantInTransport() {
         return quantInTransport;
     }
@@ -95,6 +95,7 @@ public class MyItem {
     public void setQuantInTransport(int quantInTransport) {
         this.quantInTransport = quantInTransport;
     }
+
     public int getQuantity() {
         return quantity;
     }
@@ -192,7 +193,6 @@ public class MyItem {
     }
 
     public void setNotes(String notes) {
-
         this.notes = notes;
     }
 }

@@ -17,7 +17,7 @@ public class Basket {
     private String name;
     private List<MyItem> myItemList = new ArrayList<>();
 
-    public void addItemToMyList(Optional<MyItem> myItem) {
+    public void add(Optional<MyItem> myItem) {
         if (myItem.isPresent()) myItemList.add(myItem.get());
     }
 
