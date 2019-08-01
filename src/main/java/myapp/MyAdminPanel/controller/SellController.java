@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,17 +30,18 @@ public class SellController {
     @Autowired
     private Basket basket;
 
-    @RequestMapping(value = {"/sell"},params = "sell", method = RequestMethod.POST)
-    public ModelAndView sell(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
+    @RequestMapping(value = {"/sell"}, params = "sell", method = RequestMethod.POST)
+    public ModelAndView sellItem(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
                              @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                              @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
-                             @RequestParam(name = "note", defaultValue = "") String note) {
+                             @RequestParam(name = "note", defaultValue = "") String note,
+                             @RequestParam(name = "checkedItemId") int itemId) {
         ModelAndView modelAndView = new ModelAndView();
-        Optional<MyItem> myItemFromDB = myItemRepository.findById(343);
+        Optional<MyItem> myItemFromDB = myItemRepository.findById(itemId);
         if (saveSellToDb(myItemFromDB, commission, sellPrice, note, cashOnDelivery)) {
             modelAndView.addObject("SellInfo", "Updated sell price for:" + myItemFromDB.get().getName());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
 
@@ -49,6 +51,7 @@ public class SellController {
             myItemFromDB.get().setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
             myItemFromDB.get().setLastActionDate(LocalDateTime.now().plusHours(2));
             myItemFromDB.get().setNotes(note);
+            myItemFromDB.get().setDeliveredToPoland(3);
             if (cashOnDelivery != null && cashOnDelivery != 0) {
                 myItemFromDB.get().setCashOnDelivery(cashOnDelivery);
                 myItemFromDB.get().setDeliveredToPoland(2);
@@ -60,38 +63,100 @@ public class SellController {
             return false;
         }
     }
+
+    public boolean setDeliveredStatus(MyItem myItemFromDB, int status) {
+        myItemFromDB.setDeliveredToPoland(status);
+        myItemRepository.save(myItemFromDB);
+        return true;
+    }
+
+    public boolean clearSellPriceAndDate(MyItem myItemFromDB) {
+        myItemFromDB.setDeliveredToPoland(1);
+        myItemFromDB.setSellDate(null);
+        myItemFromDB.setSellPrice(null);
+        myItemRepository.save(myItemFromDB);
+        return true;
+    }
+
     @RequestMapping(value = {"/sell"}, params = "add", method = RequestMethod.POST)
-    public ModelAndView basket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
+    public ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
                                @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                                @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                                @RequestParam(name = "note", defaultValue = "") String note,
-                               @RequestParam(name = "checkedItemId") int itemId)
-                               {
+                               @RequestParam(name = "checkedItemId") int itemId) {
         ModelAndView modelAndView = new ModelAndView();
         Optional<MyItem> item = myItemRepository.findById(itemId);
         if (saveSellToDb(item, commission, sellPrice, note, cashOnDelivery)) {
-            item.get().setName("zawieszenie zawieszenie test test");
             basket.add(item);
+            getItemsNames(basket.getMyItemList(), getItemsMap());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
         modelAndView.addObject("SellInfo", basket.getMyItemList().size());
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("redirect:/index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/remove"}, params = "remove", method = RequestMethod.POST)
+    public ModelAndView removeItemFromBasket(@RequestParam(name = "removeId") int itemId) {
+        ModelAndView modelAndView = new ModelAndView();
+        for (int i = 0; i < basket.getMyItemList().size(); i++) {
+            if (basket.getMyItemList().get(i).getId() == itemId) {
+                clearSellPriceAndDate(basket.getMyItemList().get(i));
+                basket.getMyItemList().remove(i);
+            }
+        }
+        modelAndView.setViewName("redirect:/basket");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/basket"}, params = "clearBasket", method = RequestMethod.POST)
+    public ModelAndView clearBasket() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/index");
+        for (int i = 0; i < basket.getMyItemList().size(); i++) {
+            clearSellPriceAndDate(basket.getMyItemList().get(i));
+        }
+        basket.getMyItemList().clear();
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/delivery"}, params = "confirmDelivery", method = RequestMethod.POST)
+    public ModelAndView setQuantityOfDelivered(@RequestParam(name = "checkedItemId") int itemId,
+                               @RequestParam(name = "quantityDelivered") int quantity) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<MyItem> items = myItemRepository.findItemInTransportByItemId(itemId);
+        for (int i = 0; i < quantity; i++) {
+            setDeliveredStatus(items.get(i), 1);
+        }
+        modelAndView.setViewName("redirect:/delivery");
         return modelAndView;
     }
 
     @RequestMapping(value = {"/basket"}, method = RequestMethod.GET)
-    public ModelAndView login() {
+    public ModelAndView getBasket() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("myBasket", basket.getMyItemList());
+        if (basket.getMyItemList().size() > 0) {
+            modelAndView.addObject("cashOnDelivery", basket.getMyItemList().get(0).getCashOnDelivery());
+            modelAndView.addObject("note", basket.getMyItemList().get(0).getNotes());
+        }
         modelAndView.setViewName("basket");
         return modelAndView;
     }
-    public Map<Integer, String> getItemsMap(){
+
+    public Map<Integer, String> getItemsMap() {
         List<Item> items = itemRepository.findAll();
         Map<Integer, String> itemMap = new HashMap<>();
         for (Item item : items) {
             itemMap.put(item.getId(), item.getName());
         }
         return itemMap;
+    }
+
+    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
+        for (MyItem myItem : itemList) {
+            myItem.setName(itemMap.get(myItem.getItemId()));
+        }
+        return itemList;
     }
 
 }

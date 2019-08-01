@@ -62,7 +62,7 @@
                     </li>
                     <li class="active has-sub">
                         <a href="delivery">
-                            <i class="fas fa-truck"></i>In delivery</a>
+                            <i class="fas fa-truck"></i>Basket</a>
                     </li>
                 </ul>
             </div>
@@ -156,7 +156,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="overview-wrap">
-                                <h2 class="title-1 m-b-25">In Transport</h2>
+                                <h2 class="title-1 m-b-25">Basket</h2>
                                 <button class="au-btn au-btn-icon au-btn--blue">
                                     <i class="zmdi zmdi-plus"></i>add item
                                 </button>
@@ -164,30 +164,87 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-8">
                             <div class="table-responsive table--no-card m-b-20">
-                                <table class="table table-bordered table-striped table-sm" id="mainTable">
-                                    <thead class="thead-dark">
-                                    <tr>
-                                        <th>Nazwa</th>
-                                        <th>Cena zakupu</th>
-                                        <th>Data zakupu</th>
-                                        <th>Cena sprzedaży</th>
-                                        <th>Uwagi</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="myItem: ${myBasket}" class="" onclick="changeRowColorOnTable(this)">
-                                        <td th:text="${myItem.name}"></td>
-                                        <td th:text="${myItem.buyPrice}"></td>
-                                        <td th:text="${myItem.buyDate}"></td>
-                                        <td><input class="form-control" name="sellPriceInput" type="number"
-                                                    placeholder="Sell price" th:value="${myItem.sellPrice}"></td>
-                                        <td th:text="${myItem.notes}"></td>
-                                    </tr>
+                                <form action="/remove" method="POST">
+                                    <table class="table table-bordered table-striped table-sm" id="mainTable">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th>Nazwa</th>
+                                            <th>Cena zakupu</th>
+                                            <th>Data zakupu</th>
+                                            <th>Cena sprzedaży</th>
+                                            <th>Kwota pobrania</th>
+                                            <th>Uwagi</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="myItem: ${myBasket}" class="null">
+                                            <td th:text="${myItem.name}"></td>
+                                            <td th:text="${myItem.buyPrice}"></td>
+                                            <td th:text="${myItem.buyDate}"></td>
+                                            <td style="width:12%"><input class="form-control" name="sellPriceInput"
+                                                                         type="number"
+                                                                         th:value="${myItem.sellPrice}"></td>
+                                            <td style="width:12%"><input class="form-control" name="cashOnDelivery"
+                                                                         type="number"
+                                                                         th:value="${cashOnDelivery}">
+                                            </td>
+                                            <td th:text="${note}"></td>
+                                            <td>
+                                                <div class="table-data-feature">
+                                                    <input name="removeId" th:value="${myItem.id}" hidden>
+                                                    <button th:name="remove" class="item"
+                                                            data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <i class="zmdi zmdi-delete"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="overview-item overview-item--c2">
+                                <form action="/basket" method="POST">
+                                    <h5>Kwota pobrania:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i
+                                                class="fas fa-truck"></i></span>
+                                        <input class="form-control" th:value="${cashOnDelivery}" name="cashOnDelivery"
+                                               type="number"
+                                               id="cashOnDelivery" placeholder="Cash on delivery">
+                                    </div>
+                                    <br>
+                                    <h5>Notatka:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="far fa-sticky-note"></i></span>
+                                        <input class="form-control" name="note" type="text"
+                                               placeholder="Note" th:value="${note}">
+                                    </div>
+                                    <br>
+                                    <div class="input-footer">
+                                        <button name="sell" value="sell" type="submit"
+                                                class="btn btn-primary btn-md">
+                                            <i class="far fa-check-circle"></i> Sell
+                                        </button>
+                                        <div class="pull-right">
+                                            <button name="clearBasket" value="clearBasket" type="submit"
+                                                    class="btn btn-warning btn-md">
+                                                <i class="fas fa-minus-circle"></i> Delete basket
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

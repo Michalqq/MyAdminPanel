@@ -13,6 +13,11 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     List<MyItem> findBySellPriceIsNullAndDeliveredToPolandIs(int deliveryStatus);
 
+    @Query(value = "FROM MyItem "+
+            "WHERE deliveredToPoland is null AND itemId = :itemId " +
+            "ORDER BY lastActionDate ASC")
+    List<MyItem> findItemInTransportByItemId(@Param("itemId") int itemId);
+
 //   @Query(value = "FROM MyItem JOIN Item WHERE sellPrice is null and MyItem.itemId = Item.id AND deliveredToPoland = :deliveredToPoland " +
 //            "GROUP BY itemId")
 //    List<MyItem> findBySellPriceInNullWithItemNames(@Param("deliveredToPoland") int deliveredToPoland);

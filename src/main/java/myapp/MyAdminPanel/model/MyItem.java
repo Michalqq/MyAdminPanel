@@ -65,7 +65,7 @@ public class MyItem {
         this.quantity = quantity;
         this.buyPrice = buyPrice;
         this.buyDate = buyDate;
-        //this.itemId = itemId;
+        this.itemId = itemId;
     }
 
     public MyItem(Double buyPrice, Double sellPrice, String buyDate, String sellDate, Double cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, LocalDateTime lastActionDate, String notes) {
