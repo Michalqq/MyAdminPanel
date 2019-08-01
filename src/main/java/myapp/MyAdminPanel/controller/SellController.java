@@ -32,10 +32,10 @@ public class SellController {
 
     @RequestMapping(value = {"/sell"}, params = "sell", method = RequestMethod.POST)
     public ModelAndView sellItem(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-                             @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
-                             @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
-                             @RequestParam(name = "note", defaultValue = "") String note,
-                             @RequestParam(name = "checkedItemId") int itemId) {
+                                 @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
+                                 @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
+                                 @RequestParam(name = "note", defaultValue = "") String note,
+                                 @RequestParam(name = "checkedItemId") int itemId) {
         ModelAndView modelAndView = new ModelAndView();
         Optional<MyItem> myItemFromDB = myItemRepository.findById(itemId);
         if (saveSellToDb(myItemFromDB, commission, sellPrice, note, cashOnDelivery)) {
@@ -64,6 +64,21 @@ public class SellController {
         }
     }
 
+    public boolean saveSellToDb(MyItem myItemFromDB, int commission, Double sellPrice, String note, Double cashOnDelivery) {
+        myItemFromDB.setSellPrice(sellPrice - (sellPrice * commission * 0.01));
+        myItemFromDB.setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
+        myItemFromDB.setLastActionDate(LocalDateTime.now().plusHours(2));
+        myItemFromDB.setNotes(note);
+        myItemFromDB.setDeliveredToPoland(3);
+        if (cashOnDelivery != null && cashOnDelivery != 0) {
+            myItemFromDB.setCashOnDelivery(cashOnDelivery);
+            myItemFromDB.setDeliveredToPoland(2);
+            myItemFromDB.setIfCashOnDelivery(1);
+        }
+        myItemRepository.save(myItemFromDB);
+        return true;
+    }
+
     public boolean setDeliveredStatus(MyItem myItemFromDB, int status) {
         myItemFromDB.setDeliveredToPoland(status);
         myItemRepository.save(myItemFromDB);
@@ -80,10 +95,10 @@ public class SellController {
 
     @RequestMapping(value = {"/sell"}, params = "add", method = RequestMethod.POST)
     public ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-                               @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
-                               @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
-                               @RequestParam(name = "note", defaultValue = "") String note,
-                               @RequestParam(name = "checkedItemId") int itemId) {
+                                    @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
+                                    @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
+                                    @RequestParam(name = "note", defaultValue = "") String note,
+                                    @RequestParam(name = "checkedItemId") int itemId) {
         ModelAndView modelAndView = new ModelAndView();
         Optional<MyItem> item = myItemRepository.findById(itemId);
         if (saveSellToDb(item, commission, sellPrice, note, cashOnDelivery)) {
@@ -108,7 +123,31 @@ public class SellController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/basket"}, params = "clearBasket", method = RequestMethod.POST)
+    @RequestMapping(value = {"/basket"}, method = RequestMethod.GET)
+    public ModelAndView getBasket() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("myBasket", basket.getMyItemList());
+        if (basket.getMyItemList().size() > 0) {
+            modelAndView.addObject("cashOnDelivery", basket.getMyItemList().get(0).getCashOnDelivery());
+            modelAndView.addObject("note", basket.getMyItemList().get(0).getNotes());
+        }
+        modelAndView.setViewName("basket");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/basket", params = "sell", method = RequestMethod.POST)
+    public ModelAndView sellItemsInBasket(@RequestParam(name = "note", defaultValue = "") String note,
+                                          @RequestParam(name = "cashOnDelivery", defaultValue = "") Double cashOnDelivery) {
+        ModelAndView modelAndView = new ModelAndView();
+        for (MyItem item : basket.getMyItemList()) {
+            saveSellToDb(item, 0, item.getSellPrice(), note, cashOnDelivery);
+        }
+        modelAndView.setViewName("redirect:/basket");
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value = "/basket", params = "clearBasket", method = RequestMethod.POST)
     public ModelAndView clearBasket() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/index");
@@ -119,27 +158,16 @@ public class SellController {
         return modelAndView;
     }
 
+
     @RequestMapping(value = {"/delivery"}, params = "confirmDelivery", method = RequestMethod.POST)
     public ModelAndView setQuantityOfDelivered(@RequestParam(name = "checkedItemId") int itemId,
-                               @RequestParam(name = "quantityDelivered") int quantity) {
+                                               @RequestParam(name = "quantityDelivered") int quantity) {
         ModelAndView modelAndView = new ModelAndView();
         List<MyItem> items = myItemRepository.findItemInTransportByItemId(itemId);
         for (int i = 0; i < quantity; i++) {
             setDeliveredStatus(items.get(i), 1);
         }
         modelAndView.setViewName("redirect:/delivery");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = {"/basket"}, method = RequestMethod.GET)
-    public ModelAndView getBasket() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("myBasket", basket.getMyItemList());
-        if (basket.getMyItemList().size() > 0) {
-            modelAndView.addObject("cashOnDelivery", basket.getMyItemList().get(0).getCashOnDelivery());
-            modelAndView.addObject("note", basket.getMyItemList().get(0).getNotes());
-        }
-        modelAndView.setViewName("basket");
         return modelAndView;
     }
 
