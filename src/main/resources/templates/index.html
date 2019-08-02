@@ -111,6 +111,24 @@
                         <a href="basket">
                             <i class="fas fa-shopping-basket"></i>Basket</a>
                     </li>
+                    <li>
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-list-alt"></i>History</a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
+                                <a href="/history/5">All</a>
+                            </li>
+                            <li>
+                                <a href="/history/3">Sell</a>
+                            </li>
+                            <li>
+                                <a href="/history/0">Order in transport</a>
+                            </li>
+                            <li>
+                                <a href="/history/1">Delivered to Pl</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -201,7 +219,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4" >
                             <div class="col-md-12">
                             </div>
                             <div class="overview-wrap">
@@ -210,7 +228,7 @@
                                 </button>
                             </div>
                             <br>
-                            <div class="overview-item overview-item--c1">
+                            <div class="overview-item overview-item--c1"  style="position:fixed">
                                 <form action="/sell#" modelAttribute="myItemList" method="POST">
                                     <div class="input-group col-sm-12">
                                         <input id="checkedItemId" name="checkedItemId" hidden required>

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
             "WHERE deliveredToPoland is null AND itemId = :itemId " +
             "ORDER BY lastActionDate ASC")
     List<MyItem> findItemInTransportByItemId(@Param("itemId") int itemId);
+
+    List<MyItem> findAllByLastActionDateBetween(String startDate, String stopDate);
 
 //   @Query(value = "FROM MyItem JOIN Item WHERE sellPrice is null and MyItem.itemId = Item.id AND deliveredToPoland = :deliveredToPoland " +
 //            "GROUP BY itemId")

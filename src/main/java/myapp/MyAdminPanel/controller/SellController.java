@@ -7,6 +7,7 @@ import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +50,7 @@ public class SellController {
         if (myItemFromDB.isPresent()) {
             myItemFromDB.get().setSellPrice(sellPrice - (sellPrice * commission * 0.01));
             myItemFromDB.get().setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-            myItemFromDB.get().setLastActionDate(LocalDateTime.now().plusHours(2));
+            //myItemFromDB.get().setLastActionDate(LocalDateTime.now().plusHours(2)); //ToDo
             myItemFromDB.get().setNotes(note);
             myItemFromDB.get().setDeliveredToPoland(3);
             if (cashOnDelivery != null && cashOnDelivery != 0) {
@@ -67,7 +68,7 @@ public class SellController {
     public boolean saveSellToDb(MyItem myItemFromDB, int commission, Double sellPrice, String note, Double cashOnDelivery) {
         myItemFromDB.setSellPrice(sellPrice - (sellPrice * commission * 0.01));
         myItemFromDB.setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-        myItemFromDB.setLastActionDate(LocalDateTime.now().plusHours(2));
+        //myItemFromDB.setLastActionDate(LocalDateTime.now().plusHours(2)); //todo
         myItemFromDB.setNotes(note);
         myItemFromDB.setDeliveredToPoland(3);
         if (cashOnDelivery != null && cashOnDelivery != 0) {
@@ -89,6 +90,8 @@ public class SellController {
         myItemFromDB.setDeliveredToPoland(1);
         myItemFromDB.setSellDate(null);
         myItemFromDB.setSellPrice(null);
+        myItemFromDB.setIfCashOnDelivery(null);
+        myItemFromDB.setCashOnDelivery(null);
         myItemRepository.save(myItemFromDB);
         return true;
     }
@@ -110,10 +113,11 @@ public class SellController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/remove"}, params = "remove", method = RequestMethod.POST)
-    public ModelAndView removeItemFromBasket(@RequestParam(name = "removeId") int itemId) {
+    @RequestMapping(value = {"/remove/{itemId}"}, params = "remove", method = RequestMethod.POST)
+    public ModelAndView removeItemFromBasket(@PathVariable int itemId) {
         ModelAndView modelAndView = new ModelAndView();
         for (int i = 0; i < basket.getMyItemList().size(); i++) {
+            System.out.println(itemId);
             if (basket.getMyItemList().get(i).getId() == itemId) {
                 clearSellPriceAndDate(basket.getMyItemList().get(i));
                 basket.getMyItemList().remove(i);
@@ -142,9 +146,9 @@ public class SellController {
         for (MyItem item : basket.getMyItemList()) {
             saveSellToDb(item, 0, item.getSellPrice(), note, cashOnDelivery);
         }
+        basket.getMyItemList().clear();
         modelAndView.setViewName("redirect:/basket");
         return modelAndView;
-
     }
 
     @RequestMapping(value = "/basket", params = "clearBasket", method = RequestMethod.POST)

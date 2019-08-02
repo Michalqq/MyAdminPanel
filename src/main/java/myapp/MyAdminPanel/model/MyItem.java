@@ -22,6 +22,9 @@ public class MyItem {
     private int quantity;
 
     @Transient
+    private double profit;
+
+    @Transient
     private int quantInTransport;
 
     @Column(name = "Item_ID")
@@ -49,7 +52,7 @@ public class MyItem {
     private Integer deliveredToPoland;
 
     @Column(name = "Last_action_date")
-    private LocalDateTime lastActionDate;
+    private String lastActionDate;
 
     @Column(name = "Notes")
     private String notes;
@@ -68,7 +71,7 @@ public class MyItem {
         this.itemId = itemId;
     }
 
-    public MyItem(Double buyPrice, Double sellPrice, String buyDate, String sellDate, Double cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, LocalDateTime lastActionDate, String notes) {
+    public MyItem(Double buyPrice, Double sellPrice, String buyDate, String sellDate, Double cashOnDelivery, Integer ifCashOnDelivery, Integer deliveredToPoland, String lastActionDate, String notes) {
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
         this.buyDate = buyDate;
@@ -180,11 +183,11 @@ public class MyItem {
         this.deliveredToPoland = deliveredToPoland;
     }
 
-    public LocalDateTime getLastActionDate() {
+    public String getLastActionDate() {
         return lastActionDate;
     }
 
-    public void setLastActionDate(LocalDateTime lastActionDate) {
+    public void setLastActionDate(String lastActionDate) {
         this.lastActionDate = lastActionDate;
     }
 
@@ -194,5 +197,13 @@ public class MyItem {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
     }
 }
