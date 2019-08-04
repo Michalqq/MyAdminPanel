@@ -1,6 +1,8 @@
 package myapp.MyAdminPanel.controller;
 
+import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
+import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,9 @@ import javax.jws.WebParam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.DoubleUnaryOperator;
 
 @Controller
@@ -20,6 +24,10 @@ public class HistoryController {
 
     @Autowired
     MyItemRepository myItemRepository;
+
+    @Autowired
+    ItemRepository itemRepository;
+
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
@@ -37,6 +45,7 @@ public class HistoryController {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
         }
         this.countProfit(myItems);
+        getItemsNames(myItems, this.getItemsMap());
         modelAndView.addObject("myItems", myItems);
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
@@ -62,10 +71,24 @@ public class HistoryController {
 
     private void countProfit(List<MyItem> myItems) {
         for (MyItem item : myItems) {
-            if (item.getSellPrice() > 0) {
-                double profit = Math.round((item.getSellPrice() - item.getBuyPrice()) / (item.getBuyPrice() * 0.01));
-                item.setProfit(profit);
-            } else item.setProfit(0.0);
+            if (item.getSellPrice() == null || item.getBuyPrice() == null || item.getBuyPrice()==0) continue;
+            double profit = Math.round((item.getSellPrice() - item.getBuyPrice()) / (item.getBuyPrice() * 0.01));
+            item.setProfit(profit);
+        }
+    }
+
+    public Map<Integer, String> getItemsMap() {
+        List<Item> items = itemRepository.findAll();
+        Map<Integer, String> itemMap = new HashMap<>();
+        for (Item item : items) {
+            itemMap.put(item.getId(), item.getName());
+        }
+        return itemMap;
+    }
+
+    public static void getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
+        for (MyItem myItem : itemList) {
+            myItem.setName(itemMap.get(myItem.getItemId()));
         }
     }
 }
