@@ -85,11 +85,8 @@ public class LoginController {
         else {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
             myItems = (getItemsNames(myItems, this.getItemsMap()));
-            System.out.println(name);
-            System.out.println(myItems.size());
-            if (name != null && name != "") {
-                //myItems = (getByName(myItems, name));
-                System.out.println("masakra");
+            if (name != null && !name.equals("")) {
+                myItems = (getByName(myItems, name));
             }
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("myItems", myItems);
@@ -105,9 +102,8 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         List<MyItem> myItems = myItemRepository.findItemsInTransport();
         myItems = getItemsNames(myItems, this.getItemsMap());
-        if (name != null && name != "") {
-            //myItems = getByName(myItems, name);
-            System.out.println("masakra");
+        if (name != null && !name.equals("")) {
+            myItems = getByName(myItems, name);
         }
         for (MyItem myItem : myItems) {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));

@@ -164,7 +164,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="col-md-12">
                                 <br>
                             </div>
@@ -173,14 +173,24 @@
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
                                         <input class="form-control" name="startDate" id="startDate" type="date"
-                                               required>
+                                               required th:value="${{startDate}}">
                                     </div>
                                     <br>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
                                         <input class="form-control" name="stopDate" id="stopDate" type="date"
-                                               required>
+                                               required th:value="${{stopDate}}">
                                     </div>
+                                    <br>
+                                    <div>
+                                        <select id="histStatus" name="histStatus">
+                                            <option value="4">Wszystko</option>
+                                            <option value="0">W transporcie</option>
+                                            <option value="1">W domu</option>
+                                            <option value="3">Sprzedane</option>
+                                        </select>
+                                    </div>
+                                    <br>
                                     <div class="input-footer">
                                         <button name="confirmDate" value="confirmDate" type="submit" class="btn btn-primary btn-md">
                                             <i class="fas fa-check-circle"></i>Show
@@ -194,9 +204,9 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-8">
-                            <div class="table-responsive table--no-card m-b-20">
-                                <table class="table table-bordered table-striped table-sm" id="mainTable">
+                        <div class="col-lg-9">
+                            <div class="table-responsive table--no-card m-b-15">
+                                <table class="table table-condensed-12 table-bordered table-striped table-sm" id="mainTable">
                                     <thead class="thead-dark">
                                     <tr>
                                         <th>Nazwa</th>

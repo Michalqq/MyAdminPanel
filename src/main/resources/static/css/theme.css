@@ -4217,6 +4217,16 @@ section {
     margin: 0;
 }
 
+.table-condensed-12{
+    font-size: 12px;
+}
+.table-condensed-14{
+    font-size: 14px;
+}
+.table-condensed-16{
+    font-size: 16px;
+}
+
 .table-responsive.table--no-card {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
