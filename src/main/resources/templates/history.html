@@ -35,7 +35,7 @@
 
 </head>
 
-<body class="animsition">
+<body class="animsition" onload="checkDate()">
 <div class="page-wrapper">
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">
@@ -156,7 +156,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="overview-wrap">
-                                <h2 class="title-1 m-b-25">History</h2>
+                                <h2 class="title-1 m-b-25">In Transport</h2>
                                 <button class="au-btn au-btn-icon au-btn--blue">
                                     <i class="zmdi zmdi-plus"></i>add item
                                 </button>
@@ -164,6 +164,36 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-lg-4">
+                            <div class="col-md-12">
+                                <br>
+                            </div>
+                            <div class="overview-item overview-item--c1">
+                                <form action="" method="GET">
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="startDate" id="startDate" type="date"
+                                               required>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="stopDate" id="stopDate" type="date"
+                                               required>
+                                    </div>
+                                    <div class="input-footer">
+                                        <button name="confirmDate" value="confirmDate" type="submit" class="btn btn-primary btn-md">
+                                            <i class="fas fa-check-circle"></i>Show
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
                         <div class="col-lg-8">
                             <div class="table-responsive table--no-card m-b-20">
                                 <table class="table table-bordered table-striped table-sm" id="mainTable">
@@ -180,49 +210,23 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="myItem: ${myItems}" class="null"
-                                        onclick="changeRowColorOnTable(this)">
-                                        <td style="display:none" th:text="${myItem.id}">
-                                        <td style="width:60%" th:text="${myItem.name}"></td>
-                                        <td style="width:" th:text="${myItem.buyPrice}"></td>
-                                        <td style="width:" th:text="${myItem.sellPrice}"></td>
-                                        <td style="width:" th:text="${myItem.cashOnDelivery}"></td>
-                                        <td style="width:" th:text="${myItem.profit}"></td>
-                                        <td style="width:" th:text="${myItem.buyDate}"></td>
-                                        <td style="width:" th:text="${myItem.sellDate}"></td>
-                                        <td style="width:" th:text="${myItem.note}"></td>
+                                    <tr th:each="myItem: ${myItems}" class="null" onclick="changeRowColorOnTable(this)">
+                                        <td style="display:none" th:text="${myItem.itemId}">
+                                        <td th:text="${myItem.name}"></td>
+                                        <td th:text="${myItem.buyPrice}"></td>
+                                        <td th:text="${myItem.sellPrice}"></td>
+                                        <td th:text="${myItem.cashOnDelivery}"></td>
+                                        <td th:text="${myItem.profit}"></td>
+                                        <td th:text="${myItem.buyDate}"></td>
+                                        <td th:text="${myItem.sellDate}"></td>
+                                        <td th:text="${myItem.notes}"></td>
                                     </tr>
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="col-md-12">
-                                <br>
-                            </div>
-                            <div class="overview-item overview-item--c1">
-                                <form action="/delivery" method="POST">
-                                    <div class="input-group col-sm-12">
-                                        <input id="checkedItemId" name="checkedItemId" hidden required>
-                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="quantityDelivered" type="number"
-                                               placeholder="Quantity" required>
-                                    </div>
-                                    <br>
-                                    <div class="input-footer">
-                                        <button name="confirmDelivery" value="confirmDelivery" type="submit" class="btn btn-primary btn-md">
-                                            <i class="fas fa-check-circle"></i>Confirm Delivery
-                                        </button>
-                                    </div>
-                                    <br>
-                                    <div class="col-sm-12">
-                                        <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
-                                    </div>
 
-                                </form>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -263,6 +267,7 @@
 
 <!-- Main JS-->
 <script src="js/main.js"></script>
+<script src="js/dateInHistory.js"></script>
 
 </body>
 

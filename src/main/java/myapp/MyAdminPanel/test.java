@@ -2,6 +2,7 @@ package myapp.MyAdminPanel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -13,7 +14,8 @@ public class test {
 
     public static void main(String[] args) {
         Date current = Calendar.getInstance().getTime();
-        System.out.println(current);
+        System.out.println(
+                DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
 
 
 

@@ -85,13 +85,15 @@ public class LoginController {
         else {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
             myItems = (getItemsNames(myItems, this.getItemsMap()));
+            System.out.println(name);
+            System.out.println(myItems.size());
             if (name != null && name != "") {
-                myItems = (getByName(myItems, name));
+                //myItems = (getByName(myItems, name));
+                System.out.println("masakra");
             }
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("test", myItems.get(0).getName());
-            //System.out.println(myItemList.get(0).getName());
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -104,7 +106,8 @@ public class LoginController {
         List<MyItem> myItems = myItemRepository.findItemsInTransport();
         myItems = getItemsNames(myItems, this.getItemsMap());
         if (name != null && name != "") {
-            myItems = getByName(myItems, name);
+            //myItems = getByName(myItems, name);
+            System.out.println("masakra");
         }
         for (MyItem myItem : myItems) {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
@@ -131,7 +134,11 @@ public class LoginController {
     }
 
     public static List<MyItem> getByName(List<MyItem> itemList, String name) {
-        return itemList.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+        if (name != null) {
+            return itemList.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+        } else {
+            return itemList;
+        }
     }
 
     public void getQuantityOfItems(List<MyItem> myItems) {

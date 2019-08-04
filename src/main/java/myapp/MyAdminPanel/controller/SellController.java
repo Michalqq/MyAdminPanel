@@ -42,6 +42,7 @@ public class SellController {
         if (saveSellToDb(myItemFromDB, commission, sellPrice, note, cashOnDelivery)) {
             modelAndView.addObject("SellInfo", "Updated sell price for:" + myItemFromDB.get().getName());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
+        modelAndView.addObject("SellInfo", "Sprzedano za: " + myItemFromDB.get().getSellPrice());
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -50,7 +51,7 @@ public class SellController {
         if (myItemFromDB.isPresent()) {
             myItemFromDB.get().setSellPrice(sellPrice - (sellPrice * commission * 0.01));
             myItemFromDB.get().setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-            //myItemFromDB.get().setLastActionDate(LocalDateTime.now().plusHours(2)); //ToDo
+            myItemFromDB.get().setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
             myItemFromDB.get().setNotes(note);
             myItemFromDB.get().setDeliveredToPoland(3);
             if (cashOnDelivery != null && cashOnDelivery != 0) {
@@ -68,7 +69,7 @@ public class SellController {
     public boolean saveSellToDb(MyItem myItemFromDB, int commission, Double sellPrice, String note, Double cashOnDelivery) {
         myItemFromDB.setSellPrice(sellPrice - (sellPrice * commission * 0.01));
         myItemFromDB.setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-        //myItemFromDB.setLastActionDate(LocalDateTime.now().plusHours(2)); //todo
+        myItemFromDB.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
         myItemFromDB.setNotes(note);
         myItemFromDB.setDeliveredToPoland(3);
         if (cashOnDelivery != null && cashOnDelivery != 0) {
@@ -109,6 +110,7 @@ public class SellController {
             getItemsNames(basket.getMyItemList(), getItemsMap());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
         modelAndView.addObject("SellInfo", basket.getMyItemList().size());
+        modelAndView.addObject("SellInfo", "Dodano do koszyka:");
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
