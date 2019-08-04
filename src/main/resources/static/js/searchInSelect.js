@@ -41,7 +41,7 @@ function keyControl(e, container) {
         }
     } else if (e.key == "Enter") {
         container.find("input").val(container.find("ul li.selected").text()).blur();
-        onSelect(container.find("ul li.selected").text())
+        onSelect(container.find("ul li.selected").value())
     }
 
     container.find("ul li.selected")[0].scrollIntoView({
@@ -50,7 +50,8 @@ function keyControl(e, container) {
 }
 
 function onSelect(val) {
-    //alert(val)
+    if(val.attr("id")=="item") document.getElementById("itemId").value = val.attr("name");
+    if(val.attr("id")=="seller") document.getElementById("sellerId").value = val.attr("name");
 }
 
 $(".searchable input").focus(function () {
@@ -66,7 +67,7 @@ $(".searchable input").blur(function () {
 
 $(document).on('click', '.searchable ul li', function () {
     $(this).closest(".searchable").find("input").val($(this).text()).blur();
-    onSelect($(this).text())
+    onSelect($(this))
 });
 
 $(".searchable ul li").hover(function () {

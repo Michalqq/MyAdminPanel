@@ -35,7 +35,7 @@
 
 </head>
 
-<body class="animsition" onload="checkDate()">
+<body class="animsition">
 <div class="page-wrapper">
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">
@@ -179,11 +179,12 @@
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
                                     <div class="col-lg-8">
+                                        <input id="itemId" name="itemId" hidden>
                                         <div class="searchable">
                                             <input type="text" placeholder="Search item to add"
                                                    onkeyup="filterFunction(this,event)">
-                                            <ul name="itemId" id="itemId">
-                                                <li th:each="item: ${Items}" th:value="${item.id}"
+                                            <ul>
+                                                <li th:each="item: ${Items}" id="item" th:name="${item.id}"
                                                     th:text="${item.name}"></li>
                                             </ul>
                                         </div>
@@ -202,11 +203,12 @@
                                                required>
                                     </div>
                                     <br>
+                                    <input name="sellerId" id="sellerId" hidden>
                                     <div class="searchable">
                                         <input type="text" placeholder="Search seller"
                                                onkeyup="filterFunction(this,event)">
-                                        <ul name="sellerId" id="sellerId">
-                                            <li th:each="seller: ${sellers}" th:value="${seller.id}"
+                                        <ul>
+                                            <li th:each="seller: ${sellers}" id="seller" th:name="${seller.id}"
                                                 th:text="${seller.sellerName}"></li>
                                         </ul>
                                     </div>

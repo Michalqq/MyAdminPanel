@@ -57,6 +57,9 @@ public class MyItem {
     @Column(name = "Notes")
     private String notes;
 
+    @Column(name = "seller_ID")
+    private int sellerId;
+
     public MyItem() {
     }
 
@@ -81,6 +84,14 @@ public class MyItem {
         this.deliveredToPoland = deliveredToPoland;
         this.lastActionDate = lastActionDate;
         this.notes = notes;
+    }
+
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
     }
 
     public Integer getId() {
