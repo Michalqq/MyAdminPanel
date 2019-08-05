@@ -1701,3 +1701,6 @@ function iterateTableGetChecked(){
   }
 
 })(jQuery);
+$(function () {
+  $("select").select2();
+});

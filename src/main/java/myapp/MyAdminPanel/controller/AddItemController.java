@@ -47,23 +47,19 @@ public class AddItemController {
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    String addNewItem(@RequestParam(value = "itemId", defaultValue = "") String itemId,
+    String addNewItem(@RequestParam(value = "itemId", defaultValue = "") int itemId,
                       @RequestParam(value = "buyPrice", defaultValue = "") double buyPrice,
                       @RequestParam(value = "quantity", defaultValue = "") int quantity,
-                      @RequestParam(value = "sellerId", defaultValue = "")
-                              String sellerId) {
+                      @RequestParam(value = "sellerId", defaultValue = "") int sellerId) {
 
-        System.out.println(itemId);
-        System.out.println(sellerId);
         for (int i = 0; i < quantity; i++) {
-//            MyItem myItem = new MyItem(); //todo check all variables
-//            myItem.setBuyPrice(buyPrice / quantity);
-//            myItem.setItemId(itemId);
-//            myItem.setSellerId(sellerId);
-//            myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-//            myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-
-            //myItemRepository.save(myItem);
+            MyItem myItem = new MyItem(); //todo check all variables
+            myItem.setBuyPrice(buyPrice / quantity);
+            myItem.setItemId(itemId);
+            myItem.setSellerId(sellerId);
+            myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
+            myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+            myItemRepository.save(myItem);
         }
         return "redirect:/additem";
     }

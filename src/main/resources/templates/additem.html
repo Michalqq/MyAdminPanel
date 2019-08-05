@@ -31,10 +31,9 @@
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
     <!--Search in select-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
 
 
@@ -185,8 +184,9 @@
                             </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
+                                    <h5>Wybierz towar:</h5>
                                     <div class="input-group col-sm-12">
-                                        <select class="form-control selectpicker" id="itemId" name="itemId" data-live-search="true">
+                                       <select class="form-control selectpicker" id="itemId" name="itemId" data-live-search="true" style="width:500px">
                                             <option th:each="item: ${Items}" th:value="${item.id}"
                                                     th:text="${item.name}"></option>
                                         </select>
@@ -206,8 +206,9 @@
                                                required>
                                     </div>
                                     <br>
+                                    <h5>Wybierz sprzedawcę:</h5>
                                     <div class="input-group">
-                                        <select class="form-control" id="sellerId" name="sellerId" data-live-search="true">
+                                        <select class="form-control selectpicker" id="sellerId" name="sellerId" data-live-search="true">
                                             <option th:each="seller: ${sellers}" th:value="${seller.id}"
                                                     th:text="${seller.sellerName}"></option>
                                         </select>
