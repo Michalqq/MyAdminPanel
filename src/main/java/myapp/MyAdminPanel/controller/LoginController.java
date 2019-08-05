@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.controller;
 
 
+import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.model.User;
@@ -31,6 +32,8 @@ public class LoginController {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private Basket basket;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login() {
@@ -89,6 +92,7 @@ public class LoginController {
                 myItems = (getByName(myItems, name));
             }
             this.getQuantityOfItems(myItems);
+            modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("test", myItems.get(0).getName());
             modelAndView.setViewName("index");
@@ -109,6 +113,7 @@ public class LoginController {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
         }
         modelAndView.addObject("myItems", myItems);
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("delivery");
         return modelAndView;
     }

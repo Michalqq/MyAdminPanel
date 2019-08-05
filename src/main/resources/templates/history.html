@@ -89,8 +89,7 @@
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
                     <li>
-                        <a href="basket">
-                            <i class="fas fa-shopping-basket"></i>Basket</a>
+                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}" /></a>
                     </li>
                     <li class="active has-sub">
                         <a class="js-arrow" href="history">
@@ -178,16 +177,16 @@
                             </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="GET">
+                                    <h5>Start date:</h5><br>
                                     <div class="input-group col-sm-12">
-                                        <h5>Start date:</h5><br>
-                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <span class="input-group-addon"><i class="far fa-calendar"></i></i></span>
                                         <input class="form-control" name="startDate" id="startDate" type="date"
                                                required th:value="${{startDate}}">
                                     </div>
                                     <br>
+                                    <h5>Stop date:</h5>
                                     <div class="input-group col-sm-12">
-                                        <h5>Stop date:</h5><br>
-                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <span class="input-group-addon"><i class="fas fa-calendar"></i></i></span>
                                         <input class="form-control" name="stopDate" id="stopDate" type="date"
                                                required th:value="${{stopDate}}">
                                     </div>

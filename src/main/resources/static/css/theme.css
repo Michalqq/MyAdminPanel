@@ -1179,7 +1179,7 @@ section {
     position: fixed;
     top: 0;
     right: 0;
-    left: 200px;
+    left: 210px;
     height: 75px;
     z-index: 3;
 }
@@ -1567,7 +1567,7 @@ section {
 }
 
 .menu-sidebar {
-    width: 200px;
+    width: 210px;
     position: fixed;
     left: 0;
     top: 0;
@@ -14650,9 +14650,10 @@ section {
     padding-left: 30px;
 }
 div.searchable {
-    width: 500px;
+    width:500px;
     float: left;
     margin: 0 15px;
+    color: black;
 }
 
 .searchable input {
@@ -14682,7 +14683,7 @@ div.searchable {
     border-radius: 0 0 5px 5px;
     border: 1px solid #add8e6;
     border-top: none;
-    max-height: 350px;
+    max-height: 150px;
     margin: 0;
     overflow-y: scroll;
     overflow-x: hidden;

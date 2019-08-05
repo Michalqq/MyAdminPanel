@@ -1,5 +1,6 @@
 package myapp.MyAdminPanel.controller;
 
+import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
@@ -23,11 +24,13 @@ import java.util.function.DoubleUnaryOperator;
 public class HistoryController {
 
     @Autowired
-    MyItemRepository myItemRepository;
+    private MyItemRepository myItemRepository;
 
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
+    @Autowired
+    private Basket basket;
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
@@ -49,6 +52,7 @@ public class HistoryController {
         modelAndView.addObject("myItems", myItems);
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("history");
         return modelAndView;
     }

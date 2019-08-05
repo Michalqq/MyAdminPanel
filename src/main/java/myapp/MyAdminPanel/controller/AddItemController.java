@@ -1,5 +1,6 @@
 package myapp.MyAdminPanel.controller;
 
+import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.model.Seller;
@@ -22,13 +23,16 @@ import java.util.List;
 public class AddItemController {
 
     @Autowired
-    MyItemRepository myItemRepository;
+    private MyItemRepository myItemRepository;
 
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    SellersRepository sellersRepository;
+    private SellersRepository sellersRepository;
+
+    @Autowired
+    private Basket basket;
 
     @RequestMapping("/additem")
     ModelAndView getAddItem(ModelAndView modelAndView) {
@@ -38,6 +42,7 @@ public class AddItemController {
         List<Seller> sellers = sellersRepository.findAll();
         modelAndView.addObject("sellers", sellers);
         modelAndView.setViewName("additem");
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         return modelAndView;
     }
 

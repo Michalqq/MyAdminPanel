@@ -89,8 +89,7 @@
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
                     <li>
-                        <a href="basket">
-                            <i class="fas fa-shopping-basket"></i>Basket</a>
+                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}" /></a>
                     </li>
                     <li>
                         <a href="history">
@@ -172,48 +171,58 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <div class="col-md-12">
                                 <br>
                             </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
-                                    <div class="col-lg-8">
+                                    <div class="col-sm-12">
+                                        <h5>Nazwa przedmiotu:</h5>
                                         <input id="itemId" name="itemId" hidden>
                                         <div class="searchable">
                                             <input type="text" placeholder="Search item to add"
-                                                   onkeyup="filterFunction(this,event)">
+                                                   onkeyup="filterFunction(this,event)" required>
                                             <ul>
                                                 <li th:each="item: ${Items}" id="item" th:name="${item.id}"
                                                     th:text="${item.name}"></li>
                                             </ul>
                                         </div>
                                     </div>
+                                    <br>
+                                    <div class="col-md-12">
+                                        <br>
+                                        <br>
+                                    </div>
+                                    <h5>Cena zakupu:</h5>
                                     <div class="input-group col-sm-12">
-                                        <h5>Cena zakupu:</h5><br>
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
                                         <input class="form-control" name="buyPrice" id="buyPrice" type="number"
                                                required>
                                     </div>
                                     <br>
+                                    <h5>Ilość:</h5>
                                     <div class="input-group col-sm-12">
-                                        <h5>Ilość:</h5><br>
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
                                         <input class="form-control" name="quantity" id="quantity" type="number" min="1"
                                                required>
                                     </div>
                                     <br>
                                     <input name="sellerId" id="sellerId" hidden>
-                                    <div class="searchable">
+
+                                    <h5>Sprzedawca:</h5>
+                                    <div class="input-group searchable">
                                         <input type="text" placeholder="Search seller"
-                                               onkeyup="filterFunction(this,event)">
+                                               onkeyup="filterFunction(this,event)" required>
                                         <ul>
                                             <li th:each="seller: ${sellers}" id="seller" th:name="${seller.id}"
                                                 th:text="${seller.sellerName}"></li>
                                         </ul>
                                     </div>
-                                    <div class="input-group col-sm-6">
-                                        <button name="addItem" value="addItem" type="submit" class="btn btn-primary btn-md">
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <button name="addItem" value="addItem" type="submit"
+                                                class="btn btn-primary btn-md">
                                             <i class="fas fa-check-circle"></i>Show
                                         </button>
                                     </div>

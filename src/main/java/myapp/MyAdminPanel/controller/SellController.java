@@ -138,6 +138,7 @@ public class SellController {
             modelAndView.addObject("note", basket.getMyItemList().get(0).getNotes());
         }
         modelAndView.setViewName("basket");
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         return modelAndView;
     }
 
