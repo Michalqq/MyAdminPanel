@@ -1,3 +1,8 @@
+function myFunction(caller){
+//alert(document.getElementById("sellerId").value);
+//alert(caller.value);
+//alert(document.getElementById("seller").value);
+}
 function filterFunction(that, event) {
     var container, input, filter, li, input_val;
     container = $(that).closest(".searchable");
@@ -50,6 +55,8 @@ function keyControl(e, container) {
 }
 
 function onSelect(val) {
+alert(val);
+alert(val.attr("id"));
     if(val.attr("id")=="item") document.getElementById("itemId").value = val.attr("name");
     if(val.attr("id")=="seller") document.getElementById("sellerId").value = val.attr("name");
 }
