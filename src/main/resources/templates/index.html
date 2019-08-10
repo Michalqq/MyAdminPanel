@@ -192,6 +192,7 @@
                                         <th>Ilosc</th>
                                         <th>Data zakupu</th>
                                         <th>Ile zam.</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -203,6 +204,16 @@
                                         <td style="width:5%" th:text="${myItem.quantity}"></td>
                                         <td style="width:12%" th:text="${myItem.buyDate}"></td>
                                         <td style="width:8%" th:text="${myItem.quantInTransport}"></td>
+                                        <td>
+                                            <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
+                                                <div class="table-data-feature">
+                                                    <button th:name="edit" class="item"
+                                                            data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <i class="zmdi zmdi-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
                                     </tr>
 
                                     </tbody>

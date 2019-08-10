@@ -168,57 +168,73 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="overview-wrap">
-                                <h2 class="title-1 m-b-25">Add new item</h2>
-                                <button class="au-btn au-btn-icon au-btn--blue">
-                                    <i class="zmdi zmdi-plus"></i>add item
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-lg-6">
                             <div class="col-md-12">
                                 <br>
                             </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
-                                    <h5>Wybierz towar:</h5>
+                                    <br>
+                                    <h5>Nazwa:</h5>
                                     <div class="input-group col-sm-12">
-                                       <select class="form-control selectpicker" id="itemId" name="itemId" data-live-search="true" style="width:500px">
-                                            <option th:each="item: ${Items}" th:value="${item.id}"
-                                                    th:text="${item.name}"></option>
-                                        </select>
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="itemName" id="itemName" type="text"
+                                               disabled th:value="${myItem.name}">
                                     </div>
                                     <br>
                                     <h5>Cena zakupu:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="buyPrice" id="buyPrice" type="number"
-                                               required>
+                                        <input class="form-control" name="buyPrice" id="buyPrice" type="text" th:value="${myItem.buyPrice}">
                                     </div>
                                     <br>
-                                    <h5>Ilość:</h5>
+                                    <h5>Data zakupu:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="quantity" id="quantity" type="number" min="1"
-                                               required>
+                                        <input class="form-control" name="buyDate" id="buyDate" type="date" th:value="${myItem.buyDate}">
                                     </div>
                                     <br>
-                                    <h5>Wybierz sprzedawcę:</h5>
-                                    <div class="input-group">
-                                        <select class="form-control selectpicker" id="sellerId" name="sellerId" data-live-search="true">
-                                            <option th:each="seller: ${sellers}" th:value="${seller.id}"
-                                                    th:text="${seller.sellerName}"></option>
-                                        </select>
-
+                                    <h5>Cena sprzedaży:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="sellPrice" id="sellPrice" type="text" th:value="${myItem.sellPrice}">
+                                    </div>
+                                    <br>
+                                    <h5>Data sprzedaży:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="sellDate" id="sellDate" type="date" th:value="${myItem.buyDate}">
+                                    </div>
+                                    <br>
+                                    <h5>Kwota pobrania:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="cashOnDelivery" id="cashOnDelivery" type="number" th:value="${myItem.cashOnDelivery}">
+                                    </div>
+                                    <br>
+                                    <h5>Uwagi:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="note" id="note" type="text" th:value="${myItem.notes}">
+                                    </div>
+                                    <br>
+                                    <h5>Status:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="deliveredToPoland" id="deliveredToPoland" type="text" th:value="${myItem.deliveredToPoland}">
                                     </div>
                                     <br>
                                     <div class="input-group col-sm-12">
-                                        <button name="addItem" value="addItem" type="submit"
+                                        <button name="apply" value="apply" type="submit"
                                                 class="btn btn-primary btn-md">
-                                            <i class="fas fa-check-circle"></i>Show
+                                            <i class="fas fa-check-circle"></i> Apply
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <button name="delete" value="delete" type="submit"
+                                                class="btn btn-primary btn-md">
+                                            <i class="fas fa-check-circle"></i> Delete
                                         </button>
                                     </div>
                                     <br>

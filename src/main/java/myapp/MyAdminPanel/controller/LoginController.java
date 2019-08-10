@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -79,9 +81,65 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/edit"}, params = "edit", method = RequestMethod.POST)
+    public ModelAndView editItem(ModelAndView modelAndView,
+                                 @RequestParam(name = "id", required = true) int itemId) {
+        Optional<MyItem> myItem = myItemRepository.findById(itemId);
+        if (myItem.isPresent()) {
+            myItem.get().setName(getItemsMap().get(myItem.get().getItemId()));
+            modelAndView.addObject("myItem", myItem.get());
+        }
+        modelAndView.setViewName("edit");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/edit"}, params = "apply", method = RequestMethod.POST)
+    public ModelAndView editItemApply(ModelAndView modelAndView,
+                                 @RequestParam(name = "id", required = true) int itemId,
+                                 @RequestParam(name = "buyPrice", defaultValue = "0") double buyPrice,
+                                 @RequestParam(name = "buyDate") String buyDate,
+                                 @RequestParam(name = "sellPrice", defaultValue = "0") double sellPrice,
+                                 @RequestParam(name = "sellDate") String sellDate,
+                                 @RequestParam(name = "cashOnDelivery", defaultValue = "0") double cashOnDelivery,
+                                 @RequestParam(name = "note") String note,
+                                 @RequestParam(name = "deliveredToPoland") int deliveredToPoland) {
+
+        Optional<MyItem> myItem = myItemRepository.findById(itemId);
+        if (myItem.isPresent()) {
+            myItem.get().setBuyPrice(buyPrice);
+            myItem.get().setBuyDate(buyDate);
+            myItem.get().setDeliveredToPoland(deliveredToPoland);
+            myItem.get().setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+            if (sellPrice > 0) {
+                myItem.get().setSellPrice(sellPrice);
+                myItem.get().setSellDate(sellDate);
+            }
+            if (cashOnDelivery > 0) {
+                myItem.get().setCashOnDelivery(cashOnDelivery);
+                myItem.get().setIfCashOnDelivery(1);
+                myItem.get().setDeliveredToPoland(2);
+            }
+            if (note.length()>0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
+            myItemRepository.save(myItem.get());
+        }
+        modelAndView.setViewName("redirect:/index");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/edit"}, params = "delete", method = RequestMethod.POST)
+    public ModelAndView editItemDelete(ModelAndView modelAndView,
+                                 @RequestParam(name = "id", required = true) int itemId) {
+
+        Optional<MyItem> myItem = myItemRepository.findById(itemId);
+        if (myItem.isPresent()) {
+          myItemRepository.delete(myItem.get());
+        }
+        modelAndView.setViewName("redirect:/index");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/", "/index", "/sell"}, method = RequestMethod.GET)
-    public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
