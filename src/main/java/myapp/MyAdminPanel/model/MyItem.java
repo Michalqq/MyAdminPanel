@@ -10,8 +10,8 @@ import java.util.List;
 @Entity
 @Table(name = "wskazniki")
 public class MyItem {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private Integer id;
 

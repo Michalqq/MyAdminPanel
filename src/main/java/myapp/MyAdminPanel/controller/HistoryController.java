@@ -14,10 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.jws.WebParam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.DoubleUnaryOperator;
 
 @Controller
@@ -47,6 +44,7 @@ public class HistoryController {
         } else {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
         }
+        Collections.reverse(myItems);
         this.countProfit(myItems);
         getItemsNames(myItems, this.getItemsMap());
         modelAndView.addObject("myItems", myItems);

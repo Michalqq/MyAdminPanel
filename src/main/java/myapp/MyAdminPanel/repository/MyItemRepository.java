@@ -42,6 +42,9 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(@Param("deliveryToPoland") int deliveryToPoland, @Param("itemId") int itemId);
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(@Param("itemId") int itemId);
 
+    @Query(value = "SELECT MAX(id) FROM MyItem")
+    int getMaxId();
+
     Optional<MyItem> findById(Integer ID);
 
     MyItem save(MyItem myItem);

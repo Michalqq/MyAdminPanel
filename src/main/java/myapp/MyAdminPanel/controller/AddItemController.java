@@ -54,6 +54,7 @@ public class AddItemController {
 
         for (int i = 0; i < quantity; i++) {
             MyItem myItem = new MyItem(); //todo check all variables
+            myItem.setId((myItemRepository.getMaxId() + 1));
             myItem.setBuyPrice(buyPrice / quantity);
             myItem.setItemId(itemId);
             myItem.setSellerId(sellerId);

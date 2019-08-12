@@ -83,6 +83,7 @@ public class SellController {
 
     public boolean setDeliveredStatus(MyItem myItemFromDB, int status) {
         myItemFromDB.setDeliveredToPoland(status);
+        myItemFromDB.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
         myItemRepository.save(myItemFromDB);
         return true;
     }
@@ -171,6 +172,7 @@ public class SellController {
                                                @RequestParam(name = "quantityDelivered") int quantity) {
         ModelAndView modelAndView = new ModelAndView();
         List<MyItem> items = myItemRepository.findItemInTransportByItemId(itemId);
+        items.stream().forEach(x-> System.out.println(x.getLastActionDate()));
         for (int i = 0; i < quantity; i++) {
             setDeliveredStatus(items.get(i), 1);
         }

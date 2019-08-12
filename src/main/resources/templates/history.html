@@ -171,7 +171,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="col-md-12">
                                 <br>
                             </div>
@@ -215,7 +215,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="col-lg-8">
+                        <div class="col-lg-9">
                             <div class="table-responsive table--no-card">
                                 <table class="table table-condensed-12 table-bordered table-striped table-sm" id="mainTable">
                                     <thead class="thead-dark">
@@ -227,7 +227,9 @@
                                         <th>Zysk</th>
                                         <th>Data zakupu</th>
                                         <th>Data sprzedaży</th>
+                                        <th>Data ost. zmiany</th>
                                         <th>Uwagi</th>
+                                        <th>Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -240,7 +242,9 @@
                                         <td th:text="${myItem.profit} + ' %'"></td>
                                         <td th:text="${myItem.buyDate}"></td>
                                         <td th:text="${myItem.sellDate}"></td>
+                                        <td th:text="${myItem.lastActionDate}"></td>
                                         <td th:text="${myItem.notes}"></td>
+                                        <td th:text="${myItem.deliveredToPoland}"></td>
                                     </tr>
 
                                     </tbody>

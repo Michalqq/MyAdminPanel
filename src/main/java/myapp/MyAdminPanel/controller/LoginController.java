@@ -95,14 +95,14 @@ public class LoginController {
 
     @RequestMapping(value = {"/edit"}, params = "apply", method = RequestMethod.POST)
     public ModelAndView editItemApply(ModelAndView modelAndView,
-                                 @RequestParam(name = "id", required = true) int itemId,
-                                 @RequestParam(name = "buyPrice", defaultValue = "0") double buyPrice,
-                                 @RequestParam(name = "buyDate") String buyDate,
-                                 @RequestParam(name = "sellPrice", defaultValue = "0") double sellPrice,
-                                 @RequestParam(name = "sellDate") String sellDate,
-                                 @RequestParam(name = "cashOnDelivery", defaultValue = "0") double cashOnDelivery,
-                                 @RequestParam(name = "note") String note,
-                                 @RequestParam(name = "deliveredToPoland") int deliveredToPoland) {
+                                      @RequestParam(name = "id", required = true) int itemId,
+                                      @RequestParam(name = "buyPrice", defaultValue = "0") double buyPrice,
+                                      @RequestParam(name = "buyDate") String buyDate,
+                                      @RequestParam(name = "sellPrice", defaultValue = "0") double sellPrice,
+                                      @RequestParam(name = "sellDate") String sellDate,
+                                      @RequestParam(name = "cashOnDelivery", defaultValue = "0") double cashOnDelivery,
+                                      @RequestParam(name = "note") String note,
+                                      @RequestParam(name = "deliveredToPoland") int deliveredToPoland) {
 
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
@@ -119,7 +119,7 @@ public class LoginController {
                 myItem.get().setIfCashOnDelivery(1);
                 myItem.get().setDeliveredToPoland(2);
             }
-            if (note.length()>0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
+            if (note.length() > 0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
             myItemRepository.save(myItem.get());
         }
         modelAndView.setViewName("redirect:/index");
@@ -128,11 +128,11 @@ public class LoginController {
 
     @RequestMapping(value = {"/edit"}, params = "delete", method = RequestMethod.POST)
     public ModelAndView editItemDelete(ModelAndView modelAndView,
-                                 @RequestParam(name = "id", required = true) int itemId) {
+                                       @RequestParam(name = "id", required = true) int itemId) {
 
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
-          myItemRepository.delete(myItem.get());
+            myItemRepository.delete(myItem.get());
         }
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
@@ -159,8 +159,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = {"/delivery"}, method = RequestMethod.GET)
-    public ModelAndView delivery(@RequestParam(value = "searchItem", required = false, defaultValue = "") String
-                                         name) {
+    public ModelAndView delivery(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
         ModelAndView modelAndView = new ModelAndView();
         List<MyItem> myItems = myItemRepository.findItemsInTransport();
         myItems = getItemsNames(myItems, this.getItemsMap());
@@ -175,6 +174,15 @@ public class LoginController {
         modelAndView.setViewName("delivery");
         return modelAndView;
     }
+
+//    @RequestMapping(value = "/delivery", params = "confirmDelivery", method = RequestMethod.POST)
+//    public ModelAndView setQuantityDelivered(@RequestParam(value = "checkedItemId", required = true, defaultValue = "") int itemId) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        List<MyItem> myItems = myItemRepository.findItemInTransportByItemId(itemId);
+//        myItems.stream().forEach(x-> System.out.println(x.getLastActionDate()));
+//        modelAndView.setViewName("redirect:/delivery");
+//        return modelAndView;
+//    }
 
     public Map<Integer, String> getItemsMap() {
         List<Item> items = itemRepository.findAll();
