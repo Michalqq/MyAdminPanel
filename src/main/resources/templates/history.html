@@ -89,7 +89,7 @@
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
                     <li>
-                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}" /></a>
+                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}"/></a>
                     </li>
                     <li class="active has-sub">
                         <a class="js-arrow" href="history">
@@ -193,16 +193,19 @@
                                     <br>
                                     <div class="row">
                                         <div class="input-group col-sm-6">
-                                            <select class="dropdown-toggle btn btn-secondary" data-style="btn-success" id="histStatus" name="histStatus">
+                                            <select class="dropdown-toggle btn btn-secondary" style="width:500px"
+                                                    data-style="btn-success" id="histStatus" name="histStatus">
                                                 <option value="4">Wszystko</option>
                                                 <option value="0">W transporcie</option>
                                                 <option value="1">W domu</option>
+                                                <option value="2">Pobranie</option>
                                                 <option value="3">Sprzedane</option>
                                             </select>
                                         </div>
 
                                         <div class="input-group col-sm-6">
-                                            <button name="confirmDate" value="confirmDate" type="submit" class="btn btn-primary btn-md">
+                                            <button name="confirmDate" value="confirmDate" type="submit"
+                                                    class="btn btn-primary btn-md">
                                                 <i class="fas fa-check-circle"></i>Show
                                             </button>
                                         </div>
@@ -217,9 +220,11 @@
                         </div>
                         <div class="col-lg-9">
                             <div class="table-responsive table--no-card">
-                                <table class="table table-condensed-12 table-bordered table-striped table-sm" id="mainTable">
+                                <table class="table table-condensed-12 table-bordered table-striped table-sm"
+                                       id="mainTable">
                                     <thead class="thead-dark">
                                     <tr>
+                                        <th style="display:none"></th>
                                         <th>Nazwa</th>
                                         <th>Cena zakupu</th>
                                         <th>Cena sprzedaży</th>
@@ -230,6 +235,7 @@
                                         <th>Data ost. zmiany</th>
                                         <th>Uwagi</th>
                                         <th>Status</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -245,6 +251,16 @@
                                         <td th:text="${myItem.lastActionDate}"></td>
                                         <td th:text="${myItem.notes}"></td>
                                         <td th:text="${myItem.deliveredToPoland}"></td>
+                                        <td style="display:none">
+                                            <form th:action="@{/confirmCashOnDelivery?id=} + ${{myItem.id}}" method="post">
+                                                <div class="table-data-feature">
+                                                    <button th:name="confirm" class="item"
+                                                            data-toggle="tooltip" data-placement="top" title="Confirm Cash">
+                                                        <i class="zmdi zmdi-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
                                     </tr>
 
                                     </tbody>

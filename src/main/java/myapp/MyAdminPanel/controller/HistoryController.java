@@ -54,6 +54,18 @@ public class HistoryController {
         modelAndView.setViewName("history");
         return modelAndView;
     }
+    @RequestMapping(value = "/confirmCashOnDelivery", method = RequestMethod.POST)
+    public ModelAndView confirmCashOnDelivery(@RequestParam(value = "id", required = true) int itemId,
+                                              ModelAndView modelAndView){
+        Optional<MyItem> myItem = myItemRepository.findById(itemId);
+        if (myItem.isPresent()){
+            myItem.get().setDeliveredToPoland(3);
+            myItem.get().setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+            myItemRepository.save(myItem.get());
+        }
+        modelAndView.setViewName("redirect:/history");
+        return modelAndView;
+    }
 
     private String getYesterDay() {
         return DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now().minusDays(1));

@@ -175,15 +175,6 @@ public class LoginController {
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/delivery", params = "confirmDelivery", method = RequestMethod.POST)
-//    public ModelAndView setQuantityDelivered(@RequestParam(value = "checkedItemId", required = true, defaultValue = "") int itemId) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        List<MyItem> myItems = myItemRepository.findItemInTransportByItemId(itemId);
-//        myItems.stream().forEach(x-> System.out.println(x.getLastActionDate()));
-//        modelAndView.setViewName("redirect:/delivery");
-//        return modelAndView;
-//    }
-
     public Map<Integer, String> getItemsMap() {
         List<Item> items = itemRepository.findAll();
         Map<Integer, String> itemMap = new HashMap<>();
