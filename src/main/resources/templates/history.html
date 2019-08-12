@@ -177,7 +177,7 @@
                             </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="GET">
-                                    <h5>Start date:</h5><br>
+                                    <h5>Start date:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="far fa-calendar"></i></i></span>
                                         <input class="form-control" name="startDate" id="startDate" type="date"
@@ -253,7 +253,7 @@
                                         <td th:text="${myItem.deliveredToPoland}"></td>
                                         <td style="display:none">
                                             <form th:action="@{/confirmCashOnDelivery?id=} + ${{myItem.id}}" method="post">
-                                                <div class="table-data-feature">
+                                                <div class="table-data-feature-min">
                                                     <button th:name="confirm" class="item"
                                                             data-toggle="tooltip" data-placement="top" title="Confirm Cash">
                                                         <i class="zmdi zmdi-edit"></i>
