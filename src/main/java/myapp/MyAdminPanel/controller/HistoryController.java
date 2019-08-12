@@ -44,7 +44,6 @@ public class HistoryController {
         } else {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
         }
-        Collections.reverse(myItems);
         this.countProfit(myItems);
         getItemsNames(myItems, this.getItemsMap());
         modelAndView.addObject("myItems", myItems);

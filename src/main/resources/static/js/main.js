@@ -286,7 +286,9 @@ function iterateTableGetChecked(){
     const brandService = 'rgba(0,173,95,0.8)'
 
     var elements = 10
-    var data1 = [52, 60, 55, 50, 65, 80, 57, 70, 105, 115]
+    //var name = $('#testData').val();
+    //alert(name); //todo
+
     var data2 = [102, 70, 80, 100, 56, 53, 80, 75, 65, 90]
 
     var ctx = document.getElementById("recent-rep-chart");

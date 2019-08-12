@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
@@ -153,6 +154,20 @@ public class LoginController {
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("test", myItems.get(0).getName());
+            List<Integer> list = new ArrayList<>();
+            list.add(150);
+            list.add(250);
+            list.add(350);
+            list.add(450);
+//            String json = "";
+//
+//            ObjectMapper mapper = new ObjectMapper();
+//            try {
+//                json = mapper.writeValueAsString(list);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            modelAndView.addObject("testData", list); todo
             modelAndView.setViewName("index");
         }
         return modelAndView;
