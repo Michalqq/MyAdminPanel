@@ -35,7 +35,7 @@
 
 </head>
 
-<body class="animsition" onload="checkStatus()">
+<body class="animsition" onload="check()">
 <div class="page-wrapper">
     <!-- HEADER MOBILE-->
     <header class="header-mobile d-block d-lg-none">
@@ -214,12 +214,12 @@
                                     <div class="col-sm-12">
                                         <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
                         <div class="col-lg-9">
                             <div class="table-responsive table--no-card">
+                                <input id="checkedItemId" name="checkedItemId" hidden required>
                                 <table class="table table-condensed-12 table-bordered table-striped table-sm"
                                        id="mainTable">
                                     <thead class="thead-dark">
@@ -236,6 +236,7 @@
                                         <th>Uwagi</th>
                                         <th>Status</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -251,11 +252,21 @@
                                         <td th:text="${myItem.lastActionDate}"></td>
                                         <td th:text="${myItem.notes}"></td>
                                         <td th:text="${myItem.deliveredToPoland}"></td>
-                                        <td style="display:none">
+                                        <td style="visibility:hidden">
                                             <form th:action="@{/confirmCashOnDelivery?id=} + ${{myItem.id}}" method="post">
                                                 <div class="table-data-feature-min">
                                                     <button th:name="confirm" class="item"
                                                             data-toggle="tooltip" data-placement="top" title="Confirm Cash">
+                                                        <i class="zmdi zmdi-check"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
+                                                <div class="table-data-feature-min">
+                                                    <button th:name="edit" class="item"
+                                                            data-toggle="tooltip" data-placement="top" title="Edit">
                                                         <i class="zmdi zmdi-edit"></i>
                                                     </button>
                                                 </div>

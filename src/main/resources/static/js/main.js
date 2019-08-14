@@ -4,7 +4,7 @@ function changeRowColorOnTable(x){
         iterateTableAndUncheck();
     }
     if (x.className != 'null'){
-        x.style = 'background-color:#FFFFFF';
+        x.style = 'background-color: ' + x.className;
         x.className = 'null'
     }else {
         x.className = x.style.backgroundColor;
