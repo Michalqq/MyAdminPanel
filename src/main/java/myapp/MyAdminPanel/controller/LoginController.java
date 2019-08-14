@@ -217,48 +217,4 @@ public class LoginController {
         }
     }
 
-    public boolean setCashOnDelivery(MyItem myItem, double cashOnDelivery) {
-        if (cashOnDelivery > 0) {
-            myItem.setCashOnDelivery(cashOnDelivery);
-            myItem.setIfCashOnDelivery(1);
-            myItem.setDeliveredToPoland(2);
-            setLastActionDateNowDate(myItem);
-            myItemRepository.save(myItem);
-            return true;
-        } else return false;
-    }
-
-    public boolean setSellPrice(MyItem myItem, double sellPrice, String sellDate) {
-        if (sellPrice > 0) {
-            myItem.setSellPrice(sellPrice);
-            myItem.setSellDate(sellDate);
-            setLastActionDateNowDate(myItem);
-            myItemRepository.save(myItem);
-            return true;
-        } else return false;
-    }
-
-    public boolean setLastActionDateNowDate(MyItem myItem) {
-        myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-        myItemRepository.save(myItem);
-        return true;
-    }
-
-    public boolean setBuyPrice(MyItem myItem, double buyPrice, String buyDate) {
-        if (buyPrice > 0) {
-            myItem.setBuyPrice(buyPrice);
-            myItem.setBuyDate(buyDate);
-            setLastActionDateNowDate(myItem);
-            myItemRepository.save(myItem);
-            return true;
-        } else return false;
-    }
-
-    public boolean setDeliveredToPolStatus(MyItem myItem, int deliveredStatus) {
-        myItem.setDeliveredToPoland(deliveredStatus);
-        setLastActionDateNowDate(myItem);
-        myItemRepository.save(myItem);
-        return true;
-    }
-
 }
