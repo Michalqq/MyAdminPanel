@@ -139,26 +139,11 @@ public class LoginController {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
             myItems = (getItemsNames(myItems, this.getItemsMap()));
             if (name != null && !name.equals("")) {
-                myItems = (getByName(myItems, name));
+                myItems = (getByNameContains(myItems, name));
             }
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
-            modelAndView.addObject("test", myItems.get(0).getName());
-            List<Integer> list = new ArrayList<>();
-            list.add(150);
-            list.add(250);
-            list.add(350);
-            list.add(450);
-//            String json = "";
-//
-//            ObjectMapper mapper = new ObjectMapper();
-//            try {
-//                json = mapper.writeValueAsString(list);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            modelAndView.addObject("testData", list); todo
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -169,7 +154,7 @@ public class LoginController {
         List<MyItem> myItems = myItemRepository.findItemsInTransport();
         myItems = getItemsNames(myItems, this.getItemsMap());
         if (name != null && !name.equals("")) {
-            myItems = getByName(myItems, name);
+            myItems = getByNameContains(myItems, name);
         }
         for (MyItem myItem : myItems) {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
@@ -196,9 +181,9 @@ public class LoginController {
         return itemList;
     }
 
-    public static List<MyItem> getByName(List<MyItem> itemList, String name) {
+    public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
-            return itemList.stream().filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+            return itemList.stream().filter(x->x.getName()!=null).filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
         } else {
             return itemList;
         }
