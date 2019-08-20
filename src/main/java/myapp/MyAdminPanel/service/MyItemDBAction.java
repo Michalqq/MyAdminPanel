@@ -5,6 +5,7 @@ import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -26,10 +27,10 @@ public class MyItemDBAction implements DBAction {
     }
 
     @Override
-    public boolean setSellPrice(MyItem myItem, double sellPrice, String sellDate) {
+    public boolean setSellPrice(MyItem myItem, double sellPrice) {
         if (sellPrice > 0) {
             myItem.setSellPrice(sellPrice);
-            myItem.setSellDate(sellDate);
+            myItem.setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
             setLastActionDateNowDate(myItem);
             myItemRepository.save(myItem);
             return true;
@@ -65,5 +66,38 @@ public class MyItemDBAction implements DBAction {
     @Override
     public boolean setNote(MyItem myItem, String note) {
         return false;
+    }
+
+    @Override
+    public boolean createNewItem() {
+        MyItem myItem = new MyItem();
+        myItem.setId((myItemRepository.getMaxId() + 1));
+        myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        myItemRepository.save(myItem);
+        return true;
+    }
+
+    @Override
+    public boolean createNewItem(double price, int itemId, int sellerId) {
+        MyItem myItem = new MyItem();
+        myItem.setId((myItemRepository.getMaxId() + 1));
+        myItem.setBuyPrice(price);
+        myItem.setItemId(itemId);
+        myItem.setSellerId(sellerId);
+        myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
+        myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        myItemRepository.save(myItem);
+        return true;
+    }
+
+    @Override
+    public boolean clearSellPriceAndDate(MyItem myItem) {
+        myItem.setDeliveredToPoland(1);
+        myItem.setSellDate(null);
+        myItem.setSellPrice(null);
+        myItem.setIfCashOnDelivery(null);
+        myItem.setCashOnDelivery(null);
+        myItemRepository.save(myItem);
+        return true;
     }
 }

@@ -7,6 +7,7 @@ import myapp.MyAdminPanel.model.Seller;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.repository.SellersRepository;
+import myapp.MyAdminPanel.service.DBAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +35,11 @@ public class AddItemController {
     @Autowired
     private Basket basket;
 
+    @Autowired
+    private DBAction dbAction;
+
     @RequestMapping("/additem")
     ModelAndView getAddItem(ModelAndView modelAndView) {
-
         List<Item> items = itemRepository.findAll();
         modelAndView.addObject("Items", items);
         List<Seller> sellers = sellersRepository.findAll();
@@ -51,16 +54,8 @@ public class AddItemController {
                       @RequestParam(value = "buyPrice", defaultValue = "") double buyPrice,
                       @RequestParam(value = "quantity", defaultValue = "") int quantity,
                       @RequestParam(value = "sellerId", defaultValue = "") int sellerId) {
-
         for (int i = 0; i < quantity; i++) {
-            MyItem myItem = new MyItem(); //todo check all variables
-            myItem.setId((myItemRepository.getMaxId() + 1));
-            myItem.setBuyPrice(buyPrice / quantity);
-            myItem.setItemId(itemId);
-            myItem.setSellerId(sellerId);
-            myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-            myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-            myItemRepository.save(myItem);
+            dbAction.createNewItem(buyPrice / quantity, itemId, sellerId);
         }
         return "redirect:/additem";
     }

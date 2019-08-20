@@ -5,6 +5,7 @@ import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.DBAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,6 +29,9 @@ public class HistoryController {
 
     @Autowired
     private Basket basket;
+
+    @Autowired
+    private DBAction dbAction;
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
@@ -58,9 +62,7 @@ public class HistoryController {
                                               ModelAndView modelAndView){
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()){
-            myItem.get().setDeliveredToPoland(3);
-            myItem.get().setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-            myItemRepository.save(myItem.get());
+            dbAction.setDeliveredToPolStatus(myItem.get(), 3);
         }
         modelAndView.setViewName("redirect:/history");
         return modelAndView;

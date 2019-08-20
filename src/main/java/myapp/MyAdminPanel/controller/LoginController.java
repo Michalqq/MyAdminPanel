@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,22 +45,19 @@ public class LoginController {
     private DBAction dbAction;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
     @GetMapping(value = "/chart")
-    public ModelAndView chart() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView chart(ModelAndView modelAndView) {
         modelAndView.setViewName("chart");
         return modelAndView;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registration() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView registration(ModelAndView modelAndView) {
         User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("register");
@@ -67,8 +65,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult, ModelAndView modelAndView) {
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult
@@ -114,10 +111,9 @@ public class LoginController {
         if (myItem.isPresent()) {
             dbAction.setBuyPrice(myItem.get(), buyPrice, buyDate);
             dbAction.setDeliveredToPolStatus(myItem.get(), deliveredToPoland);
-            dbAction.setSellPrice(myItem.get(), sellPrice, sellDate);
+            dbAction.setSellPrice(myItem.get(), sellPrice);
             dbAction.setCashOnDelivery(myItem.get(), cashOnDelivery);
             if (note.length() > 0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
-            myItemRepository.save(myItem.get());
         }
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
@@ -126,7 +122,6 @@ public class LoginController {
     @RequestMapping(value = {"/edit"}, params = "delete", method = RequestMethod.POST)
     public ModelAndView editItemDelete(ModelAndView modelAndView,
                                        @RequestParam(name = "id", required = true) int itemId) {
-
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
             myItemRepository.delete(myItem.get());
@@ -170,8 +165,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = {"/delivery"}, method = RequestMethod.GET)
-    public ModelAndView delivery(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView delivery(ModelAndView modelAndView, @RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
         List<MyItem> myItems = myItemRepository.findItemsInTransport();
         myItems = getItemsNames(myItems, this.getItemsMap());
         if (name != null && !name.equals("")) {

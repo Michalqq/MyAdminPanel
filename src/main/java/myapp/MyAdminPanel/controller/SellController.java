@@ -5,6 +5,7 @@ import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.DBAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,15 +32,18 @@ public class SellController {
     @Autowired
     private Basket basket;
 
+    @Autowired
+    private DBAction dbAction;
+
     @RequestMapping(value = {"/sell"}, params = "sell", method = RequestMethod.POST)
     public ModelAndView sellItem(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
                                  @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                                  @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                                  @RequestParam(name = "note", defaultValue = "") String note,
-                                 @RequestParam(name = "checkedItemId") int itemId) {
-        ModelAndView modelAndView = new ModelAndView();
+                                 @RequestParam(name = "checkedItemId") int itemId,
+                                 ModelAndView modelAndView) {
         Optional<MyItem> myItemFromDB = myItemRepository.findById(itemId);
-        if (saveSellToDb(myItemFromDB, commission, sellPrice, note, cashOnDelivery)) {
+        if (saveSellToDb(myItemFromDB.get(), commission, sellPrice, note, cashOnDelivery)) {
             modelAndView.addObject("SellInfo", "Updated sell price for:" + myItemFromDB.get().getName());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
         modelAndView.addObject("SellInfo", "Sprzedano za: " + myItemFromDB.get().getSellPrice());
@@ -47,54 +51,13 @@ public class SellController {
         return modelAndView;
     }
 
-    public boolean saveSellToDb(Optional<MyItem> myItemFromDB, int commission, Double sellPrice, String note, Double cashOnDelivery) {
-        if (myItemFromDB.isPresent()) {
-            myItemFromDB.get().setSellPrice(sellPrice - (sellPrice * commission * 0.01));
-            myItemFromDB.get().setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-            myItemFromDB.get().setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-            myItemFromDB.get().setNotes(note);
-            myItemFromDB.get().setDeliveredToPoland(3);
-            if (cashOnDelivery != null && cashOnDelivery != 0) {
-                myItemFromDB.get().setCashOnDelivery(cashOnDelivery);
-                myItemFromDB.get().setDeliveredToPoland(2);
-                myItemFromDB.get().setIfCashOnDelivery(1);
-            }
-            myItemRepository.save(myItemFromDB.get());
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public boolean saveSellToDb(MyItem myItemFromDB, int commission, Double sellPrice, String note, Double cashOnDelivery) {
-        myItemFromDB.setSellPrice(sellPrice - (sellPrice * commission * 0.01));
-        myItemFromDB.setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-        myItemFromDB.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-        myItemFromDB.setNotes(note);
-        myItemFromDB.setDeliveredToPoland(3);
+        dbAction.setSellPrice(myItemFromDB, sellPrice - (sellPrice * commission * 0.01));
+        dbAction.setNote(myItemFromDB, note);
+        dbAction.setDeliveredToPolStatus(myItemFromDB, 3);
         if (cashOnDelivery != null && cashOnDelivery != 0) {
-            myItemFromDB.setCashOnDelivery(cashOnDelivery);
-            myItemFromDB.setDeliveredToPoland(2);
-            myItemFromDB.setIfCashOnDelivery(1);
+            dbAction.setCashOnDelivery(myItemFromDB, cashOnDelivery);
         }
-        myItemRepository.save(myItemFromDB);
-        return true;
-    }
-
-    public boolean setDeliveredStatus(MyItem myItemFromDB, int status) {
-        myItemFromDB.setDeliveredToPoland(status);
-        myItemFromDB.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-        myItemRepository.save(myItemFromDB);
-        return true;
-    }
-
-    public boolean clearSellPriceAndDate(MyItem myItemFromDB) {
-        myItemFromDB.setDeliveredToPoland(1);
-        myItemFromDB.setSellDate(null);
-        myItemFromDB.setSellPrice(null);
-        myItemFromDB.setIfCashOnDelivery(null);
-        myItemFromDB.setCashOnDelivery(null);
-        myItemRepository.save(myItemFromDB);
         return true;
     }
 
@@ -103,10 +66,10 @@ public class SellController {
                                     @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                                     @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                                     @RequestParam(name = "note", defaultValue = "") String note,
-                                    @RequestParam(name = "checkedItemId") int itemId) {
-        ModelAndView modelAndView = new ModelAndView();
+                                    @RequestParam(name = "checkedItemId") int itemId,
+                                    ModelAndView modelAndView) {
         Optional<MyItem> item = myItemRepository.findById(itemId);
-        if (saveSellToDb(item, commission, sellPrice, note, cashOnDelivery)) {
+        if (saveSellToDb(item.get(), commission, sellPrice, note, cashOnDelivery)) {
             basket.add(item);
             getItemsNames(basket.getMyItemList(), getItemsMap());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
@@ -117,12 +80,10 @@ public class SellController {
     }
 
     @RequestMapping(value = {"/remove/{itemId}"}, params = "remove", method = RequestMethod.POST)
-    public ModelAndView removeItemFromBasket(@PathVariable int itemId) {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView removeItemFromBasket(@PathVariable int itemId, ModelAndView modelAndView) {
         for (int i = 0; i < basket.getMyItemList().size(); i++) {
-            System.out.println(itemId);
             if (basket.getMyItemList().get(i).getId() == itemId) {
-                clearSellPriceAndDate(basket.getMyItemList().get(i));
+                dbAction.clearSellPriceAndDate(basket.getMyItemList().get(i));
                 basket.getMyItemList().remove(i);
             }
         }
@@ -131,8 +92,7 @@ public class SellController {
     }
 
     @RequestMapping(value = {"/basket"}, method = RequestMethod.GET)
-    public ModelAndView getBasket() {
-        ModelAndView modelAndView = new ModelAndView();
+    public ModelAndView getBasket(ModelAndView modelAndView) {
         modelAndView.addObject("myBasket", basket.getMyItemList());
         if (basket.getMyItemList().size() > 0) {
             modelAndView.addObject("cashOnDelivery", basket.getMyItemList().get(0).getCashOnDelivery());
@@ -145,8 +105,8 @@ public class SellController {
 
     @RequestMapping(value = "/basket", params = "sell", method = RequestMethod.POST)
     public ModelAndView sellItemsInBasket(@RequestParam(name = "note", defaultValue = "") String note,
-                                          @RequestParam(name = "cashOnDelivery", defaultValue = "") Double cashOnDelivery) {
-        ModelAndView modelAndView = new ModelAndView();
+                                          @RequestParam(name = "cashOnDelivery", defaultValue = "") Double cashOnDelivery,
+                                          ModelAndView modelAndView) {
         for (MyItem item : basket.getMyItemList()) {
             saveSellToDb(item, 0, item.getSellPrice(), note, cashOnDelivery);
         }
@@ -160,7 +120,7 @@ public class SellController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/index");
         for (int i = 0; i < basket.getMyItemList().size(); i++) {
-            clearSellPriceAndDate(basket.getMyItemList().get(i));
+            dbAction.clearSellPriceAndDate(basket.getMyItemList().get(i));
         }
         basket.getMyItemList().clear();
         return modelAndView;
@@ -169,12 +129,11 @@ public class SellController {
 
     @RequestMapping(value = {"/delivery"}, params = "confirmDelivery", method = RequestMethod.POST)
     public ModelAndView setQuantityOfDelivered(@RequestParam(name = "checkedItemId") int itemId,
-                                               @RequestParam(name = "quantityDelivered") int quantity) {
-        ModelAndView modelAndView = new ModelAndView();
+                                               @RequestParam(name = "quantityDelivered") int quantity,
+                                               ModelAndView modelAndView) {
         List<MyItem> items = myItemRepository.findItemInTransportByItemId(itemId);
-        items.stream().forEach(x-> System.out.println(x.getLastActionDate()));
         for (int i = 0; i < quantity; i++) {
-            setDeliveredStatus(items.get(i), 1);
+            dbAction.setDeliveredToPolStatus(items.get(i), 1);
         }
         modelAndView.setViewName("redirect:/delivery");
         return modelAndView;
