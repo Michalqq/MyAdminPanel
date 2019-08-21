@@ -80,7 +80,7 @@
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
-            <a href="#">
+            <a href="/index">
                 <img src="images/icon/logo.png" alt="Cool Admin"/>
             </a>
         </div>
@@ -178,18 +178,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-9">
                             <div class="col-md-12">
                                 <br>
                             </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
                                     <h5>Wybierz towar:</h5>
-                                    <div class="input-group col-sm-12">
-                                       <select class="form-control selectpicker" id="itemId" name="itemId" data-live-search="true" style="width:500px">
+                                    <div class="col-sm-12">
+                                       <select class="selectpicker" id="itemId" name="itemId" data-live-search="true">
                                             <option th:each="item: ${Items}" th:value="${item.id}"
                                                     th:text="${item.name}"></option>
                                         </select>
+                                    </div>
+                                    <br>
+                                    <h5>Wybierz sprzedawcę:</h5>
+                                    <div class="col-sm-12">
+                                        <select class="form-control selectpicker" id="sellerId" name="sellerId" data-live-search="true">
+                                            <option th:each="seller: ${sellers}" th:value="${seller.id}"
+                                                    th:text="${seller.sellerName}"></option>
+                                        </select>
+
                                     </div>
                                     <br>
                                     <h5>Cena zakupu:</h5>
@@ -204,15 +213,6 @@
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
                                         <input class="form-control" name="quantity" id="quantity" type="number" min="1"
                                                required>
-                                    </div>
-                                    <br>
-                                    <h5>Wybierz sprzedawcę:</h5>
-                                    <div class="input-group">
-                                        <select class="form-control selectpicker" id="sellerId" name="sellerId" data-live-search="true">
-                                            <option th:each="seller: ${sellers}" th:value="${seller.id}"
-                                                    th:text="${seller.sellerName}"></option>
-                                        </select>
-
                                     </div>
                                     <br>
                                     <div class="input-group col-sm-12">

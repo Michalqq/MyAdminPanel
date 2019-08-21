@@ -73,7 +73,7 @@
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
-            <a href="#">
+            <a href="/index">
                 <img src="images/icon/logo.png" alt="Cool Admin"/>
             </a>
         </div>
@@ -192,7 +192,7 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="input-group col-sm-6">
+                                        <div class="col-sm-12">
                                             <select class="dropdown-toggle btn btn-secondary" style="width:500px"
                                                     data-style="btn-success" id="histStatus" name="histStatus">
                                                 <option value="4">Wszystko</option>
@@ -202,8 +202,10 @@
                                                 <option value="3">Sprzedane</option>
                                             </select>
                                         </div>
-
-                                        <div class="input-group col-sm-6">
+                                        <br>
+                                        <div class="input-group col-sm-12">
+                                        </div>
+                                        <div class="input-group col-sm-12">
                                             <button name="confirmDate" value="confirmDate" type="submit"
                                                     class="btn btn-primary btn-md">
                                                 <i class="fas fa-check-circle"></i>Show
@@ -253,10 +255,12 @@
                                         <td th:text="${myItem.notes}"></td>
                                         <td th:text="${myItem.deliveredToPoland}"></td>
                                         <td style="visibility:hidden">
-                                            <form th:action="@{/confirmCashOnDelivery?id=} + ${{myItem.id}}" method="post">
+                                            <form th:action="@{/confirmCashOnDelivery?id=} + ${{myItem.id}}"
+                                                  method="post">
                                                 <div class="table-data-feature-min">
                                                     <button th:name="confirm" class="item"
-                                                            data-toggle="tooltip" data-placement="top" title="Confirm Cash">
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            title="Confirm Cash">
                                                         <i class="zmdi zmdi-check"></i>
                                                     </button>
                                                 </div>

@@ -13,11 +13,10 @@ import java.util.Map;
 public class test {
 
     public static void main(String[] args) {
-        Date current = Calendar.getInstance().getTime();
-        System.out.println(
-                DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
-
-
-
+        System.out.println(isOdd(1));
+        System.out.println(isOdd(-2000));
+    }
+    public static boolean isOdd(int i) {
+        return i % 2 == 1;
     }
 }
