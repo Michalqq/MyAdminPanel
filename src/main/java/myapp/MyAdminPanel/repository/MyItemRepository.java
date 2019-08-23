@@ -20,12 +20,12 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findItemInTransportByItemId(@Param("itemId") int itemId);
 
     @Query(value = "FROM MyItem " +
-            "WHERE lastActionDate BETWEEN :startDate  AND :stopDate and deliveredToPoland = :deliveryStatus"+
+            "WHERE lastActionDate BETWEEN :startDate AND :stopDate and deliveredToPoland = :deliveryStatus"+
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetweenAndDeliveredToPolandEquals(String startDate, String stopDate, int deliveryStatus);
 
     @Query(value = "FROM MyItem " +
-            "WHERE lastActionDate BETWEEN :startDate  AND :stopDate and deliveredToPoland is null"+
+            "WHERE lastActionDate BETWEEN :startDate  AND :stopDate AND deliveredToPoland is null"+
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(String startDate, String stopDate);
 
@@ -54,6 +54,12 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     @Query(value = "SELECT MAX(id) FROM MyItem")
     int getMaxId();
+
+    @Query(value="SELECT SUM(sellPrice) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
+    int getSellPriceSumWhereSellDateBetween(String startDate, String stopDate);
+
+    @Query(value="SELECT SUM(buyPrice) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
+    int getBuyPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
     Optional<MyItem> findById(Integer ID);
 

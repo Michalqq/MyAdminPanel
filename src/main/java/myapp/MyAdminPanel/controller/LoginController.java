@@ -1,7 +1,5 @@
 package myapp.MyAdminPanel.controller;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
@@ -9,20 +7,16 @@ import myapp.MyAdminPanel.model.User;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.DBAction;
-import myapp.MyAdminPanel.service.MyItemDBAction;
 import myapp.MyAdminPanel.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -144,6 +138,14 @@ public class LoginController {
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
+            List<Integer> list1 = new ArrayList<>(); //todo tested
+            list1.add(1250);
+            list1.add(2540);
+            list1.add(3120);
+            list1.add(400);
+            list1.add(myItemRepository.getSellPriceSumWhereSellDateBetween("2019-08-01", "2019-08-30"));
+            list1.add(myItemRepository.getBuyPriceSumWhereSellDateBetween("2019-08-01", "2019-08-30"));
+            modelAndView.addObject("dataToChart", list1);
             modelAndView.setViewName("index");
         }
         return modelAndView;

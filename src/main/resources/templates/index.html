@@ -504,7 +504,14 @@
 </script>
 
 <!-- Main JS-->
-<script src="js/main.js"></script>
+<script th:inline="javascript">
+     /*<![CDATA[*/
+
+        var dataToChart = /*[[${dataToChart}]]*/ '0';
+
+    /*]]>*/
+</script>
+<script src="js/main.js" th:inline="javascript"></script>
 
 </body>
 
