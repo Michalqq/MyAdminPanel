@@ -36,23 +36,12 @@ public class HistoryController {
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
                                    @RequestParam(value = "startDate", defaultValue = "") String startDate,
-                                   @RequestParam(value = "stopDate", defaultValue = "") String stopDate) {
-        ModelAndView modelAndView = new ModelAndView();
-        List<MyItem> myItems = new ArrayList<>();
-        if (startDate.equals("")) startDate = this.getYesterDay();
-        if (stopDate.equals("")) stopDate = this.getToday();
-        if (status == 4) {
-            myItems = myItemRepository.findAllByLastActionDateBetween(getFullStartDate(startDate), getFullStopDate(stopDate));
-        } else if (status == 0) {
-            myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(getFullStartDate(startDate), getFullStopDate(stopDate));
-        } else {
-            myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
-        }
+                                   @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
+                                   ModelAndView modelAndView) {
+        List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
         this.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
-        modelAndView.addObject("startDate", startDate);
-        modelAndView.addObject("stopDate", stopDate);
         modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("history");
         return modelAndView;
@@ -90,5 +79,20 @@ public class HistoryController {
             double profit = Math.round((item.getSellPrice() - item.getBuyPrice()) / (item.getBuyPrice() * 0.01));
             item.setProfit(profit);
         }
+    }
+    private List<MyItem> getHistoryByStatus(int status, String startDate, String stopDate, ModelAndView modelAndView){
+        List<MyItem> myItems;
+        if (startDate.equals("")) startDate = this.getYesterDay();
+        if (stopDate.equals("")) stopDate = this.getToday();
+        if (status == 4) {
+            myItems = myItemRepository.findAllByLastActionDateBetween(getFullStartDate(startDate), getFullStopDate(stopDate));
+        } else if (status == 0) {
+            myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(getFullStartDate(startDate), getFullStopDate(stopDate));
+        } else {
+            myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
+        }
+        modelAndView.addObject("startDate", startDate);
+        modelAndView.addObject("stopDate", stopDate);
+        return myItems;
     }
 }
