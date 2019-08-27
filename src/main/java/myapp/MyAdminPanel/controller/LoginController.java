@@ -6,6 +6,7 @@ import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.model.User;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.CountProfitByMonth;
 import myapp.MyAdminPanel.service.DBAction;
 import myapp.MyAdminPanel.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +40,9 @@ public class LoginController {
 
     @Autowired
     private DBAction dbAction;
+
+    @Autowired
+    private CountProfitByMonth countProfitByMonth;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView) {
@@ -138,14 +144,7 @@ public class LoginController {
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
-            List<Integer> list1 = new ArrayList<>(); //todo tested
-            list1.add(1250);
-            list1.add(2540);
-            list1.add(3120);
-            list1.add(400);
-            list1.add(myItemRepository.getSellPriceSumWhereSellDateBetween("2019-08-01", "2019-08-30"));
-            list1.add(myItemRepository.getBuyPriceSumWhereSellDateBetween("2019-08-01", "2019-08-30"));
-            modelAndView.addObject("dataToChart", list1);
+            modelAndView.addObject("dataToChart", getProfitLast6Month());
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -185,7 +184,7 @@ public class LoginController {
 
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
-            return itemList.stream().filter(x->x.getName()!=null).filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+            return itemList.stream().filter(x -> x.getName() != null).filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
         } else {
             return itemList;
         }
@@ -196,6 +195,14 @@ public class LoginController {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
             myItem.setQuantInTransport(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
         }
+    }
+
+    public List<Integer> getProfitLast6Month() {
+        List<Integer> profitList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            profitList.add(countProfitByMonth.getProfit(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        return profitList;
     }
 
 }

@@ -55,10 +55,10 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "SELECT MAX(id) FROM MyItem")
     int getMaxId();
 
-    @Query(value="SELECT SUM(sellPrice) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
+    @Query(value="SELECT COALESCE(SUM(sellPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
     int getSellPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
-    @Query(value="SELECT SUM(buyPrice) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
+    @Query(value="SELECT COALESCE(SUM(buyPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
     int getBuyPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
     Optional<MyItem> findById(Integer ID);
