@@ -146,6 +146,7 @@ public class LoginController {
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("dataToChart", getProfitLast6Month());
             modelAndView.addObject("monthNameToChart", getNameOfLast6Month());
+            modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
             modelAndView.setViewName("index");
         }
         return modelAndView;
