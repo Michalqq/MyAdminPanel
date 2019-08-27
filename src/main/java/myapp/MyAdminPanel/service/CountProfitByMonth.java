@@ -7,9 +7,13 @@ import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjuster;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.time.temporal.TemporalAdjusters;
@@ -25,20 +29,25 @@ public class CountProfitByMonth {
     private MyItemRepository myItemRepository;
 
     public int getProfit(String month) {
-        int profit = 0;
-        int tempValue = 0;
         String startDate = LocalDate.now().getYear() + "-" + month + "-01";
-        String date = "1/" + month + "/" + LocalDate.now().getYear();
-        LocalDate lastDayOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("d/MM/yyyy")).with(TemporalAdjusters.lastDayOfMonth());
-        String stopDate = lastDayOfMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(startDate);
-        System.out.println(stopDate);
-        System.out.println("++++++++++++++++++++++");
+        String stopDate = getDateWithLastDayOfMonth(month);
+        return this.countProfitByDate(startDate, stopDate);
+    }
+
+    public String getMonthName(String month){
+        return Month.of(Integer.parseInt(month)).getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL"));
+    }
+
+    private int countProfitByDate(String startDate, String stopDate){
+        int profit, tempValue = 0;
         profit = (myItemRepository.getSellPriceSumWhereSellDateBetween(startDate, stopDate));
         tempValue = (myItemRepository.getBuyPriceSumWhereSellDateBetween(startDate, stopDate));
-        profit = profit - tempValue;
-        System.out.println(profit);
+        return profit - tempValue;
+    }
 
-        return profit;
+    private static String getDateWithLastDayOfMonth(String month){
+        String date = "1/" + month + "/" + LocalDate.now().getYear();
+        LocalDate lastDayOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("d/MM/yyyy")).with(TemporalAdjusters.lastDayOfMonth());
+        return lastDayOfMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

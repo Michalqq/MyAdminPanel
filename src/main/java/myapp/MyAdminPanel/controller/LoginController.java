@@ -145,6 +145,7 @@ public class LoginController {
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("dataToChart", getProfitLast6Month());
+            modelAndView.addObject("monthNameToChart", getNameOfLast6Month());
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -202,7 +203,16 @@ public class LoginController {
         for (int i = 0; i < 6; i++) {
             profitList.add(countProfitByMonth.getProfit(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
         }
+        Collections.reverse(profitList);
         return profitList;
+    }
+    public List<String> getNameOfLast6Month() {
+        List<String> nameList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            nameList.add(countProfitByMonth.getMonthName(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        Collections.reverse(nameList);
+        return nameList;
     }
 
 }
