@@ -1,10 +1,13 @@
 package myapp.MyAdminPanel.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class DateGenerator {
@@ -21,5 +24,13 @@ public class DateGenerator {
 
     public static String getFirstDayOfMonth(String month) {
         return LocalDate.now().getYear() + "-" + month + "-01";
+    }
+
+    public static List<String> getLastDate(int quantityOfDays){
+        List<String> dateList = new ArrayList<>();
+        for (int i = 0; i < quantityOfDays; i++) {
+            dateList.add(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now().minusDays(i)));
+        }
+        return dateList;
     }
 }

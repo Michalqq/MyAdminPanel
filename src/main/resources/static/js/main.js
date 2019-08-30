@@ -149,9 +149,9 @@ function iterateTableGetChecked(){
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               ticks: {
-                display: false,
+                display: true,
               }
             }]
           },
@@ -179,14 +179,14 @@ function iterateTableGetChecked(){
     if (ctx) {
       ctx.height = 130;
       var myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
           labels: labelToEarningByDays,
-          type: 'line',
+          type: 'bar',
           datasets: [{
             data: dataToEarningByDays,
             label: 'Dataset',
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(0,0,0,.65)',
             borderColor: 'rgba(255,255,255,.55)',
           },]
         },
@@ -220,9 +220,9 @@ function iterateTableGetChecked(){
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               ticks: {
-                display: false,
+                display: true,
               }
             }]
           },
@@ -261,7 +261,7 @@ function iterateTableGetChecked(){
           ]
         },
         options: {
-          maintainAspectRatio: true,
+          maintainAspectRatio: false,
           legend: {
             display: false
           },
@@ -272,7 +272,7 @@ function iterateTableGetChecked(){
               barPercentage: 0.65
             }],
             yAxes: [{
-              display: false
+              display: true
             }]
           }
         }
@@ -284,9 +284,6 @@ function iterateTableGetChecked(){
     const brandService = 'rgba(0,173,95,0.8)'
 
     var elements = 10
-    //var name = $('#testData').val();
-    //alert(name); //todo
-
     var data2 = [102, 70, 80, 100, 56, 53, 80, 75, 65, 90]
 
     var ctx = document.getElementById("recent-rep-chart");

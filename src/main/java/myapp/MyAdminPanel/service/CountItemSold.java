@@ -7,6 +7,9 @@ import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Data
 @NoArgsConstructor
@@ -20,5 +23,13 @@ public class CountItemSold {
         String startDate = DateGenerator.getFirstDayOfMonth(month);
         String stopDate = DateGenerator.getLastDayOfMonth(month);
         return myItemRepository.countBySellPriceIsNotNullAndSellDateIsBetween(startDate, stopDate);
+    }
+
+    public List<Double> getLastSoldSumData(int quantityOfDay, List<String> date) {
+        List<Double> soldByDayList = new ArrayList<>();
+        for (int i = 0; i < quantityOfDay; i++) {
+            soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs(date.get(i)).getSellPrice());
+        }
+        return soldByDayList;
     }
 }

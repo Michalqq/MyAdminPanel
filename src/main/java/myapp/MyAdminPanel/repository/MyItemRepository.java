@@ -21,6 +21,9 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(SUM(sellPrice), sellDate) FROM MyItem WHERE sellPrice IS NOT NULL GROUP BY sellDate ORDER BY sellDate DESC")
     List<MyItemSoldSum> sumSellPriceByDays();
 
+    @Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(COALESCE(SUM(sellPrice),0), sellDate) FROM MyItem WHERE sellPrice IS NOT NULL AND sellDate = :sellDate")
+    MyItemSoldSum sumSellPriceWhereSellDateIs(String sellDate);
+
     @Query(value = "FROM MyItem " +
             "WHERE deliveredToPoland is null AND itemId = :itemId " +
             "ORDER BY lastActionDate ASC")
