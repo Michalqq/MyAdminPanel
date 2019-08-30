@@ -193,6 +193,7 @@
                                         <th>Cena zakupu</th>
                                         <th>Data zakupu</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -202,6 +203,16 @@
                                         <td th:text="${myItem.quantity}"></td>
                                         <td th:text="${myItem.buyPrice}"></td>
                                         <td th:text="${myItem.buyDate}"></td>
+                                        <td>
+                                            <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
+                                                <div class="table-data-feature">
+                                                    <button th:name="edit" class="item"
+                                                            data-toggle="tooltip" data-placement="item" title="Edit">
+                                                        <i class="zmdi zmdi-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
                                         <td>
                                             <form th:action="@{/delivery?id=} + ${{myItem.itemId}}" method="post">
                                                 <div class="table-data-feature">

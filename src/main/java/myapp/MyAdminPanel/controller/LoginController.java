@@ -113,6 +113,7 @@ public class LoginController {
             dbAction.setCashOnDelivery(myItem.get(), cashOnDelivery);
             if (note.length() > 0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
         }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -124,6 +125,7 @@ public class LoginController {
         if (myItem.isPresent()) {
             myItemRepository.delete(myItem.get());
         }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
