@@ -181,10 +181,10 @@ function iterateTableGetChecked(){
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+          labels: labelToEarningByDays,
           type: 'line',
           datasets: [{
-            data: [65, 59, 84, 84, 51, 55],
+            data: dataToEarningByDays,
             label: 'Dataset',
             backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',

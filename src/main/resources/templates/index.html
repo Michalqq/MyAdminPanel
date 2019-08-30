@@ -285,25 +285,25 @@
                         </div>
                     </div>
                     <div class="row m-t-25">
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="overview-item overview-item--c1">
-                                <div class="overview__inner">
-                                    <div class="overview-box clearfix">
-                                        <div class="icon">
-                                            <i class="zmdi zmdi-account-o"></i>
-                                        </div>
-                                        <div class="text">
-                                            <h2 th:text="${totalProfit}"></h2>
-                                            <span>total earning</span>
-                                        </div>
-                                    </div>
-                                    <div class="overview-chart">
-                                        <canvas id="widgetChart1"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
+                        <!--<div class="col-sm-6 col-lg-3">-->
+                            <!--<div class="overview-item overview-item&#45;&#45;c1">-->
+                                <!--<div class="overview__inner">-->
+                                    <!--<div class="overview-box clearfix">-->
+                                        <!--<div class="icon">-->
+                                            <!--<i class="zmdi zmdi-account-o"></i>-->
+                                        <!--</div>-->
+                                        <!--<div class="text">-->
+                                            <!--<h2 th:text="${totalProfit}"></h2>-->
+                                            <!--<span>total earning</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="overview-chart">-->
+                                        <!--<canvas id="widgetChart1"></canvas>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-sm-6 col-lg-4">
                             <div class="overview-item overview-item--c2">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -321,7 +321,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-4">
                             <div class="overview-item overview-item--c3">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -329,8 +329,8 @@
                                             <i class="zmdi zmdi-calendar-note"></i>
                                         </div>
                                         <div class="text">
-                                            <h2>1,086</h2>
-                                            <span>this week</span>
+                                            <h2 th:text="${totalEarningLastDays}"></h2>
+                                            <span>earning by day</span>
                                         </div>
                                     </div>
                                     <div class="overview-chart">
@@ -339,7 +339,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
+                        <div class="col-sm-6 col-lg-4">
                             <div class="overview-item overview-item--c1">
                                 <div class="overview__inner">
                                     <div class="overview-box clearfix">
@@ -512,6 +512,11 @@
         var totalProfit = /*[[${totalProfit}]]*/ '0';
         var totalItemSold = /*[[${totalItemSold}]]*/ '0';
         var dataToItemSold = /*[[${dataToItemSold}]]*/ '0';
+        var totalEarningLastDays = /*[[${totalEarningLastDays}]]*/ '0';
+        var dataToEarningByDays = /*[[${dataToEarningByDays}]]*/ '0';
+        var labelToEarningByDays = /*[[${labelToEarningByDays}]]*/ '0';
+
+
 
     /*]]>*/
 </script>

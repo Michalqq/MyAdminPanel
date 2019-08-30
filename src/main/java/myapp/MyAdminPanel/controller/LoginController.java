@@ -1,9 +1,6 @@
 package myapp.MyAdminPanel.controller;
 
-import myapp.MyAdminPanel.model.Basket;
-import myapp.MyAdminPanel.model.Item;
-import myapp.MyAdminPanel.model.MyItem;
-import myapp.MyAdminPanel.model.User;
+import myapp.MyAdminPanel.model.*;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.*;
@@ -145,11 +142,7 @@ public class LoginController {
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
-            modelAndView.addObject("dataToChart", getProfitLast6Month());
-            modelAndView.addObject("monthNameToChart", getNameOfLastMonth(6));
-            modelAndView.addObject("dataToItemSold", getSoldItemByLastMonth(6));
-            modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
-            modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNullAndSellDateIsBetween("2019-08-01" ,"2019-08-30" ));
+            this.chartDataCreator(modelAndView);
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -168,6 +161,27 @@ public class LoginController {
         modelAndView.addObject("myItems", myItems);
         modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("delivery");
+        return modelAndView;
+    }
+
+    public ModelAndView chartDataCreator(ModelAndView modelAndView) {
+        modelAndView.addObject("dataToChart", getProfitLast6Month());
+        modelAndView.addObject("monthNameToChart", getNameOfLastMonth(6));
+        modelAndView.addObject("dataToItemSold", getSoldItemByLastMonth(6));
+        modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
+        modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
+        List<MyItemSoldSum> list = myItemRepository.sumSellPriceByDays();
+        List<Double> soldByDayList = new ArrayList<>();
+        List<String> dataByDay = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            soldByDayList.add(list.get(i).getSellPrice());
+            dataByDay.add(list.get(i).getSellDate());
+        }
+        Collections.reverse(soldByDayList);
+        Collections.reverse(dataByDay);
+        modelAndView.addObject("dataToEarningByDays", soldByDayList);
+        modelAndView.addObject("labelToEarningByDays", dataByDay);
+        modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
         return modelAndView;
     }
 
@@ -202,9 +216,9 @@ public class LoginController {
         }
     }
 
-    public List<Integer> getSoldItemByLastMonth(int quantityOfMonth){
+    public List<Integer> getSoldItemByLastMonth(int quantityOfMonth) {
         List<Integer> soldItem = new ArrayList<>();
-        if (quantityOfMonth<0) {
+        if (quantityOfMonth < 0) {
             soldItem.add(0);
             return soldItem;
         }
@@ -223,6 +237,7 @@ public class LoginController {
         Collections.reverse(profitList);
         return profitList;
     }
+
     public List<String> getNameOfLastMonth(int quantityOfMonth) {
         List<String> nameList = new ArrayList<>();
         for (int i = 0; i < quantityOfMonth; i++) {

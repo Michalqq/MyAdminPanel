@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.repository;
 
 import myapp.MyAdminPanel.model.MyItem;
+import myapp.MyAdminPanel.model.MyItemSoldSum;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,18 +18,21 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     int countBySellPriceIsNotNullAndSellDateIsBetween(String startDate, String stopDate);
 
+    @Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(SUM(sellPrice), sellDate) FROM MyItem WHERE sellPrice IS NOT NULL GROUP BY sellDate ORDER BY sellDate DESC")
+    List<MyItemSoldSum> sumSellPriceByDays();
+
     @Query(value = "FROM MyItem " +
             "WHERE deliveredToPoland is null AND itemId = :itemId " +
             "ORDER BY lastActionDate ASC")
     List<MyItem> findItemInTransportByItemId(@Param("itemId") int itemId);
 
     @Query(value = "FROM MyItem " +
-            "WHERE lastActionDate BETWEEN :startDate AND :stopDate and deliveredToPoland = :deliveryStatus"+
+            "WHERE lastActionDate BETWEEN :startDate AND :stopDate and deliveredToPoland = :deliveryStatus" +
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetweenAndDeliveredToPolandEquals(String startDate, String stopDate, int deliveryStatus);
 
     @Query(value = "FROM MyItem " +
-            "WHERE lastActionDate BETWEEN :startDate  AND :stopDate AND deliveredToPoland is null"+
+            "WHERE lastActionDate BETWEEN :startDate  AND :stopDate AND deliveredToPoland is null" +
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(String startDate, String stopDate);
 
@@ -54,10 +58,10 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "SELECT MAX(id) FROM MyItem")
     int getMaxId();
 
-    @Query(value="SELECT COALESCE(SUM(sellPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
+    @Query(value = "SELECT COALESCE(SUM(sellPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
     int getSellPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
-    @Query(value="SELECT COALESCE(SUM(buyPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
+    @Query(value = "SELECT COALESCE(SUM(buyPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
     int getBuyPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
     Optional<MyItem> findById(Integer ID);
