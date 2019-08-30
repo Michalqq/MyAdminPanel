@@ -6,9 +6,7 @@ import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.model.User;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
-import myapp.MyAdminPanel.service.CountProfitByMonth;
-import myapp.MyAdminPanel.service.DBAction;
-import myapp.MyAdminPanel.service.UserService;
+import myapp.MyAdminPanel.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +41,9 @@ public class LoginController {
 
     @Autowired
     private CountProfitByMonth countProfitByMonth;
+
+    @Autowired
+    private CountItemSold countItemSold;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView) {
@@ -145,8 +146,10 @@ public class LoginController {
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("dataToChart", getProfitLast6Month());
-            modelAndView.addObject("monthNameToChart", getNameOfLast6Month());
+            modelAndView.addObject("monthNameToChart", getNameOfLastMonth(6));
+            modelAndView.addObject("dataToItemSold", getSoldItemByLastMonth(6));
             modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
+            modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNullAndSellDateIsBetween("2019-08-01" ,"2019-08-30" ));
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -199,6 +202,19 @@ public class LoginController {
         }
     }
 
+    public List<Integer> getSoldItemByLastMonth(int quantityOfMonth){
+        List<Integer> soldItem = new ArrayList<>();
+        if (quantityOfMonth<0) {
+            soldItem.add(0);
+            return soldItem;
+        }
+        for (int i = 0; i < quantityOfMonth; i++) {
+            soldItem.add(countItemSold.countItemSoldByMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        Collections.reverse(soldItem);
+        return soldItem;
+    }
+
     public List<Integer> getProfitLast6Month() {
         List<Integer> profitList = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -207,10 +223,10 @@ public class LoginController {
         Collections.reverse(profitList);
         return profitList;
     }
-    public List<String> getNameOfLast6Month() {
+    public List<String> getNameOfLastMonth(int quantityOfMonth) {
         List<String> nameList = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            nameList.add(countProfitByMonth.getMonthName(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        for (int i = 0; i < quantityOfMonth; i++) {
+            nameList.add(DateGenerator.getMonthName(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
         }
         Collections.reverse(nameList);
         return nameList;

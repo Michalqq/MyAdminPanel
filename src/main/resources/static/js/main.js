@@ -110,10 +110,10 @@ function iterateTableGetChecked(){
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+          labels: monthNameToChart,
           type: 'line',
           datasets: [{
-            data: [1, 18, 9, 17, 34, 22],
+            data: dataToItemSold,
             label: 'Dataset',
             backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',
@@ -243,7 +243,6 @@ function iterateTableGetChecked(){
       });
     }
 
-
     //WidgetChart 4
     var ctx = document.getElementById("widgetChart4");
     if (ctx) {
@@ -251,11 +250,10 @@ function iterateTableGetChecked(){
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          labels: monthNameToChart,
           datasets: [
             {
-              label: "My First dataset",
-              data: [78, 81, 80, 65, 58, 75, 60, 75, 65, 60, 60, 75],
+              data: dataToChart,
               borderColor: "transparent",
               borderWidth: "0",
               backgroundColor: "rgba(255,255,255,.3)"

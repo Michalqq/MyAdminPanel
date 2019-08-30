@@ -13,8 +13,7 @@ import java.util.Map;
 public class test {
 
     public static void main(String[] args) {
-        System.out.println(isOdd(1));
-        System.out.println(isOdd(-2000));
+        System.out.println(LocalDate.now().getMonth().minus(9));
     }
     public static boolean isOdd(int i) {
         return i % 2 == 1;

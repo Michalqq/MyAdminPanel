@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +12,10 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findBySellPriceIsNull();
 
     List<MyItem> findBySellPriceIsNullAndDeliveredToPolandIs(int deliveryStatus);
+
+    int countBySellPriceIsNotNull();
+
+    int countBySellPriceIsNotNullAndSellDateIsBetween(String startDate, String stopDate);
 
     @Query(value = "FROM MyItem " +
             "WHERE deliveredToPoland is null AND itemId = :itemId " +
@@ -33,10 +36,6 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
             "WHERE lastActionDate BETWEEN :startDate  AND :stopDate" +
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetween(String startDate, String stopDate);
-
-//   @Query(value = "FROM MyItem JOIN Item WHERE sellPrice is null and MyItem.itemId = Item.id AND deliveredToPoland = :deliveredToPoland " +
-//            "GROUP BY itemId")
-//    List<MyItem> findBySellPriceInNullWithItemNames(@Param("deliveredToPoland") int deliveredToPoland);
 
     @Query(value = "FROM MyItem " +
             "WHERE sellPrice is null AND deliveredToPoland = :deliveredToPoland " +
