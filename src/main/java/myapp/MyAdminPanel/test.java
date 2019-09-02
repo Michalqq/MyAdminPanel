@@ -13,9 +13,10 @@ import java.util.Map;
 public class test {
 
     public static void main(String[] args) {
-        System.out.println(LocalDate.now().getMonth().minus(9));
+        System.out.println(silnia(0));
     }
-    public static boolean isOdd(int i) {
-        return i % 2 == 1;
+
+    public static int silnia(int liczba) {
+        return liczba <= 1 ? 1 : silnia(liczba - 1) * liczba;
     }
 }
