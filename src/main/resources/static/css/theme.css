@@ -3142,9 +3142,9 @@ section {
 }
 
 .overview-item--c1 {
-    background-image: -moz-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);
-    background-image: -webkit-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);
-    background-image: -ms-linear-gradient(90deg, #3f5efb 0%, #fc466b 100%);
+    background-image: -moz-linear-gradient(90deg, #a6a6a6 0%, #737373 100%);
+    background-image: -webkit-linear-gradient(90deg, #a6a6a6 0%, #737373 100%);
+    background-image: -ms-linear-gradient(90deg, #a6a6a6 0%, #737373 100%);
 }
 
 .overview-item--c2 {
@@ -4629,7 +4629,6 @@ section {
     -moz-border-radius: 100%;
     border-radius: 100%;
     background: #e5e5e5;
-    margin-right: 5px;
 }
 .table-data-feature-min .item {
     display: block;

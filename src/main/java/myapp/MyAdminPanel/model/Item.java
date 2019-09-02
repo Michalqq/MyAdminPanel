@@ -1,12 +1,6 @@
 package myapp.MyAdminPanel.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.xml.internal.ws.developer.UsesJAXBContext;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "item")

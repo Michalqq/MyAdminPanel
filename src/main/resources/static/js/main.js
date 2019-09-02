@@ -44,10 +44,10 @@ function iterateTableGetChecked(){
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: monthNameToChart,
           type: 'line',
           datasets: [{
-            data: [78, 81, 80, 45, 34, 12, 40],
+            data: dataToChart,
             label: 'Dataset',
             backgroundColor: 'rgba(255,255,255,.1)',
             borderColor: 'rgba(255,255,255,.55)',
@@ -110,10 +110,10 @@ function iterateTableGetChecked(){
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+          labels: monthNameToChart,
           type: 'line',
           datasets: [{
-            data: [1, 18, 9, 17, 34, 22],
+            data: dataToItemSold,
             label: 'Dataset',
             backgroundColor: 'transparent',
             borderColor: 'rgba(255,255,255,.55)',
@@ -149,9 +149,9 @@ function iterateTableGetChecked(){
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               ticks: {
-                display: false,
+                display: true,
               }
             }]
           },
@@ -179,14 +179,14 @@ function iterateTableGetChecked(){
     if (ctx) {
       ctx.height = 130;
       var myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-          type: 'line',
+          labels: labelToEarningByDays,
+          type: 'bar',
           datasets: [{
-            data: [65, 59, 84, 84, 51, 55],
+            data: dataToEarningByDays,
             label: 'Dataset',
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(0,0,0,.65)',
             borderColor: 'rgba(255,255,255,.55)',
           },]
         },
@@ -220,9 +220,9 @@ function iterateTableGetChecked(){
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               ticks: {
-                display: false,
+                display: true,
               }
             }]
           },
@@ -243,7 +243,6 @@ function iterateTableGetChecked(){
       });
     }
 
-
     //WidgetChart 4
     var ctx = document.getElementById("widgetChart4");
     if (ctx) {
@@ -251,11 +250,10 @@ function iterateTableGetChecked(){
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+          labels: monthNameToChart,
           datasets: [
             {
-              label: "My First dataset",
-              data: [78, 81, 80, 65, 58, 75, 60, 75, 65, 60, 60, 75],
+              data: dataToChart,
               borderColor: "transparent",
               borderWidth: "0",
               backgroundColor: "rgba(255,255,255,.3)"
@@ -263,7 +261,7 @@ function iterateTableGetChecked(){
           ]
         },
         options: {
-          maintainAspectRatio: true,
+          maintainAspectRatio: false,
           legend: {
             display: false
           },
@@ -274,7 +272,7 @@ function iterateTableGetChecked(){
               barPercentage: 0.65
             }],
             yAxes: [{
-              display: false
+              display: true
             }]
           }
         }
@@ -286,9 +284,6 @@ function iterateTableGetChecked(){
     const brandService = 'rgba(0,173,95,0.8)'
 
     var elements = 10
-    //var name = $('#testData').val();
-    //alert(name); //todo
-
     var data2 = [102, 70, 80, 100, 56, 53, 80, 75, 65, 90]
 
     var ctx = document.getElementById("recent-rep-chart");

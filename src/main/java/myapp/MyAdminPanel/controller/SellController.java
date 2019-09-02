@@ -1,11 +1,11 @@
 package myapp.MyAdminPanel.controller;
 
 import myapp.MyAdminPanel.model.Basket;
-import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.DBAction;
+import myapp.MyAdminPanel.service.ItemsNameFiller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -34,6 +30,9 @@ public class SellController {
 
     @Autowired
     private DBAction dbAction;
+
+    @Autowired
+    private ItemsNameFiller itemsNameFiller;
 
     @RequestMapping(value = {"/sell"}, params = "sell", method = RequestMethod.POST)
     public ModelAndView sellItem(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
@@ -71,7 +70,7 @@ public class SellController {
         Optional<MyItem> item = myItemRepository.findById(itemId);
         if (saveSellToDb(item.get(), commission, sellPrice, note, cashOnDelivery)) {
             basket.add(item);
-            getItemsNames(basket.getMyItemList(), getItemsMap());
+            itemsNameFiller.getItemsNames(basket.getMyItemList());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
         modelAndView.addObject("SellInfo", basket.getMyItemList().size());
         modelAndView.addObject("SellInfo", "Dodano do koszyka:");
@@ -125,34 +124,4 @@ public class SellController {
         basket.getMyItemList().clear();
         return modelAndView;
     }
-
-
-    @RequestMapping(value = {"/delivery"}, params = "confirmDelivery", method = RequestMethod.POST)
-    public ModelAndView setQuantityOfDelivered(@RequestParam(name = "checkedItemId") int itemId,
-                                               @RequestParam(name = "quantityDelivered") int quantity,
-                                               ModelAndView modelAndView) {
-        List<MyItem> items = myItemRepository.findItemInTransportByItemId(itemId);
-        for (int i = 0; i < quantity; i++) {
-            dbAction.setDeliveredToPolStatus(items.get(i), 1);
-        }
-        modelAndView.setViewName("redirect:/delivery");
-        return modelAndView;
-    }
-
-    public Map<Integer, String> getItemsMap() {
-        List<Item> items = itemRepository.findAll();
-        Map<Integer, String> itemMap = new HashMap<>();
-        for (Item item : items) {
-            itemMap.put(item.getId(), item.getName());
-        }
-        return itemMap;
-    }
-
-    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
-        for (MyItem myItem : itemList) {
-            myItem.setName(itemMap.get(myItem.getItemId()));
-        }
-        return itemList;
-    }
-
 }

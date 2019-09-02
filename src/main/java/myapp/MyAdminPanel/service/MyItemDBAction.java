@@ -65,7 +65,9 @@ public class MyItemDBAction implements DBAction {
 
     @Override
     public boolean setNote(MyItem myItem, String note) {
-        return false;
+        myItem.setNotes(note);
+        myItemRepository.save(myItem);
+        return true;
     }
 
     @Override

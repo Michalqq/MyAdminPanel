@@ -1,27 +1,19 @@
 package myapp.MyAdminPanel.controller;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import myapp.MyAdminPanel.model.Basket;
-import myapp.MyAdminPanel.model.Item;
-import myapp.MyAdminPanel.model.MyItem;
-import myapp.MyAdminPanel.model.User;
+import myapp.MyAdminPanel.model.*;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
-import myapp.MyAdminPanel.service.DBAction;
-import myapp.MyAdminPanel.service.MyItemDBAction;
-import myapp.MyAdminPanel.service.UserService;
+import myapp.MyAdminPanel.service.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -43,6 +35,12 @@ public class LoginController {
 
     @Autowired
     private DBAction dbAction;
+
+    @Autowired
+    private CountProfitByMonth countProfitByMonth;
+
+    @Autowired
+    private CountItemSold countItemSold;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView) {
@@ -115,6 +113,7 @@ public class LoginController {
             dbAction.setCashOnDelivery(myItem.get(), cashOnDelivery);
             if (note.length() > 0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
         }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -126,6 +125,7 @@ public class LoginController {
         if (myItem.isPresent()) {
             myItemRepository.delete(myItem.get());
         }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -144,6 +144,7 @@ public class LoginController {
             this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
+            this.chartDataCreator(modelAndView);
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -165,6 +166,27 @@ public class LoginController {
         return modelAndView;
     }
 
+    public ModelAndView chartDataCreator(ModelAndView modelAndView) {
+        modelAndView.addObject("dataToChart", getProfitLast6Month());
+        modelAndView.addObject("monthNameToChart", getNameOfLastMonth(6));
+        modelAndView.addObject("dataToItemSold", getSoldItemByLastMonth(6));
+        modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
+        modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
+        this.getSoldSumByLastDays(modelAndView, 30);
+        return modelAndView;
+    }
+
+    public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
+        List<String> dataByDay = DateGenerator.getLastDate(30);
+        List<Double> soldByDayList = countItemSold.getLastSoldSumData(30, dataByDay);
+        Collections.reverse(soldByDayList);
+        Collections.reverse(dataByDay);
+        modelAndView.addObject("dataToEarningByDays", soldByDayList);
+        modelAndView.addObject("labelToEarningByDays", dataByDay);
+        modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
+        return modelAndView;
+    }
+
     public Map<Integer, String> getItemsMap() {
         List<Item> items = itemRepository.findAll();
         Map<Integer, String> itemMap = new HashMap<>();
@@ -183,7 +205,7 @@ public class LoginController {
 
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
-            return itemList.stream().filter(x->x.getName()!=null).filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
+            return itemList.stream().filter(x -> x.getName() != null).filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
         } else {
             return itemList;
         }
@@ -194,6 +216,37 @@ public class LoginController {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(1, myItem.getItemId()));
             myItem.setQuantInTransport(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
         }
+    }
+
+    public List<Integer> getSoldItemByLastMonth(int quantityOfMonth) {
+        List<Integer> soldItem = new ArrayList<>();
+        if (quantityOfMonth < 0) {
+            soldItem.add(0);
+            return soldItem;
+        }
+        for (int i = 0; i < quantityOfMonth; i++) {
+            soldItem.add(countItemSold.countItemSoldByMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        Collections.reverse(soldItem);
+        return soldItem;
+    }
+
+    public List<Integer> getProfitLast6Month() {
+        List<Integer> profitList = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            profitList.add(countProfitByMonth.getProfit(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        Collections.reverse(profitList);
+        return profitList;
+    }
+
+    public List<String> getNameOfLastMonth(int quantityOfMonth) {
+        List<String> nameList = new ArrayList<>();
+        for (int i = 0; i < quantityOfMonth; i++) {
+            nameList.add(DateGenerator.getMonthName(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        Collections.reverse(nameList);
+        return nameList;
     }
 
 }
