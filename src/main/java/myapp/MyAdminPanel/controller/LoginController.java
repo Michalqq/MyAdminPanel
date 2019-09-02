@@ -21,26 +21,23 @@ import java.util.stream.Collectors;
 @Controller
 public class LoginController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private MyItemRepository myItemRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
-
-    @Autowired
     private Basket basket;
-
-    @Autowired
     private DBAction dbAction;
-
-    @Autowired
     private CountProfitByMonth countProfitByMonth;
-
-    @Autowired
     private CountItemSold countItemSold;
+
+    public LoginController(UserService userService, MyItemRepository myItemRepository, ItemRepository itemRepository, Basket basket, DBAction dbAction, CountProfitByMonth countProfitByMonth, CountItemSold countItemSold) {
+        this.userService = userService;
+        this.myItemRepository = myItemRepository;
+        this.itemRepository = itemRepository;
+        this.basket = basket;
+        this.dbAction = dbAction;
+        this.countProfitByMonth = countProfitByMonth;
+        this.countItemSold = countItemSold;
+    }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView) {
