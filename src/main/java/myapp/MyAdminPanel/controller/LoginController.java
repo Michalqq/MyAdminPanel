@@ -138,11 +138,11 @@ public class LoginController {
         else {
 //           List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
             List<MyItem> myItems = myItemRepository.findBySellPriceIsNull();
-//            myItems = (getItemsNames(myItems, this.getItemsMap()));
-//            if (name != null && !name.equals("")) {
-//                myItems = (getByNameContains(myItems, name));
-//            }
-            //this.getQuantityOfItems(myItems);
+            myItems = (getItemsNames(myItems, this.getItemsMap()));
+            if (name != null && !name.equals("")) {
+                myItems = (getByNameContains(myItems, name));
+            }
+            this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
             modelAndView.addObject("myItems", myItems);
             this.chartDataCreator(modelAndView);
