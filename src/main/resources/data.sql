@@ -452,7 +452,7 @@ INSERT INTO wskazniki (ID, Item_ID, Buy_date, Sell_date, Buy_price, Cash_on_deli
 (474, 40, '2019-05-20', '2019-06-12', '201.57', NULL, NULL, '315.88', 15, 3, '2019-06-12 20:04:53', 'mbernard'),
 (475, 41, '2019-05-20', '2019-05-20', '216.00', NULL, NULL, '297.48', 15, 3, '2019-05-20 19:45:53', 'Vurietto'),
 (476, 1, '2019-05-23', '2019-07-03', '73.18', NULL, NULL, '96.60', 8, 3, '2019-07-03 20:58:53', 'asik0210');
-INSERT INTO `wskazniki` (`ID`, `Item_ID`, `Buy_date`, `Sell_date`, `Buy_price`, `Cash_on_delivery`, `If_cash_on_delivery`, `Sell_price`, `seller_ID`, `delivered_to_Poland`, `Last_action_date`, `Notes`) VALUES
+INSERT INTO wskazniki (ID, Item_ID, Buy_date, Sell_date, Buy_price, Cash_on_delivery, If_cash_on_delivery, Sell_price, seller_ID, delivered_to_Poland, Last_action_date, Notes) VALUES
 (477, 1, '2019-05-23', '2019-07-03', '73.18', NULL, NULL, '96.60', 8, 3, '2019-07-03 21:01:23', 'Blazerku'),
 (478, 1, '2019-05-23', '2019-07-04', '73.18', NULL, NULL, '96.60', 8, 3, '2019-07-04 21:00:31', 'Pawel461'),
 (479, 49, '2019-05-23', '2019-05-23', '207.36', NULL, NULL, '284.88', 15, 3, '2019-05-23 21:16:28', 'Client:44188316'),
