@@ -141,10 +141,10 @@ public class LoginController {
 //            if (name != null && !name.equals("")) {
 //                myItems = (getByNameContains(myItems, name));
 //            }
-        //    this.getQuantityOfItems(myItems);
+            //this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
 //            modelAndView.addObject("myItems", myItems);
-         //   this.chartDataCreator(modelAndView);
+            this.chartDataCreator(modelAndView);
             modelAndView.setViewName("index");
         }
         return modelAndView;
