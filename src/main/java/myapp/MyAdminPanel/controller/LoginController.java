@@ -136,14 +136,14 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-           List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
+//           List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
 //            myItems = (getItemsNames(myItems, this.getItemsMap()));
 //            if (name != null && !name.equals("")) {
 //                myItems = (getByNameContains(myItems, name));
 //            }
             //this.getQuantityOfItems(myItems);
             modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
-            modelAndView.addObject("myItems", myItems);
+ //           modelAndView.addObject("myItems", myItems);
             this.chartDataCreator(modelAndView);
             modelAndView.setViewName("index");
         }
@@ -178,7 +178,7 @@ public class LoginController {
 
     public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
         List<String> dataByDay = DateGenerator.getLastDate(30);
-        //List<Double> soldByDayList = countItemSold.getLastSoldSumData(30, dataByDay);
+        List<Double> soldByDayList = countItemSold.getLastSoldSumData(30, dataByDay);
         //Collections.reverse(soldByDayList);
         //Collections.reverse(dataByDay);
         //modelAndView.addObject("dataToEarningByDays", soldByDayList);
