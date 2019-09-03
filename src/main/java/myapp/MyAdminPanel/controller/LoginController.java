@@ -170,7 +170,7 @@ public class LoginController {
         modelAndView.addObject("dataToChart", getProfitLast6Month());
         modelAndView.addObject("monthNameToChart", getNameOfLastMonth(6));
         modelAndView.addObject("dataToItemSold", getSoldItemByLastMonth(6));
-        //modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
+        modelAndView.addObject("totalProfit", getProfitLast6Month().stream().mapToInt(Integer::intValue).sum());
         modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
         //this.getSoldSumByLastDays(modelAndView, 30);
         return modelAndView;
