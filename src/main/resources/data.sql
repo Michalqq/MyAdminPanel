@@ -1,3 +1,4 @@
+INSERT INTO user_role (role_id, user_id) VALUES (1,1)
 INSERT INTO wskazniki (ID, Item_ID, Buy_date, Sell_date, Buy_price, Cash_on_delivery, If_cash_on_delivery, Sell_price, seller_ID, delivered_to_Poland, Last_action_date, Notes) VALUES
 (477, 1, '2019-05-23', '2019-07-03', '73.18', NULL, NULL, '96.60', 8, 3, '2019-07-03 21:01:23', 'Blazerku'),
 (478, 1, '2019-05-23', '2019-07-04', '73.18', NULL, NULL, '96.60', 8, 3, '2019-07-04 21:00:31', 'Pawel461'),
