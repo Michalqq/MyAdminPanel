@@ -1,4 +1,4 @@
-UPDATE INTO `role` VALUES (1,'ADMIN');
+INSERT INTO `role` VALUES (1,'ADMIN');
 INSERT INTO `wskazniki` (`ID`, `Item_ID`, `Buy_date`, `Sell_date`, `Buy_price`, `Cash_on_delivery`, `If_cash_on_delivery`, `Sell_price`, `seller_ID`, `delivered_to_Poland`, `Last_action_date`, `Notes`) VALUES
 (1, 30, '2018-11-07', '2019-01-22', '27.81', NULL, NULL, '55.19', 5, 3, '2019-01-22 20:13:27', 'B_U_N_C_H'),
 (2, 1, '2018-11-23', '2019-02-07', '59.72', NULL, NULL, '93.84', 1, 3, '2019-02-07 19:42:19', 'Client:43254588'),
