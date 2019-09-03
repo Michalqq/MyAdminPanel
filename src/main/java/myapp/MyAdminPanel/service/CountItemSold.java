@@ -30,7 +30,7 @@ public class CountItemSold {
 //        for (int i = 0; i < quantityOfDay; i++) {
 //            soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs(date.get(i)).getSellPrice());
 //        }
-        soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs("2019-09-02").getSellPrice());
+        soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs("2019-09-02"));
         return soldByDayList;
     }
 }
