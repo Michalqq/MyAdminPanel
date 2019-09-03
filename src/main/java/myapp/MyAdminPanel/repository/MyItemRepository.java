@@ -52,7 +52,6 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     //List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
     Set<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
 
-
     @Query(value = "FROM MyItem " +
             "WHERE sellPrice is null AND deliveredToPoland is null")
             //"GROUP BY itemId")
