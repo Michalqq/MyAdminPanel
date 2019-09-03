@@ -136,15 +136,15 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
-            myItems = (getItemsNames(myItems, this.getItemsMap()));
-            if (name != null && !name.equals("")) {
-                myItems = (getByNameContains(myItems, name));
-            }
-            this.getQuantityOfItems(myItems);
-            modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
-            modelAndView.addObject("myItems", myItems);
-            this.chartDataCreator(modelAndView);
+//            List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
+//            myItems = (getItemsNames(myItems, this.getItemsMap()));
+//            if (name != null && !name.equals("")) {
+//                myItems = (getByNameContains(myItems, name));
+//            }
+//            this.getQuantityOfItems(myItems);
+//            modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+//            modelAndView.addObject("myItems", myItems);
+//            this.chartDataCreator(modelAndView);
             modelAndView.setViewName("index");
         }
         return modelAndView;
