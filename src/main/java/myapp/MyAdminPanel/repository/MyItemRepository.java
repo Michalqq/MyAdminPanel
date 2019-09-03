@@ -51,8 +51,9 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
 
 
-    @Query(value = "SELECT DISTINCT MyItem FROM MyItem " +
-            "WHERE sellPrice is null AND deliveredToPoland is null ")
+    @Query(value = "SELECT DISTINCT * FROM MyItem " +
+            "WHERE sellPrice is null AND deliveredToPoland is null",
+            nativeQuery = true)
             //"GROUP BY itemId")
     List<MyItem> findItemsInTransport();
 
