@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findBySellPriceIsNull();
@@ -45,10 +46,11 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetween(String startDate, String stopDate);
 
-    @Query(value = "SELECT DISTINCT * FROM MyItem " +
+    @Query(value = "FROM MyItem " +
             "WHERE sellPrice is null AND deliveredToPoland = :deliveredToPoland" , nativeQuery = true)
            // "GROUP BY itemId")
-    List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
+    //List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
+    Set<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
 
 
     @Query(value = "SELECT DISTINCT * FROM MyItem " +

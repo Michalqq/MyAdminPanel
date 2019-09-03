@@ -136,7 +136,8 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
+            Set<MyItem> myItems1 = myItemRepository.findItemsOnStockGroupByItemId(1);
+            List<MyItem> myItems = (List<MyItem>) myItems1;
 //            List<MyItem> myItems = myItemRepository.findBySellPriceIsNull();
             myItems = (getItemsNames(myItems, this.getItemsMap()));
             if (name != null && !name.equals("")) {
