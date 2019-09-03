@@ -3,6 +3,7 @@ package myapp.MyAdminPanel.model;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
+@Component
 @Data
 @Table(name = "user")
 public class User {
