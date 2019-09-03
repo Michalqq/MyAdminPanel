@@ -27,9 +27,10 @@ public class CountItemSold {
 
     public List<Double> getLastSoldSumData(int quantityOfDay, List<String> date) {
         List<Double> soldByDayList = new ArrayList<>();
-        for (int i = 0; i < quantityOfDay; i++) {
-            //soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs(date.get(i)).getSellPrice());
-        }
+//        for (int i = 0; i < quantityOfDay; i++) {
+//            soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs(date.get(i)).getSellPrice());
+//        }
+        soldByDayList.add(myItemRepository.sumSellPriceWhereSellDateIs("2019-09-02").getSellPrice());
         return soldByDayList;
     }
 }
