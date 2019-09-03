@@ -18,7 +18,7 @@ import java.util.List;
 public class MyItem {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -34,34 +34,34 @@ public class MyItem {
     @Transient
     private int quantInTransport;
 
-    @Column(name = "Item_ID")
+    @Column(name = "item_ID")
     private int itemId;
 
-    @Column(name = "Buy_price")
+    @Column(name = "buy_price")
     private Double buyPrice;
 
-    @Column(name = "Sell_price")
+    @Column(name = "sell_price")
     private Double sellPrice;
 
-    @Column(name = "Buy_date")
+    @Column(name = "buy_date")
     private String buyDate;
 
-    @Column(name = "Sell_date")
+    @Column(name = "sell_date")
     private String sellDate;
 
-    @Column(name = "Cash_on_delivery")
+    @Column(name = "cash_on_delivery")
     private Double cashOnDelivery;
 
-    @Column(name = "If_cash_on_delivery")
+    @Column(name = "if_cash_on_delivery")
     private Integer ifCashOnDelivery;
 
     @Column(name = "delivered_to_Poland")
     private Integer deliveredToPoland;
 
-    @Column(name = "Last_action_date")
+    @Column(name = "last_action_date")
     private String lastActionDate;
 
-    @Column(name = "Notes")
+    @Column(name = "notes")
     private String notes;
 
     @Column(name = "seller_ID")

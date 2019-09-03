@@ -14,9 +14,9 @@ import javax.persistence.*;
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "Seller_name")
+    @Column(name = "seller_name")
     private String sellerName;
 }
