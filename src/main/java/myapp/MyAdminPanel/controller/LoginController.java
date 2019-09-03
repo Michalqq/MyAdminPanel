@@ -177,13 +177,13 @@ public class LoginController {
     }
 
     public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
-        //List<String> dataByDay = DateGenerator.getLastDate(30);
-        List<Double> soldByDayList = countItemSold.getLastSoldSumData(30, dataByDay);
-        Collections.reverse(soldByDayList);
+        List<String> dataByDay = DateGenerator.getLastDate(30);
+        //List<Double> soldByDayList = countItemSold.getLastSoldSumData(30, dataByDay);
+        //Collections.reverse(soldByDayList);
         //Collections.reverse(dataByDay);
-        modelAndView.addObject("dataToEarningByDays", soldByDayList);
-        //modelAndView.addObject("labelToEarningByDays", dataByDay);
-        modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
+        //modelAndView.addObject("dataToEarningByDays", soldByDayList);
+        modelAndView.addObject("labelToEarningByDays", dataByDay);
+        //modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
         return modelAndView;
     }
 
