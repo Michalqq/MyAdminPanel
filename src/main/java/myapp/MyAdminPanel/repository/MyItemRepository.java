@@ -51,8 +51,8 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
 
     @Query(value = "FROM MyItem " +
-            "WHERE sellPrice is null AND deliveredToPoland is null " +
-            "GROUP BY itemId")
+            "WHERE sellPrice is null AND deliveredToPoland is null ")
+            //"GROUP BY itemId")
     List<MyItem> findItemsInTransport();
 
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(@Param("deliveryToPoland") int deliveryToPoland, @Param("itemId") int itemId);
