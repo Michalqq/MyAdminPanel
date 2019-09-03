@@ -47,15 +47,14 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findAllByLastActionDateBetween(String startDate, String stopDate);
 
     @Query(value = "FROM MyItem " +
-            "WHERE sellPrice is null AND deliveredToPoland = :deliveredToPoland" , nativeQuery = true)
+            "WHERE sellPrice is null AND deliveredToPoland = :deliveredToPoland")
            // "GROUP BY itemId")
     //List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
     Set<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
 
 
-    @Query(value = "SELECT DISTINCT * FROM MyItem " +
-            "WHERE sellPrice is null AND deliveredToPoland is null",
-            nativeQuery = true)
+    @Query(value = "FROM MyItem " +
+            "WHERE sellPrice is null AND deliveredToPoland is null")
             //"GROUP BY itemId")
     List<MyItem> findItemsInTransport();
 
