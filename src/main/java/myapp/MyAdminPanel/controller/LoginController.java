@@ -134,9 +134,6 @@ public class LoginController {
     public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        System.out.println("________________________________");
-        System.out.println(user);
-        System.out.println("________________________________");
         if (user == null) modelAndView.setViewName("login");
         else {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
