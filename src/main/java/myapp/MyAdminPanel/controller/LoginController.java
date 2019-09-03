@@ -22,9 +22,6 @@ import java.util.stream.Collectors;
 public class LoginController {
 
     @Autowired
-    User user;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
