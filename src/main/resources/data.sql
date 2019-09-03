@@ -1,1 +1,2 @@
 REPLACE INTO role VALUES (1,'ADMIN');
+DELETE FROM user_role;
