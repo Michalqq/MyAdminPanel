@@ -146,8 +146,6 @@ public class LoginController {
                 }
                 if (temp == 0) myItems.add(item);
             }
-            myItems.addAll(myItems1);
-//            List<MyItem> myItems = myItemRepository.findBySellPriceIsNull();
             myItems = (getItemsNames(myItems, this.getItemsMap()));
             if (name != null && !name.equals("")) {
                 myItems = (getByNameContains(myItems, name));
