@@ -49,16 +49,7 @@ public class DeliveryController {
     @RequestMapping(value = {"/delivery"}, params = "details", method = RequestMethod.POST)
     public ModelAndView getListOfItem(@RequestParam(value = "id", required = true) int id,
                                       ModelAndView modelAndView) {
-        List<MyItem> myItems1 = myItemRepository.findItemInTransportByItemId(id);
-        List<MyItem> myItems = new ArrayList<>();
-        int temp = 0;
-        for (MyItem item : myItems1) {
-            temp = 0;
-            for (int i = 0; i < myItems.size(); i++) {
-                if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
-            }
-            if (temp == 0) myItems.add(item);
-        }
+        List<MyItem> myItems = myItemRepository.findItemInTransportByItemId(id);
         itemsNameFiller.getItemsNames(myItems);
         for (MyItem item : myItems) {
             item.setQuantity(1);

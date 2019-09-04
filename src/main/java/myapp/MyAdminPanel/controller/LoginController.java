@@ -161,7 +161,16 @@ public class LoginController {
 
     @RequestMapping(value = {"/delivery"}, method = RequestMethod.GET)
     public ModelAndView delivery(ModelAndView modelAndView, @RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
-        List<MyItem> myItems = myItemRepository.findItemsInTransport();
+        List<MyItem> myItems1 = myItemRepository.findItemsInTransport();
+        List<MyItem> myItems = new ArrayList<>();
+        int temp = 0;
+        for (MyItem item : myItems1) {
+            temp = 0;
+            for (int i = 0; i < myItems.size(); i++) {
+                if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
+            }
+            if (temp == 0) myItems.add(item);
+        }
         myItems = getItemsNames(myItems, this.getItemsMap());
         if (name != null && !name.equals("")) {
             myItems = getByNameContains(myItems, name);
