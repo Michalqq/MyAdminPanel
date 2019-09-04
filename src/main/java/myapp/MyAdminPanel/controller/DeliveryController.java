@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,16 +46,25 @@ public class DeliveryController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/delivery"}, params="details" , method = RequestMethod.POST)
+    @RequestMapping(value = {"/delivery"}, params = "details", method = RequestMethod.POST)
     public ModelAndView getListOfItem(@RequestParam(value = "id", required = true) int id,
                                       ModelAndView modelAndView) {
-        List<MyItem> items = myItemRepository.findItemInTransportByItemId(id);
-        itemsNameFiller.getItemsNames(items);
-        for (MyItem item:items){
+        List<MyItem> myItems1 = myItemRepository.findItemInTransportByItemId(id);
+        List<MyItem> myItems = new ArrayList<>();
+        int temp = 0;
+        for (MyItem item : myItems1) {
+            temp = 0;
+            for (int i = 0; i < myItems.size(); i++) {
+                if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
+            }
+            if (temp == 0) myItems.add(item);
+        }
+        itemsNameFiller.getItemsNames(myItems);
+        for (MyItem item : myItems) {
             item.setQuantity(1);
         }
         modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
-        modelAndView.addObject("myItems", items);
+        modelAndView.addObject("myItems", myItems);
         modelAndView.setViewName("delivery");
         return modelAndView;
     }
