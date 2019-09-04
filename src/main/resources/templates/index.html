@@ -58,31 +58,38 @@
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
                         <a class="js-arrow" href="index">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <i class="fas fa-tachometer-alt"></i>Main</a>
                     </li>
                     <li>
-                        <a href="chart">
-                            <i class="fas fa-chart-bar"></i>Charts</a>
+                        <a href="delivery">
+                            <i class="fas fa-truck"></i>In delivery</a>
                     </li>
                     <li>
-                        <a href="table">
-                            <i class="fas fa-table"></i>Tables</a>
+                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}"/></a>
                     </li>
-                    <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-copy"></i>Pages</a>
-                        <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                            <li>
-                                <a href="/login">Login</a>
-                            </li>
-                            <li>
-                                <a href="/register">Register</a>
-                            </li>
-                            <li>
-                                <a href="/forget-pass">Forget Password</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a href="history">
+                            <i class="fas fa-history"></i></i>History</a>
                     </li>
+                    <li>
+                        <a href="additem">
+                    <i class="fas fa-plus-circle"></i>Add Item</a>
+                    </li>
+                    <!--<li class="has-sub">-->
+                        <!--<a class="js-arrow" href="#">-->
+                            <!--<i class="fas fa-copy"></i>Pages</a>-->
+                        <!--<ul class="navbar-mobile-sub__list list-unstyled js-sub-list">-->
+                            <!--<li>-->
+                                <!--<a href="/login">Login</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="/register">Register</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="/forget-pass">Forget Password</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                 </ul>
             </div>
         </nav>
