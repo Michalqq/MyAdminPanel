@@ -72,7 +72,7 @@ public class SellController {
             basket.add(item);
             itemsNameFiller.getItemsNames(basket.getMyItemList());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
-        modelAndView.addObject("SellInfo", basket.getMyItemList().size());
+        //modelAndView.addObject("SellInfo", basket.getMyItemList().size());
         modelAndView.addObject("SellInfo", "Dodano do koszyka:");
         modelAndView.setViewName("index");
         return modelAndView;
