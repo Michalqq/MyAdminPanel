@@ -14,6 +14,8 @@ public class MyItemDBAction implements DBAction {
     @Autowired
     private MyItemRepository myItemRepository;
 
+    private String lastActionDate = DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now().plusHours(2));
+
     @Override
     public boolean setCashOnDelivery(MyItem myItem, double cashOnDelivery) {
         if (cashOnDelivery > 0) {
@@ -39,7 +41,7 @@ public class MyItemDBAction implements DBAction {
 
     @Override
     public boolean setLastActionDateNowDate(MyItem myItem) {
-        myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        myItem.setLastActionDate(lastActionDate);
         myItemRepository.save(myItem);
         return true;
     }
@@ -74,7 +76,7 @@ public class MyItemDBAction implements DBAction {
     public boolean createNewItem() {
         MyItem myItem = new MyItem();
         myItem.setId((myItemRepository.getMaxId() + 1));
-        myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        myItem.setLastActionDate(lastActionDate);
         myItemRepository.save(myItem);
         return true;
     }
@@ -87,7 +89,7 @@ public class MyItemDBAction implements DBAction {
         myItem.setItemId(itemId);
         myItem.setSellerId(sellerId);
         myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-        myItem.setLastActionDate(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:ss").format(LocalDateTime.now()));
+        myItem.setLastActionDate(lastActionDate);
         myItemRepository.save(myItem);
         return true;
     }
