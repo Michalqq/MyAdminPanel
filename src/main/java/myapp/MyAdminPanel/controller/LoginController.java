@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -212,6 +213,10 @@ public class LoginController {
             itemMap.put(item.getId(), item.getName());
         }
         return itemMap;
+    }
+
+    public void goHome(ModelAndView modelAndView) {
+        this.home("", modelAndView);
     }
 
     public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
