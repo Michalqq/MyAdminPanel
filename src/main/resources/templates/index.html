@@ -264,16 +264,16 @@
                                         </button>
                                     </div>
                                     <br>
+                                    <br>
+                                    <div class="text-right col-sm-6 col-md-12" style="margin-top: -45px">
+                                        <form action="/basket" method="POST">
+                                            <button name="clearBasket" value="clearBasket" type="submit"
+                                                    class="btn btn-warning btn-md">
+                                                <i class="fas fa-minus-circle"></i> Delete basket
+                                            </button>
+                                        </form>
+                                    </div>
                                 </form>
-                                <br>
-                                <div class="text-right col-sm-6 col-md-12" style="margin-top: -45px">
-                                    <form action="/basket" method="POST">
-                                        <button name="clearBasket" value="clearBasket" type="submit"
-                                                class="btn btn-warning btn-md">
-                                            <i class="fas fa-minus-circle"></i> Delete basket
-                                        </button>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -494,6 +494,7 @@
 
 
     /*]]>*/
+
 
 </script>
 <script src="js/main.js" th:inline="javascript"></script>
