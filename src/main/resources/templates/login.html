@@ -52,9 +52,6 @@
                             <br/>
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <!--<label-->
-                                            <!--th:if="${#fields.hasErrors('email')}" th:errors="*{email}"-->
-                                            <!--class="validation-message"></label>-->
                                     <input type="text" id="email" name="email" th:placeholder="Email"
                                            class="au-input au-input--full"/> <br>
                                 </div>
@@ -62,14 +59,14 @@
                             <br>
                             <div class="form-group">
                                 <div class="col-sm-9">
-                                    <!--<label-->
-                                            <!--th:if="${#fields.hasErrors('password')}" th:errors="*{password}"-->
-                                            <!--class="validation-message"></label>-->
                                     <input type="password" th:placeholder="Password"
                                            id="password" name="password" class="au-input au-input--full"/> <br/>
                                 </div>
                             </div>
                             <br>
+                            <div align="center" th:if="${param.error}">
+                                <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+                            </div>
                             <div class="login-checkbox">
                                 <label>
                                     <input type="checkbox" name="remember">Remember Me
@@ -77,9 +74,6 @@
                                 <label>
                                     <a href="#">Forgotten Password?</a>
                                 </label>
-                            </div>
-                            <div align="center" th:if="${param.error}">
-                                <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
                             </div>
 
                             <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Login</button>
