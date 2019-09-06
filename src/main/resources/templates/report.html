@@ -248,14 +248,14 @@
                                     <tbody>
                                     <tr th:each="myItem: ${myItems}" class="null"
                                         onclick="changeRowColorOnTable(this)">
-                                        <td style="display:none" th:text="${myItem.id}">
+                                        <td style="display:none" th:text="${myItem.itemId}">
                                         <td style="width:60%" th:text="${myItem.name}"></td>
-                                        <td style="width:15%" th:text="${profit}"></td>
+                                        <td style="width:15%" th:text="${myItem.sellPrice}"></td>
                                         <!--<td style="width:5%" th:text="${myItem.quantity}"></td>-->
                                         <!--<td style="width:12%" th:text="${myItem.buyDate}"></td>-->
                                         <!--<td style="width:8%" th:text="${myItem.quantInTransport}"></td>-->
                                         <td>
-                                            <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
+                                            <form th:action="@{/edit?id=} + ${{myItem.itemId}}" method="post">
                                                 <div class="table-data-feature">
                                                     <button th:name="edit" class="item"
                                                             data-toggle="tooltip" data-placement="top" title="Edit">
@@ -264,16 +264,16 @@
                                                 </div>
                                             </form>
                                         </td>
-                                        <td>
-                                            <form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">
-                                                <div class="table-data-feature">
-                                                    <button th:name="details" value="details" class="item"
-                                                            data-toggle="tooltip" data-placement="top" title="Details">
-                                                        <i class="zmdi zmdi-view-list-alt"></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>
+                                        <!--<td>-->
+                                        <!--<form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">-->
+                                        <!--<div class="table-data-feature">-->
+                                        <!--<button th:name="details" value="details" class="item"-->
+                                        <!--data-toggle="tooltip" data-placement="top" title="Details">-->
+                                        <!--<i class="zmdi zmdi-view-list-alt"></i>-->
+                                        <!--</button>-->
+                                        <!--</div>-->
+                                        <!--</form>-->
+                                        <!--</td>-->
                                     </tr>
 
                                     </tbody>
@@ -498,6 +498,7 @@
 
 
     /*]]>*/
+
 
 
 </script>

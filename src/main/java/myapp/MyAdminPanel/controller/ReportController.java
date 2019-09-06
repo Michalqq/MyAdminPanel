@@ -2,6 +2,7 @@ package myapp.MyAdminPanel.controller;
 
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
+import myapp.MyAdminPanel.model.MyItemSoldSum;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,14 @@ import java.util.List;
 public class ReportController {
 
     private MyItemRepository myItemRepository;
-
     private ItemRepository itemRepository;
+    private MyItemSoldSum myItemSoldSum;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, MyItemSoldSum myItemSoldSum) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
+        this.myItemSoldSum = myItemSoldSum;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -34,9 +36,13 @@ public class ReportController {
                                   @RequestParam(value = "startDate", defaultValue = "") String startDate,
                                   @RequestParam(value = "stopDate", defaultValue = "") String stopDate) {
         List<Item> items = itemRepository.findAll();
-
-        modelAndView.addObject("myItems", items);
-        modelAndView.addObject("profits", items);
+        List<MyItemSoldSum> myItemSoldSums = new ArrayList<>();
+        for (Item item : items){
+            myItemSoldSums.add(new MyItemSoldSum());
+            myItemSoldSums.get(myItemSoldSums.size()-1).setItemId(item.getId());
+            myItemSoldSums.get(myItemSoldSums.size()-1).setName(item.getName());
+        }
+        modelAndView.addObject("myItems", myItemSoldSums);
         modelAndView.setViewName("report");
         return modelAndView;
     }
@@ -47,6 +53,7 @@ public class ReportController {
         List<Double> myItems = new ArrayList<>();
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
+            double profit = myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum();
             myItems.add(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum());
         }
         return myItems;

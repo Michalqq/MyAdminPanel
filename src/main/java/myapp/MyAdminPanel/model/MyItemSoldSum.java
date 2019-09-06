@@ -12,4 +12,6 @@ import org.springframework.stereotype.Service;
 public class MyItemSoldSum {
     private Double sellPrice;
     private String sellDate;
+    private String name;
+    private int itemId;
 }
