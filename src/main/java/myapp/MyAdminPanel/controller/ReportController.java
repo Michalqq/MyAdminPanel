@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static jdk.nashorn.internal.objects.NativeMath.round;
+
 @Controller
 public class ReportController {
 
@@ -48,6 +50,7 @@ public class ReportController {
         }
         this.getProfitSum(items, startDate, stopDate, itemsToReport);
         Collections.sort(itemsToReport);
+        Collections.reverse(itemsToReport);
         modelAndView.addObject("myItems", itemsToReport);
         modelAndView.setViewName("report");
         modelAndView.addObject("startDate", startDate);
@@ -59,9 +62,13 @@ public class ReportController {
         int count = 0;
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
-            double profit = myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum();
-            itemToReports.get(count).setSellPrice(profit);
-            count++;
+            double profit = round(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum(), 2);
+            if (profit == 0) {
+                itemToReports.remove(count);
+            } else {
+                itemToReports.get(count).setSellPrice(profit);
+                count++;
+            }
         }
     }
 
