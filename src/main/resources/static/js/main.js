@@ -140,6 +140,7 @@ function iterateTableGetChecked(){
           },
           scales: {
             xAxes: [{
+              display: true,
               gridLines: {
                 color: 'transparent',
                 zeroLineColor: 'transparent'
