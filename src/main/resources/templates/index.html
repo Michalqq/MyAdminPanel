@@ -186,6 +186,7 @@
                                         <th>Data zakupu</th>
                                         <th>Ile zam.</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -203,6 +204,16 @@
                                                     <button th:name="edit" class="item"
                                                             data-toggle="tooltip" data-placement="top" title="Edit">
                                                         <i class="zmdi zmdi-edit"></i>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">
+                                                <div class="table-data-feature">
+                                                    <button th:name="details" value="details" class="item"
+                                                            data-toggle="tooltip" data-placement="top" title="Details">
+                                                        <i class="zmdi zmdi-view-list-alt"></i>
                                                     </button>
                                                 </div>
                                             </form>

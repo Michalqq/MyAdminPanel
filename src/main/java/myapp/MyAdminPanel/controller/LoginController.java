@@ -43,6 +43,9 @@ public class LoginController {
     @Autowired
     private CountItemSold countItemSold;
 
+    @Autowired
+    private ItemsNameFiller itemsNameFiller;
+
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(ModelAndView modelAndView) {
         modelAndView.setViewName("login");
@@ -80,6 +83,19 @@ public class LoginController {
             modelAndView.setViewName("register");
 
         }
+        return modelAndView;
+    }
+    @RequestMapping(value = {"/details"}, params = "details", method = RequestMethod.POST)
+    public ModelAndView getListOfItem(@RequestParam(value = "id", required = true) int id,
+                                      ModelAndView modelAndView) {
+        List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(id);
+        itemsNameFiller.getItemsNames(myItems);
+        for (MyItem item : myItems) {
+            item.setQuantity(1);
+        }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+        modelAndView.addObject("myItems", myItems);
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
@@ -218,22 +234,22 @@ public class LoginController {
         modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
         return modelAndView;
     }
-
-    public Map<Integer, String> getItemsMap() {
-        List<Item> items = itemRepository.findAll();
-        Map<Integer, String> itemMap = new HashMap<>();
-        for (Item item : items) {
-            itemMap.put(item.getId(), item.getName());
-        }
-        return itemMap;
-    }
-
-    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
-        for (MyItem myItem : itemList) {
-            myItem.setName(itemMap.get(myItem.getItemId()));
-        }
-        return itemList;
-    }
+//
+//    public Map<Integer, String> getItemsMap() {
+//        List<Item> items = itemRepository.findAll();
+//        Map<Integer, String> itemMap = new HashMap<>();
+//        for (Item item : items) {
+//            itemMap.put(item.getId(), item.getName());
+//        }
+//        return itemMap;
+//    }
+//
+//    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
+//        for (MyItem myItem : itemList) {
+//            myItem.setName(itemMap.get(myItem.getItemId()));
+//        }
+//        return itemList;
+//    }
 
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
