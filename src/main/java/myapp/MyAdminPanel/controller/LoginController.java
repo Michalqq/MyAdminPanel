@@ -215,7 +215,7 @@ public class LoginController {
         return itemMap;
     }
 
-    public void goHome(ModelAndView modelAndView) {
+    public static void goHome(ModelAndView modelAndView) {
         this.home("", modelAndView);
     }
 

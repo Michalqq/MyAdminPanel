@@ -62,8 +62,8 @@ public class SellController {
 
     @RequestMapping(value = {"/sell"}, params = "add", method = RequestMethod.POST)
     //public ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-    public void addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-                                    @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
+    public void ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
+                                     @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                                     @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                                     @RequestParam(name = "note", defaultValue = "") String note,
                                     @RequestParam(name = "checkedItemId") int itemId,
@@ -76,9 +76,7 @@ public class SellController {
         //modelAndView.addObject("SellInfo", basket.getMyItemList().size());
         modelAndView.addObject("SellInfo", "Dodano do koszyka:");
         //modelAndView.setViewName("index");
-
-        LoginController loginController = new LoginController();
-        loginController.goHome(modelAndView);
+        LoginController.goHome(modelAndView);
         //return modelAndView;
     }
 
