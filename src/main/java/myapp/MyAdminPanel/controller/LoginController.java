@@ -166,16 +166,17 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         if (user == null) modelAndView.setViewName("login");
         else {
-            List<MyItem> myItems1 = myItemRepository.findItemsOnStockGroupByItemId(1);
-            List<MyItem> myItems = new ArrayList<>();
-            int temp = 0;
-            for (MyItem item : myItems1) {
-                temp = 0;
-                for (int i = 0; i < myItems.size(); i++) {
-                    if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
-                }
-                if (temp == 0) myItems.add(item);
-            }
+            List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
+            myItems = countItemOnStock(myItems);
+//            List<MyItem> myItems = new ArrayList<>();
+//            int temp = 0;
+//            for (MyItem item : myItems1) {
+//                temp = 0;
+//                for (int i = 0; i < myItems.size(); i++) {
+//                    if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
+//                }
+//                if (temp == 0) myItems.add(item);
+//            }
             myItems = (itemsNameFiller.getItemsNames(myItems));
             if (name != null && !name.equals("")) {
                 myItems = (getByNameContains(myItems, name));
@@ -191,16 +192,8 @@ public class LoginController {
 
     @RequestMapping(value = {"/delivery"}, method = RequestMethod.GET)
     public ModelAndView delivery(ModelAndView modelAndView, @RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
-        List<MyItem> myItems1 = myItemRepository.findItemsInTransport();
-        List<MyItem> myItems = new ArrayList<>();
-        int temp = 0;
-        for (MyItem item : myItems1) {
-            temp = 0;
-            for (int i = 0; i < myItems.size(); i++) {
-                if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
-            }
-            if (temp == 0) myItems.add(item);
-        }
+        List<MyItem> myItems = myItemRepository.findItemsInTransport();
+        myItems = countItemOnStock(myItems);
         myItems = itemsNameFiller.getItemsNames(myItems);
         if (name != null && !name.equals("")) {
             myItems = getByNameContains(myItems, name);
@@ -234,22 +227,19 @@ public class LoginController {
         modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
         return modelAndView;
     }
-//
-//    public Map<Integer, String> getItemsMap() {
-//        List<Item> items = itemRepository.findAll();
-//        Map<Integer, String> itemMap = new HashMap<>();
-//        for (Item item : items) {
-//            itemMap.put(item.getId(), item.getName());
-//        }
-//        return itemMap;
-//    }
-//
-//    public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
-//        for (MyItem myItem : itemList) {
-//            myItem.setName(itemMap.get(myItem.getItemId()));
-//        }
-//        return itemList;
-//    }
+
+    public List<MyItem> countItemOnStock(List<MyItem> myItems1){
+        List<MyItem> myItems = new ArrayList<>();
+        int temp = 0;
+        for (MyItem item : myItems1) {
+            temp = 0;
+            for (int i = 0; i < myItems.size(); i++) {
+                if (myItems.get(i).getItemId() == item.getItemId()) temp = 1;
+            }
+            if (temp == 0) myItems.add(item);
+        }
+        return myItems;
+    }
 
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
