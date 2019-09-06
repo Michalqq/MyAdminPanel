@@ -34,7 +34,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css"
+          rel="stylesheet"/>
 
 
     <!-- Main CSS-->
@@ -196,49 +197,63 @@
                                     <h5>Cena zakupu:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="buyPrice" id="buyPrice" type="text" th:value="${myItem.buyPrice}">
+                                        <input class="form-control" name="buyPrice" id="buyPrice" type="text"
+                                               th:value="${myItem.buyPrice}">
                                     </div>
                                     <br>
                                     <h5>Data zakupu:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="buyDate" id="buyDate" type="date" th:value="${myItem.buyDate}">
+                                        <input class="form-control" name="buyDate" id="buyDate" type="date"
+                                               th:value="${myItem.buyDate}">
                                     </div>
                                     <br>
                                     <h5>Cena sprzedaży:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="sellPrice" id="sellPrice" type="text" th:value="${myItem.sellPrice}">
+                                        <input class="form-control" name="sellPrice" id="sellPrice" type="text"
+                                               th:value="${myItem.sellPrice}">
                                     </div>
                                     <br>
                                     <h5>Data sprzedaży:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="sellDate" id="sellDate" type="date" th:value="${myItem.buyDate}">
+                                        <input class="form-control" name="sellDate" id="sellDate" type="date"
+                                               th:value="${myItem.buyDate}">
                                     </div>
                                     <br>
                                     <h5>Kwota pobrania:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="cashOnDelivery" id="cashOnDelivery" type="number" th:value="${myItem.cashOnDelivery}">
+                                        <input class="form-control" name="cashOnDelivery" id="cashOnDelivery"
+                                               type="number" th:value="${myItem.cashOnDelivery}">
                                     </div>
                                     <br>
                                     <h5>Uwagi:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="note" id="note" type="text" th:value="${myItem.notes}">
+                                        <input class="form-control" name="note" id="note" type="text"
+                                               th:value="${myItem.notes}">
                                     </div>
                                     <br>
                                     <h5>Status:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="deliveredToPoland" id="deliveredToPoland" type="text" th:value="${myItem.deliveredToPoland}">
+                                        <input class="form-control" name="deliveredToPoland" id="deliveredToPoland"
+                                               type="text" th:value="${myItem.deliveredToPoland}">
                                     </div>
                                     <br>
-                                    <div class="input-group col-sm-12">
+                                    <div class="input-group col-sm-6">
                                         <button name="apply" value="apply" type="submit"
                                                 class="btn btn-primary btn-md">
                                             <i class="fas fa-check-circle"></i> Apply
+                                        </button>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-6">
+                                        <button name="apply" value="restore" type="submit"
+                                                class="btn btn-primary btn-md">
+                                            <i class="fas fa-reply"></i> Restore to shop
                                         </button>
                                     </div>
                                     <br>
@@ -246,10 +261,8 @@
 
                                         <button name="delete" value="delete" type="submit"
                                                 class="btn btn-danger btn-md" onclick="return confirm('Are you sure?')">
-                                            <i class="fas fa-check-circle"></i> Delete
+                                            <i class="far fa-trash-alt"></i> Delete
                                         </button>
-
-
                                     </div>
                                     <br>
                                     <div class="col-sm-12">

@@ -131,6 +131,18 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/edit"}, params = "restore", method = RequestMethod.POST)
+    public ModelAndView restoreToShop(ModelAndView modelAndView,
+                                       @RequestParam(name = "id", required = true) int itemId) {
+        Optional<MyItem> myItem = myItemRepository.findById(itemId);
+        if (myItem.isPresent()) {
+            dbAction.clearSellPriceAndDate(myItem.get());
+        }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+        modelAndView.setViewName("redirect:/index");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/", "/index", "/sell"}, method = RequestMethod.GET)
     public ModelAndView home(@RequestParam(value = "searchItem", required = false, defaultValue = "") String name, ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
