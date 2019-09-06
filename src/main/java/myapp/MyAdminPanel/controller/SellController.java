@@ -62,7 +62,7 @@ public class SellController {
 
     @RequestMapping(value = {"/sell"}, params = "add", method = RequestMethod.POST)
     //public ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-    public void ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
+    public void addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
                                      @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                                     @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                                     @RequestParam(name = "note", defaultValue = "") String note,

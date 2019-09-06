@@ -216,7 +216,7 @@ public class LoginController {
     }
 
     public static void goHome(ModelAndView modelAndView) {
-        this.home("", modelAndView);
+        ModelAndView loginController = new LoginController().home("", modelAndView);
     }
 
     public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
