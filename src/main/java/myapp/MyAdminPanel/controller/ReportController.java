@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -36,28 +37,32 @@ public class ReportController {
     public ModelAndView getReport(ModelAndView modelAndView,
                                   @RequestParam(value = "startDate", defaultValue = "") String startDate,
                                   @RequestParam(value = "stopDate", defaultValue = "") String stopDate) {
+        if (startDate.equals("")) startDate = this.getYesterDay();
+        if (stopDate.equals("")) stopDate = this.getToday();
         List<Item> items = itemRepository.findAll();
-        List<ItemToReport> myItemSoldSums = new ArrayList<>();
-        for (Item item : items){
-            myItemSoldSums.add(new ItemToReport());
-            myItemSoldSums.get(myItemSoldSums.size()-1).setItemId(item.getId());
-            myItemSoldSums.get(myItemSoldSums.size()-1).setName(item.getName());
+        List<ItemToReport> itemsToReport = new ArrayList<>();
+        for (Item item : items) {
+            itemsToReport.add(new ItemToReport());
+            itemsToReport.get(itemsToReport.size() - 1).setItemId(item.getId());
+            itemsToReport.get(itemsToReport.size() - 1).setName(item.getName());
         }
-        modelAndView.addObject("myItems", myItemSoldSums);
+        this.getProfitSum(items, startDate, stopDate, itemsToReport);
+        Collections.sort(itemsToReport);
+        modelAndView.addObject("myItems", itemsToReport);
         modelAndView.setViewName("report");
+        modelAndView.addObject("startDate", startDate);
+        modelAndView.addObject("stopDate", stopDate);
         return modelAndView;
     }
 
-    public List<Double> getProfitSum(List<Item> items, String startDate, String stopDate, ModelAndView modelAndView) {
-        if (startDate.equals("")) startDate = this.getYesterDay();
-        if (stopDate.equals("")) stopDate = this.getToday();
-        List<Double> myItems = new ArrayList<>();
+    public void getProfitSum(List<Item> items, String startDate, String stopDate, List<ItemToReport> itemToReports) {
+        int count = 0;
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
             double profit = myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum();
-            myItems.add(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum());
+            itemToReports.get(count).setSellPrice(profit);
+            count++;
         }
-        return myItems;
     }
 
     private String getYesterDay() {

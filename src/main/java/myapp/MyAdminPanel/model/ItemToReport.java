@@ -9,9 +9,14 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Component
-public class ItemToReport {
-    private Double sellPrice;
+public class ItemToReport implements Comparable<ItemToReport> {
+    private Double sellPrice = 0.0;
     private String sellDate;
     private String name;
     private int itemId;
+
+    @Override
+    public int compareTo(ItemToReport o) {
+        return getSellPrice().compareTo(o.getSellPrice());
+    }
 }
