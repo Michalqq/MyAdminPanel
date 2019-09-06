@@ -211,6 +211,7 @@ function iterateTableGetChecked(){
           },
           scales: {
             xAxes: [{
+              display: true,
               gridLines: {
                 color: 'transparent',
                 zeroLineColor: 'transparent'
@@ -268,7 +269,7 @@ function iterateTableGetChecked(){
           },
           scales: {
             xAxes: [{
-              display: false,
+              display: true,
               categoryPercentage: 1,
               barPercentage: 0.65
             }],
