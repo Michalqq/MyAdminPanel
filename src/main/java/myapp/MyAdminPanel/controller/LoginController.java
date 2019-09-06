@@ -88,7 +88,7 @@ public class LoginController {
     @RequestMapping(value = {"/details"}, params = "details", method = RequestMethod.POST)
     public ModelAndView getListOfItem(@RequestParam(value = "id", required = true) int id,
                                       ModelAndView modelAndView) {
-        List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(id);
+        List<MyItem> myItems = myItemRepository.findItemInStockByItemId(id);
         itemsNameFiller.getItemsNames(myItems);
         for (MyItem item : myItems) {
             item.setQuantity(1);

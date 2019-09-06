@@ -32,7 +32,7 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findItemInTransportByItemId(@Param("itemId") int itemId);
 
     @Query(value = "FROM MyItem " +
-            "WHERE deliveredToPoland = 1 AND itemId = :itemId " +
+            "WHERE deliveredToPoland = 1 AND sellPrice IS NULL AND itemId = :itemId " +
             "ORDER BY lastActionDate ASC")
     List<MyItem> findItemInStockByItemId(@Param ("itemId") int itemId);
 
