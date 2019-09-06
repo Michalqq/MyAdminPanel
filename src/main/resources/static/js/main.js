@@ -69,6 +69,7 @@ function iterateTableGetChecked(){
           responsive: true,
           scales: {
             xAxes: [{
+                display: true,
               gridLines: {
                 color: 'transparent',
                 zeroLineColor: 'transparent'
@@ -79,7 +80,7 @@ function iterateTableGetChecked(){
               }
             }],
             yAxes: [{
-              display: false,
+              display: true,
               ticks: {
                 display: false,
               }
@@ -146,7 +147,6 @@ function iterateTableGetChecked(){
               ticks: {
                 fontSize: 2,
                 fontColor: 'transparent',
-                display: true
               }
             }],
             yAxes: [{
