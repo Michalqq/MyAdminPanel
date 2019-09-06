@@ -91,6 +91,7 @@ public class LoginController {
             myItem.get().setName(getItemsMap().get(myItem.get().getItemId()));
             modelAndView.addObject("myItem", myItem.get());
         }
+        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         modelAndView.setViewName("edit");
         return modelAndView;
     }
