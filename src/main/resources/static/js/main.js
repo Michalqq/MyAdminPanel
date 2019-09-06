@@ -141,14 +141,14 @@ function iterateTableGetChecked(){
           scales: {
             xAxes: [{
               display: true,
-              gridLines: {
-                color: 'transparent',
-                zeroLineColor: 'transparent'
-              },
-              ticks: {
-                fontSize: 2,
-                fontColor: 'transparent',
-              }
+//              gridLines: {
+//                color: 'transparent',
+//                zeroLineColor: 'transparent'
+//              },
+//              ticks: {
+//                fontSize: 2,
+//                fontColor: 'transparent',
+//              }
             }],
             yAxes: [{
               display: true,
@@ -213,14 +213,14 @@ function iterateTableGetChecked(){
           scales: {
             xAxes: [{
               display: true,
-              gridLines: {
-                color: 'transparent',
-                zeroLineColor: 'transparent'
-              },
-              ticks: {
-                fontSize: 2,
-                fontColor: 'transparent'
-              }
+//              gridLines: {
+//                color: 'transparent',
+//                zeroLineColor: 'transparent'
+//              },
+//              ticks: {
+//                fontSize: 2,
+//                fontColor: 'transparent'
+//              }
             }],
             yAxes: [{
               display: true,
