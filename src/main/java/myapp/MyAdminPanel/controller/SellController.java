@@ -74,7 +74,7 @@ public class SellController {
             itemsNameFiller.getItemsNames(basket.getMyItemList());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
         //modelAndView.addObject("SellInfo", basket.getMyItemList().size());
-        redirectAttributes.addFlashAttribute("SellInfo", "Dodano do koszyka:");
+        redirectAttributes.addFlashAttribute("SellInfo", "Dodano do koszyka: " + item.get().getName());
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
