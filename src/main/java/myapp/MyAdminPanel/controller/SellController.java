@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -61,23 +62,21 @@ public class SellController {
     }
 
     @RequestMapping(value = {"/sell"}, params = "add", method = RequestMethod.POST)
-    //public ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-    public void addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
-                                     @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
+    public ModelAndView addToBasket(@RequestParam(name = "sellPriceInput", required = true) Double sellPrice,
+                                    @RequestParam(name = "commissionInput", defaultValue = "0") int commission,
                                     @RequestParam(name = "cashOnDelivery", defaultValue = "0") Double cashOnDelivery,
                                     @RequestParam(name = "note", defaultValue = "") String note,
                                     @RequestParam(name = "checkedItemId") int itemId,
-                                    ModelAndView modelAndView) {
+                                    ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
         Optional<MyItem> item = myItemRepository.findById(itemId);
         if (saveSellToDb(item.get(), commission, sellPrice, note, cashOnDelivery)) {
             basket.add(item);
             itemsNameFiller.getItemsNames(basket.getMyItemList());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
         //modelAndView.addObject("SellInfo", basket.getMyItemList().size());
-        modelAndView.addObject("SellInfo", "Dodano do koszyka:");
-        //modelAndView.setViewName("index");
-        LoginController.goHome(modelAndView);
-        //return modelAndView;
+        redirectAttributes.addFlashAttribute("SellInfo", "Dodano do koszyka:");
+        modelAndView.setViewName("redirect:/index");
+        return modelAndView;
     }
 
     @RequestMapping(value = {"/remove/{itemId}"}, params = "remove", method = RequestMethod.POST)

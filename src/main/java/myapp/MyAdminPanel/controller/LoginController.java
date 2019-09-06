@@ -215,10 +215,6 @@ public class LoginController {
         return itemMap;
     }
 
-    public static void goHome(ModelAndView modelAndView) {
-        ModelAndView loginController = new LoginController().home("", modelAndView);
-    }
-
     public static List<MyItem> getItemsNames(List<MyItem> itemList, Map<Integer, String> itemMap) {
         for (MyItem myItem : itemList) {
             myItem.setName(itemMap.get(myItem.getItemId()));
