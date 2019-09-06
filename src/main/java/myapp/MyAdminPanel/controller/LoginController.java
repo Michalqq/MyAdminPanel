@@ -104,7 +104,7 @@ public class LoginController {
                                  @RequestParam(name = "id", required = true) int itemId) {
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
-            myItem.get().setName(getItemsMap().get(myItem.get().getItemId()));
+            myItem.get().setName(itemsNameFiller.getItemsMap().get(myItem.get().getItemId()));
             modelAndView.addObject("myItem", myItem.get());
         }
         modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
@@ -176,7 +176,7 @@ public class LoginController {
                 }
                 if (temp == 0) myItems.add(item);
             }
-            myItems = (getItemsNames(myItems, this.getItemsMap()));
+            myItems = (itemsNameFiller.getItemsNames(myItems));
             if (name != null && !name.equals("")) {
                 myItems = (getByNameContains(myItems, name));
             }
@@ -201,7 +201,7 @@ public class LoginController {
             }
             if (temp == 0) myItems.add(item);
         }
-        myItems = getItemsNames(myItems, this.getItemsMap());
+        myItems = itemsNameFiller.getItemsNames(myItems);
         if (name != null && !name.equals("")) {
             myItems = getByNameContains(myItems, name);
         }
