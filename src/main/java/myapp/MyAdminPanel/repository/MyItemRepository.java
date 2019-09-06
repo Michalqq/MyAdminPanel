@@ -22,7 +22,6 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(SUM(sellPrice), sellDate) FROM MyItem WHERE sellPrice IS NOT NULL GROUP BY sellDate ORDER BY sellDate DESC")
     List<MyItemSoldSum> sumSellPriceByDays();
 
-    //@Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(COALESCE(SUM(sellPrice),0), sellDate) FROM MyItem WHERE sellPrice IS NOT NULL AND sellDate = :sellDate")
     @Query(value = "SELECT COALESCE(SUM(sellPrice),0) FROM MyItem WHERE sellPrice IS NOT NULL AND sellDate = :sellDate")
     Double sumSellPriceWhereSellDateIs(String sellDate);
 
@@ -47,6 +46,10 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(String startDate, String stopDate);
 
     @Query(value = "FROM MyItem " +
+            "WHERE sellDate BETWEEN :startDate  AND :stopDate AND itemId = :itemId")
+    List<MyItem> findAllItemsWhereSellDateBetween(String startDate, String stopDate, int itemId);
+
+    @Query(value = "FROM MyItem " +
             "WHERE lastActionDate BETWEEN :startDate  AND :stopDate" +
             " ORDER BY lastActionDate DESC")
     List<MyItem> findAllByLastActionDateBetween(String startDate, String stopDate);
@@ -55,7 +58,6 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
             "WHERE sellPrice is null AND deliveredToPoland = :deliveredToPoland")
            //"GROUP BY MyItem.itemId")
     List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
-    //Set<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
 
     @Query(value = "FROM MyItem " +
             "WHERE sellPrice is null AND deliveredToPoland is null")

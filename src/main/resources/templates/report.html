@@ -186,6 +186,49 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="col-lg-4">
+                            <form action="" method="GET">
+                                <h5>Start date:</h5>
+                                <div class="input-group col-sm-12">
+                                    <span class="input-group-addon"><i class="far fa-calendar"></i></i></span>
+                                    <input class="form-control" name="startDate" id="startDate" type="date"
+                                           required th:value="${{startDate}}">
+                                </div>
+                                <br>
+                                <h5>Stop date:</h5>
+                                <div class="input-group col-sm-12">
+                                    <span class="input-group-addon"><i class="fas fa-calendar"></i></i></span>
+                                    <input class="form-control" name="stopDate" id="stopDate" type="date"
+                                           required th:value="${{stopDate}}">
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <select class="dropdown-toggle btn btn-secondary" style="width:500px"
+                                                data-style="btn-success" id="histStatus" name="histStatus">
+                                            <option value="4">Wszystko</option>
+                                            <option value="0">W transporcie</option>
+                                            <option value="1">W domu</option>
+                                            <option value="2">Pobranie</option>
+                                            <option value="3">Sprzedane</option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                    </div>
+                                    <div class="input-group col-sm-12">
+                                        <button name="confirmDate" value="confirmDate" type="submit"
+                                                class="btn btn-primary btn-md">
+                                            <i class="fas fa-check-circle"></i>Show
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-sm-12">
+                                    <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
+                                </div>
+                            </form>
+                        </div>
                         <div class="col-lg-8">
                             <h2 class="title-1 m-b-25">My Items</h2>
                             <div class="table-responsive table--no-card m-b-20">
@@ -203,14 +246,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="myItem: ${myItems}" class="null"
+                                    <tr th:each="myItem: ${myItems}" th:each="profit: ${profits}" class="null"
                                         onclick="changeRowColorOnTable(this)">
                                         <td style="display:none" th:text="${myItem.id}">
                                         <td style="width:60%" th:text="${myItem.name}"></td>
-                                        <td style="width:15%" th:text="${myItem.buyPrice}"></td>
-                                        <td style="width:5%" th:text="${myItem.quantity}"></td>
-                                        <td style="width:12%" th:text="${myItem.buyDate}"></td>
-                                        <td style="width:8%" th:text="${myItem.quantInTransport}"></td>
+                                        <td style="width:15%" th:text="${profit}"></td>
+                                        <!--<td style="width:5%" th:text="${myItem.quantity}"></td>-->
+                                        <!--<td style="width:12%" th:text="${myItem.buyDate}"></td>-->
+                                        <!--<td style="width:8%" th:text="${myItem.quantInTransport}"></td>-->
                                         <td>
                                             <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
                                                 <div class="table-data-feature">
@@ -235,71 +278,6 @@
 
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <div class="col-md-12">
-                            </div>
-                            <div class="overview-wrap">
-                                <button href="additem" class="au-btn au-btn-icon au-btn--blue">
-                                    <i class="zmdi zmdi-plus"></i>add item
-                                </button>
-                            </div>
-                            <br>
-                            <div class="overview-item overview-item--c1">
-                                <form action="/sell#" modelAttribute="myItemList" method="POST">
-                                    <div class="input-group col-sm-12">
-                                        <input id="checkedItemId" name="checkedItemId" hidden required>
-                                        <span class="input-group-addon"><i class="fas fa-tag"></i></span>
-                                        <input class="form-control" name="sellPriceInput" type="number" step="0.01"
-                                               placeholder="Sell price" required>
-                                    </div>
-                                    <br>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon"><i class="fas fa-percent"></i></span>
-                                        <input class="form-control" name="commissionInput" type="number" step="0.01"
-                                               placeholder="Commission">
-                                    </div>
-                                    <br>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon"
-                                              onclick="document.getElementById('cashOnDelivery').disabled=false"><i
-                                                class="fas fa-truck"></i></span>
-                                        <input class="form-control" name="cashOnDelivery" type="number" step="0.01"
-                                               id="cashOnDelivery"
-                                               placeholder="Cash on delivery" disabled>
-                                    </div>
-                                    <br>
-                                    <div class="input-group col-sm-12">
-                                        <span class="input-group-addon"><i class="far fa-sticky-note"></i></span>
-                                        <input class="form-control" name="note" type="text"
-                                               placeholder="Note">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <h6 th:text="${SellInfo}"></h6>
-                                    </div>
-                                    <br>
-                                    <div class="input-footer">
-                                        <button name="sell" value="sell" type="submit"
-                                                class="btn btn-primary btn-md">
-                                            <i class="far fa-check-circle"></i> Sell
-                                        </button>
-                                        <button name="add" value="add" type="submit" class="btn btn-primary btn-md">
-                                            <i class="fas fa-shopping-basket"></i> Add
-                                        </button>
-                                    </div>
-                                    <br>
-                                    <br>
-                                </form>
-                                    <div class="text-right col-sm-6 col-md-12" style="margin-top: -45px">
-                                        <form action="/basket" method="POST">
-                                            <button name="clearBasket" value="clearBasket" type="submit"
-                                                    class="btn btn-warning btn-md">
-                                                <i class="fas fa-minus-circle"></i> Delete basket
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <br>
                             </div>
                         </div>
                     </div>
