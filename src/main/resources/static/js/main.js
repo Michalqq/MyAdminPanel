@@ -145,7 +145,8 @@ function iterateTableGetChecked(){
               },
               ticks: {
                 fontSize: 2,
-                fontColor: 'transparent'
+                fontColor: 'transparent',
+                display: true
               }
             }],
             yAxes: [{
