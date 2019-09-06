@@ -3,7 +3,6 @@ package myapp.MyAdminPanel.controller;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
-import myapp.MyAdminPanel.model.MyItemSoldSum;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,12 +62,12 @@ public class ReportController {
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
             double profit = round(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum(), 2);
-            if (profit == 0) {
-                itemToReports.remove(count);
-            } else {
+//            if (profit == 0) {
+//                itemToReports.remove(count);
+//            } else {
                 itemToReports.get(count).setSellPrice(profit);
                 count++;
-            }
+//            }
         }
     }
 
