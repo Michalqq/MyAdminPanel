@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.controller;
 
 import myapp.MyAdminPanel.model.Item;
+import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.model.MyItemSoldSum;
 import myapp.MyAdminPanel.repository.ItemRepository;
@@ -22,13 +23,13 @@ public class ReportController {
 
     private MyItemRepository myItemRepository;
     private ItemRepository itemRepository;
-    private MyItemSoldSum myItemSoldSum;
+    private ItemToReport itemToReport;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, MyItemSoldSum myItemSoldSum) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
-        this.myItemSoldSum = myItemSoldSum;
+        this.itemToReport = itemToReport;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -36,9 +37,9 @@ public class ReportController {
                                   @RequestParam(value = "startDate", defaultValue = "") String startDate,
                                   @RequestParam(value = "stopDate", defaultValue = "") String stopDate) {
         List<Item> items = itemRepository.findAll();
-        List<MyItemSoldSum> myItemSoldSums = new ArrayList<>();
+        List<ItemToReport> myItemSoldSums = new ArrayList<>();
         for (Item item : items){
-            myItemSoldSums.add(new MyItemSoldSum());
+            myItemSoldSums.add(new ItemToReport());
             myItemSoldSums.get(myItemSoldSums.size()-1).setItemId(item.getId());
             myItemSoldSums.get(myItemSoldSums.size()-1).setName(item.getName());
         }

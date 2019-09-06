@@ -3,13 +3,15 @@ package myapp.MyAdminPanel.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyItemSoldSum {
+@Component
+public class ItemToReport {
     private Double sellPrice;
     private String sellDate;
+    private String name;
+    private int itemId;
 }

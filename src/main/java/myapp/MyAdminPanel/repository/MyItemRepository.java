@@ -19,7 +19,7 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     int countBySellPriceIsNotNullAndSellDateIsBetween(String startDate, String stopDate);
 
-    @Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(SUM(sellPrice), sellDate, itemId, name) FROM MyItem WHERE sellPrice IS NOT NULL GROUP BY sellDate ORDER BY sellDate DESC")
+    @Query(value = "SELECT new myapp.MyAdminPanel.model.MyItemSoldSum(SUM(sellPrice), sellDate) FROM MyItem WHERE sellPrice IS NOT NULL GROUP BY sellDate ORDER BY sellDate DESC")
     List<MyItemSoldSum> sumSellPriceByDays();
 
     @Query(value = "SELECT COALESCE(SUM(sellPrice),0) FROM MyItem WHERE sellPrice IS NOT NULL AND sellDate = :sellDate")
