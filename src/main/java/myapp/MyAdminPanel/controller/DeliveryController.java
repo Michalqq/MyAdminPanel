@@ -54,7 +54,7 @@ public class DeliveryController {
         for (MyItem item : myItems) {
             item.setQuantity(1);
         }
-        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.addObject("myItems", myItems);
         modelAndView.setViewName("delivery");
         return modelAndView;

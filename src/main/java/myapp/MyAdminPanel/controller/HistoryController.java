@@ -42,7 +42,7 @@ public class HistoryController {
         this.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
-        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("history");
         return modelAndView;
     }

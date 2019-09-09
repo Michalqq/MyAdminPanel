@@ -73,7 +73,6 @@ public class SellController {
             basket.add(item);
             itemsNameFiller.getItemsNames(basket.getMyItemList());
         } else modelAndView.addObject("SellInfo", "ERROR:  Item doesn't exist");
-        //modelAndView.addObject("SellInfo", basket.getMyItemList().size());
         redirectAttributes.addFlashAttribute("SellInfo", "Dodano do koszyka: " + item.get().getName());
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
@@ -99,7 +98,7 @@ public class SellController {
             modelAndView.addObject("note", basket.getMyItemList().get(0).getNotes());
         }
         modelAndView.setViewName("basket");
-        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+        basket.addInfoAboutBasketSize(modelAndView);
         return modelAndView;
     }
 
