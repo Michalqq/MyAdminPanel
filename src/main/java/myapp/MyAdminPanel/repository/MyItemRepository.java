@@ -46,7 +46,7 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(String startDate, String stopDate);
 
     @Query(value = "FROM MyItem " +
-            "WHERE sellDate BETWEEN :startDate  AND :stopDate AND itemId = :itemId")
+            "WHERE sellDate BETWEEN :startDate  AND :stopDate AND itemId = :itemId AND sellPrice IS NOT NULL")
     List<MyItem> findAllItemsWhereSellDateBetween(String startDate, String stopDate, int itemId);
 
     @Query(value = "FROM MyItem " +
