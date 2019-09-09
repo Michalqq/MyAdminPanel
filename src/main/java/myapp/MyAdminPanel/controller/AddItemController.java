@@ -41,7 +41,7 @@ public class AddItemController {
         List<Seller> sellers = sellersRepository.findAll();
         modelAndView.addObject("sellers", sellers);
         modelAndView.setViewName("additem");
-        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
+        basket.addInfoAboutBasketSize(modelAndView);
         return modelAndView;
     }
 

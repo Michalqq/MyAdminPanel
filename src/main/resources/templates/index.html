@@ -296,27 +296,27 @@
                                     </div>
                                     <br>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row m-t-25">
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="overview-item overview-item--c2">
-                                <div class="overview__inner">
-                                    <div class="overview-box clearfix">
-                                        <div class="icon">
-                                            <i class="zmdi zmdi-shopping-cart"></i>
+                            <div class="col-sm-12 col-lg-12">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-shopping-cart"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 th:text="${totalItemSold}"></h2>
+                                                <span>items sold</span>
+                                            </div>
                                         </div>
-                                        <div class="text">
-                                            <h2 th:text="${totalItemSold}"></h2>
-                                            <span>items sold</span>
+                                        <div class="overview-chart">
+                                            <canvas id="widgetChart2"></canvas>
                                         </div>
-                                    </div>
-                                    <div class="overview-chart">
-                                        <canvas id="widgetChart2"></canvas>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row m-t-25">
                         <div class="col-sm-6 col-lg-4">
                             <div class="overview-item overview-item--c3">
                                 <div class="overview__inner">

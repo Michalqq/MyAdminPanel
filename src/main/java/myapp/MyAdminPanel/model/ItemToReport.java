@@ -14,6 +14,7 @@ public class ItemToReport implements Comparable<ItemToReport> {
     private String sellDate;
     private String name;
     private int itemId;
+    private int quantity;
 
     @Override
     public int compareTo(ItemToReport o) {

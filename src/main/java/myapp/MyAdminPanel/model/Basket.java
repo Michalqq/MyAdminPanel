@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,5 +24,9 @@ public class Basket {
 
     public void add(MyItem myItem) {
         this.myItemList.add(myItem);
+    }
+
+    public void addInfoAboutBasketSize(ModelAndView modelAndView){
+        modelAndView.addObject("basketsize", "Basket (" + this.getMyItemList().size() + ")");
     }
 }

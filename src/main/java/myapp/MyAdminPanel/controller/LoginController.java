@@ -92,7 +92,7 @@ public class LoginController {
         for (MyItem item : myItems) {
             item.setQuantity(1);
         }
-        getBasketInfo(modelAndView);
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.addObject("myItems", myItems);
         modelAndView.setViewName("index");
         return modelAndView;
@@ -106,7 +106,7 @@ public class LoginController {
             myItem.get().setName(itemsNameFiller.getItemsMap().get(myItem.get().getItemId()));
             modelAndView.addObject("myItem", myItem.get());
         }
-        getBasketInfo(modelAndView);
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("edit");
         return modelAndView;
     }
@@ -130,7 +130,7 @@ public class LoginController {
             dbAction.setCashOnDelivery(myItem.get(), cashOnDelivery);
             if (note.length() > 0) myItem.get().setNotes(myItem.get().getNotes() + "; " + note);
         }
-        getBasketInfo(modelAndView);
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -142,7 +142,7 @@ public class LoginController {
         if (myItem.isPresent()) {
             myItemRepository.delete(myItem.get());
         }
-        getBasketInfo(modelAndView);
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -154,7 +154,7 @@ public class LoginController {
         if (myItem.isPresent()) {
             dbAction.clearSellPriceAndDate(myItem.get());
         }
-        getBasketInfo(modelAndView);
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
@@ -172,7 +172,7 @@ public class LoginController {
                 myItems = (getByNameContains(myItems, name));
             }
             this.getQuantityOfItems(myItems);
-            getBasketInfo(modelAndView);
+            basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
             this.chartDataCreator(modelAndView);
             modelAndView.setViewName("index");
@@ -192,7 +192,7 @@ public class LoginController {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
         }
         modelAndView.addObject("myItems", myItems);
-        getBasketInfo(modelAndView);
+        basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("delivery");
         return modelAndView;
     }
@@ -215,11 +215,6 @@ public class LoginController {
         modelAndView.addObject("dataToEarningByDays", soldByDayList);
         modelAndView.addObject("labelToEarningByDays", dataByDay);
         modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
-        return modelAndView;
-    }
-
-    public ModelAndView getBasketInfo(ModelAndView modelAndView){
-        modelAndView.addObject("basketsize", "Basket (" + basket.getMyItemList().size() + ")");
         return modelAndView;
     }
 

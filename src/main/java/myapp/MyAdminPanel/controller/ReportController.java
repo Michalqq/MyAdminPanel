@@ -1,5 +1,6 @@
 package myapp.MyAdminPanel.controller;
 
+import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,12 +27,14 @@ public class ReportController {
     private MyItemRepository myItemRepository;
     private ItemRepository itemRepository;
     private ItemToReport itemToReport;
+    private Basket basket;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.itemToReport = itemToReport;
+        this.basket = basket;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -39,6 +43,15 @@ public class ReportController {
                                   @RequestParam(value = "stopDate", defaultValue = "") String stopDate) {
         if (startDate.equals("")) startDate = this.getYesterDay();
         if (stopDate.equals("")) stopDate = this.getToday();
+        modelAndView.addObject("myItems", getListOfItems(startDate, stopDate));
+        modelAndView.addObject("startDate", startDate);
+        modelAndView.addObject("stopDate", stopDate);
+        basket.addInfoAboutBasketSize(modelAndView);
+        modelAndView.setViewName("report");
+        return modelAndView;
+    }
+
+    public List<ItemToReport> getListOfItems(String startDate, String stopDate) {
         List<Item> items = itemRepository.findAll();
         List<ItemToReport> itemsToReport = new ArrayList<>();
         for (Item item : items) {
@@ -49,11 +62,7 @@ public class ReportController {
         this.getProfitSum(items, startDate, stopDate, itemsToReport);
         Collections.sort(itemsToReport);
         Collections.reverse(itemsToReport);
-        modelAndView.addObject("myItems", itemsToReport);
-        modelAndView.setViewName("report");
-        modelAndView.addObject("startDate", startDate);
-        modelAndView.addObject("stopDate", stopDate);
-        return modelAndView;
+        return itemsToReport;
     }
 
     public void getProfitSum(List<Item> items, String startDate, String stopDate, List<ItemToReport> itemToReports) {
@@ -65,6 +74,7 @@ public class ReportController {
                 itemToReports.remove(count);
             } else {
                 itemToReports.get(count).setSellPrice(profit);
+                itemToReports.get(count).setQuantity(myItemsTemp.size());
                 count++;
             }
         }
