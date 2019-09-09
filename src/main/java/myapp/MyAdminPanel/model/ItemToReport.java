@@ -14,10 +14,26 @@ public class ItemToReport implements Comparable<ItemToReport> {
     private String sellDate;
     private String name;
     private int itemId;
-    private int quantity;
+    private int quantity = 0;
+    private double average;
 
+    public void setSellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
+        setAverageAutomatickly();
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
+        setAverageAutomatickly();
+    }
     @Override
     public int compareTo(ItemToReport o) {
         return getSellPrice().compareTo(o.getSellPrice());
+    }
+
+    public void setAverageAutomatickly(){
+        if (this.quantity > 0 && this.sellPrice>0){
+            this.average = this.sellPrice / this.quantity;
+        }
     }
 }
