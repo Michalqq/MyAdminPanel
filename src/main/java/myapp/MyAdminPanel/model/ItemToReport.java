@@ -33,7 +33,7 @@ public class ItemToReport implements Comparable<ItemToReport> {
 
     public void setAverageAutomatickly(){
         if (this.quantity > 0 && this.sellPrice>0){
-            this.average = this.sellPrice / this.quantity;
+            this.average = Math.round(this.sellPrice / this.quantity);
         }
     }
 }
