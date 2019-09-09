@@ -1,11 +1,13 @@
 package myapp.MyAdminPanel.controller;
 
+import lombok.extern.log4j.Log4j2;
 import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,15 +20,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
-
-import static jdk.nashorn.internal.objects.NativeMath.log;
-import static jdk.nashorn.internal.objects.NativeMath.round;
 
 @Controller
+@Log4j2
 public class ReportController {
-
-    private Logger logger;
 
     private MyItemRepository myItemRepository;
     private ItemRepository itemRepository;
@@ -34,12 +31,11 @@ public class ReportController {
     private Basket basket;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket, Logger logger) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.itemToReport = itemToReport;
         this.basket = basket;
-        this.logger = logger;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -60,7 +56,7 @@ public class ReportController {
         List<Item> items = itemRepository.findAll();
         List<ItemToReport> itemsToReport = new ArrayList<>();
         for (Item item : items) {
-            logger.info(item.getName());
+            log.info(item.getName());
             itemsToReport.add(new ItemToReport());
             itemsToReport.get(itemsToReport.size() - 1).setItemId(item.getId());
             itemsToReport.get(itemsToReport.size() - 1).setName(item.getName());
@@ -75,7 +71,7 @@ public class ReportController {
         int count = 0;
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
-            logger.info(String.valueOf(myItemsTemp.size()));
+            log.info(String.valueOf(myItemsTemp.size()));
             double profit = Math.round(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum());
             if (profit == 0) {
                 itemToReports.remove(count);
