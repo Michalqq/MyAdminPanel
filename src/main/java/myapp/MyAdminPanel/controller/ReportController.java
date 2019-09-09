@@ -20,12 +20,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static jdk.nashorn.internal.objects.NativeMath.log;
 import static jdk.nashorn.internal.objects.NativeMath.round;
 
 @Controller
 public class ReportController {
 
-    @Autowired
     private Logger logger;
 
     private MyItemRepository myItemRepository;
@@ -34,11 +34,12 @@ public class ReportController {
     private Basket basket;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket, Logger logger) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.itemToReport = itemToReport;
         this.basket = basket;
+        this.logger = logger
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
