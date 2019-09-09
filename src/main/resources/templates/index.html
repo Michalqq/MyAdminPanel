@@ -286,15 +286,15 @@
                                     <br>
                                     <br>
                                 </form>
-                                    <div class="text-right col-sm-6 col-md-12" style="margin-top: -45px">
-                                        <form action="/basket" method="POST">
-                                            <button name="clearBasket" value="clearBasket" type="submit"
-                                                    class="btn btn-warning btn-md">
-                                                <i class="fas fa-minus-circle"></i> Delete basket
-                                            </button>
-                                        </form>
-                                    </div>
-                                    <br>
+                                <div class="text-right col-sm-6 col-md-12" style="margin-top: -45px">
+                                    <form action="/basket" method="POST">
+                                        <button name="clearBasket" value="clearBasket" type="submit"
+                                                class="btn btn-warning btn-md">
+                                            <i class="fas fa-minus-circle"></i> Delete basket
+                                        </button>
+                                    </form>
+                                </div>
+                                <br>
                             </div>
                             <div class="col-sm-12 col-lg-12">
                                 <div class="overview-item overview-item--c2">
@@ -315,39 +315,39 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-lg-12">
-                        <div class="overview-item overview-item--c3">
-                            <div class="overview__inner">
-                                <div class="overview-box clearfix">
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-calendar-note"></i>
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="overview-item overview-item--c3">
+                                <div class="overview__inner">
+                                    <div class="overview-box clearfix">
+                                        <div class="icon">
+                                            <i class="zmdi zmdi-calendar-note"></i>
+                                        </div>
+                                        <div class="text">
+                                            <h2 th:text="${totalEarningLastDays}"></h2>
+                                            <span>earning by day</span>
+                                        </div>
                                     </div>
-                                    <div class="text">
-                                        <h2 th:text="${totalEarningLastDays}"></h2>
-                                        <span>earning by day</span>
+                                    <div class="overview-chart">
+                                        <canvas id="widgetChart3"></canvas>
                                     </div>
-                                </div>
-                                <div class="overview-chart">
-                                    <canvas id="widgetChart3"></canvas>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-lg-12">
-                        <div class="overview-item overview-item--c1">
-                            <div class="overview__inner">
-                                <div class="overview-box clearfix">
-                                    <div class="icon">
-                                        <i class="zmdi zmdi-money"></i>
+                        <div class="col-sm-12 col-lg-12">
+                            <div class="overview-item overview-item--c1">
+                                <div class="overview__inner">
+                                    <div class="overview-box clearfix">
+                                        <div class="icon">
+                                            <i class="zmdi zmdi-money"></i>
+                                        </div>
+                                        <div class="text">
+                                            <h2 th:text="${totalProfit}"></h2>
+                                            <span>total profit</span>
+                                        </div>
                                     </div>
-                                    <div class="text">
-                                        <h2 th:text="${totalProfit}"></h2>
-                                        <span>total profit</span>
+                                    <div class="overview-chart">
+                                        <canvas id="widgetChart4"></canvas>
                                     </div>
-                                </div>
-                                <div class="overview-chart">
-                                    <canvas id="widgetChart4"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -516,6 +516,8 @@
 
 
     /*]]>*/
+
+
 
 
 </script>

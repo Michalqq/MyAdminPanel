@@ -237,20 +237,20 @@
                                         <td style="display:none" th:text="${myItem.itemId}">
                                         <td style="width:60%" th:text="${myItem.name}"></td>
                                         <td style="width:15%" th:text="${myItem.sellPrice}"></td>
-                                        <td style="width:15%" th:text="${myItem.quantity}"></td>
+                                        <td style="width:5%" th:text="${myItem.quantity}"></td>
                                         <!--<td style="width:5%" th:text="${myItem.quantity}"></td>-->
                                         <!--<td style="width:12%" th:text="${myItem.buyDate}"></td>-->
                                         <!--<td style="width:8%" th:text="${myItem.quantInTransport}"></td>-->
-                                        <td>
-                                            <form th:action="@{/edit?id=} + ${{myItem.itemId}}" method="post">
-                                                <div class="table-data-feature">
-                                                    <button th:name="edit" class="item"
-                                                            data-toggle="tooltip" data-placement="top" title="Edit">
-                                                        <i class="zmdi zmdi-edit"></i>
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </td>
+                                        <!--<td>-->
+                                            <!--<form th:action="@{/edit?id=} + ${{myItem.itemId}}" method="post">-->
+                                                <!--<div class="table-data-feature">-->
+                                                    <!--<button th:name="edit" class="item"-->
+                                                            <!--data-toggle="tooltip" data-placement="top" title="Edit">-->
+                                                        <!--<i class="zmdi zmdi-edit"></i>-->
+                                                    <!--</button>-->
+                                                <!--</div>-->
+                                            <!--</form>-->
+                                        <!--</td>-->
                                         <!--<td>-->
                                         <!--<form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">-->
                                         <!--<div class="table-data-feature">-->
@@ -262,7 +262,6 @@
                                         <!--</form>-->
                                         <!--</td>-->
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
