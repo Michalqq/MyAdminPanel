@@ -39,7 +39,7 @@ public class ReportController {
         this.itemRepository = itemRepository;
         this.itemToReport = itemToReport;
         this.basket = basket;
-        this.logger = logger
+        this.logger = logger;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
