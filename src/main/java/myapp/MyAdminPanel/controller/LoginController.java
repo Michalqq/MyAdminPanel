@@ -153,6 +153,7 @@ public class LoginController {
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
             dbAction.clearSellPriceAndDate(myItem.get());
+            dbAction.setNote(myItem.get(), "towar po zwrocie");
         }
         basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("redirect:/index");
