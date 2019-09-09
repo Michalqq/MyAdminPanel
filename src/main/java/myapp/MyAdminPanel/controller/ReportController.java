@@ -18,11 +18,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static jdk.nashorn.internal.objects.NativeMath.round;
 
 @Controller
 public class ReportController {
+
+    @Autowired
+    private Logger logger;
 
     private MyItemRepository myItemRepository;
     private ItemRepository itemRepository;
@@ -55,7 +59,7 @@ public class ReportController {
         List<Item> items = itemRepository.findAll();
         List<ItemToReport> itemsToReport = new ArrayList<>();
         for (Item item : items) {
-            System.out.println(item.getName());
+            logger.info(item.getName());
             itemsToReport.add(new ItemToReport());
             itemsToReport.get(itemsToReport.size() - 1).setItemId(item.getId());
             itemsToReport.get(itemsToReport.size() - 1).setName(item.getName());
@@ -70,7 +74,7 @@ public class ReportController {
         int count = 0;
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
-            System.out.println(myItemsTemp.size());
+            logger.info(String.valueOf(myItemsTemp.size()));
             double profit = Math.round(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum());
             if (profit == 0) {
                 itemToReports.remove(count);
