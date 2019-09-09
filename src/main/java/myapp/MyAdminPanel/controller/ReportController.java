@@ -69,15 +69,14 @@ public class ReportController {
         int count = 0;
         for (Item item : items) {
             List<MyItem> myItemsTemp = myItemRepository.findAllItemsWhereSellDateBetween(startDate, stopDate, item.getId());
-            if (myItemsTemp.size() > 0) {
-                double profit = Math.round(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum());
-                if (profit == 0) {
-                    itemToReports.remove(count);
-                } else {
-                    itemToReports.get(count).setSellPrice(profit);
-                    itemToReports.get(count).setQuantity(myItemsTemp.size());
-                    count++;
-                }
+            double profit = Math.round(myItemsTemp.stream().mapToDouble(x -> x.getSellPrice()).sum() - myItemsTemp.stream().mapToDouble(x -> x.getBuyPrice()).sum());
+            if (profit == 0) {
+                itemToReports.remove(count);
+            } else {
+                itemToReports.get(count).setSellPrice(profit);
+                itemToReports.get(count).setQuantity(myItemsTemp.size());
+                count++;
+
             }
         }
     }
