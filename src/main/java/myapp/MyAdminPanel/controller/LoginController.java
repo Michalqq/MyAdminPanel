@@ -286,7 +286,7 @@ public class LoginController {
         double valueOnStock =myItemRepository.getSumValueOfItemsOnStock();
         double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
                 ,DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-        DecimalFormat df1=new DecimalFormat("### ### ###.##");
+        DecimalFormat df1=new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
     }
