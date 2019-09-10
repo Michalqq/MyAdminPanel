@@ -62,6 +62,7 @@ public class ReportController {
         this.getProfitSum(items, startDate, stopDate, itemsToReport);
         Collections.sort(itemsToReport);
         Collections.reverse(itemsToReport);
+        addExtraRowWithTotalSum(itemsToReport);
         return itemsToReport;
     }
 
@@ -79,6 +80,14 @@ public class ReportController {
 
             }
         }
+    }
+
+    public void addExtraRowWithTotalSum(List<ItemToReport> itemsToReport){
+        ItemToReport item = new ItemToReport();
+        item.setName("TOTAL");
+        item.setSellPrice(itemsToReport.stream().mapToDouble(x->x.getSellPrice()).sum());
+        item.setQuantity(1);
+        itemsToReport.add(item);
     }
 
     private String getYesterDay() {
