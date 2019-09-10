@@ -98,7 +98,7 @@ public class HistoryController {
         }
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
-        modelAndView.addObject("totalBuyPrice", myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum());
+        modelAndView.addObject("totalBuyPrice", Math.round(myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum()));
         return myItems;
     }
 }
