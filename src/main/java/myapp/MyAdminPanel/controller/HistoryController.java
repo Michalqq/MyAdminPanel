@@ -98,18 +98,8 @@ public class HistoryController {
         }
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
-        this.addExtraRowWithTotalSum(myItems);
+        modelAndView.addObject("totalBuyPrice", myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum());
+        modelAndView.addObject("totalSellPrice", myItems.stream().mapToDouble(x -> x.getSellPrice()).sum());
         return myItems;
-    }
-
-    public void addExtraRowWithTotalSum(List<MyItem> myItem) {
-        MyItem item = new MyItem();
-        item.setName("__TOTAL__");
-        item.setSellPrice(myItem.stream().mapToDouble(x -> x.getSellPrice()).sum());
-        item.setQuantity(0);
-        item.setId(0);
-        item.setDeliveredToPoland(0);
-        item.setBuyPrice(0.0);
-        myItem.add(item);
     }
 }
