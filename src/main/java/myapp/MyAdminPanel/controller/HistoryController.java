@@ -103,10 +103,10 @@ public class HistoryController {
     }
 
     public void addExtraRowWithTotalSum(List<MyItem> myItem) {
-        myItem.add(new MyItem());
         MyItem item = new MyItem();
         item.setName("__TOTAL__");
         item.setSellPrice(myItem.stream().mapToDouble(x -> x.getSellPrice()).sum());
+        item.setQuantity(0);
         myItem.add(item);
     }
 }

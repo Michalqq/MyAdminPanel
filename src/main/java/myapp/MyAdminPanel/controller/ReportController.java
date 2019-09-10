@@ -84,7 +84,6 @@ public class ReportController {
 
     public void addExtraRowWithTotalSum(List<ItemToReport> itemsToReport){
         ItemToReport item = new ItemToReport();
-        itemsToReport.add(new ItemToReport());
         item.setName("__TOTAL__");
         item.setSellPrice(itemsToReport.stream().mapToDouble(x->x.getSellPrice()).sum());
         item.setQuantity(1);
