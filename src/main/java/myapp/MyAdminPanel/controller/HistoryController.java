@@ -107,6 +107,9 @@ public class HistoryController {
         item.setName("__TOTAL__");
         item.setSellPrice(myItem.stream().mapToDouble(x -> x.getSellPrice()).sum());
         item.setQuantity(0);
+        item.setId(0);
+        item.setDeliveredToPoland(0);
+        item.setBuyPrice(0.0);
         myItem.add(item);
     }
 }
