@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -34,7 +35,7 @@ public class LoginController {
     @Autowired
     public LoginController(UserService userService, MyItemRepository myItemRepository, ItemRepository itemRepository,
                            Basket basket, DBAction dbAction, CountProfitByMonth countProfitByMonth, CountItemSold countItemSold,
-                           ItemsNameFiller itemsNameFiller){
+                           ItemsNameFiller itemsNameFiller) {
         this.userService = userService;
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
@@ -84,6 +85,7 @@ public class LoginController {
         }
         return modelAndView;
     }
+
     @RequestMapping(value = {"/details"}, params = "details", method = RequestMethod.POST)
     public ModelAndView getListOfItem(@RequestParam(value = "id", required = true) int id,
                                       ModelAndView modelAndView) {
@@ -149,7 +151,7 @@ public class LoginController {
 
     @RequestMapping(value = {"/edit"}, params = "restore", method = RequestMethod.POST)
     public ModelAndView restoreToShop(ModelAndView modelAndView,
-                                       @RequestParam(name = "id", required = true) int itemId) {
+                                      @RequestParam(name = "id", required = true) int itemId) {
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
             dbAction.clearSellPriceAndDate(myItem.get());
@@ -176,6 +178,7 @@ public class LoginController {
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
             this.chartDataCreator(modelAndView);
+            this.addInfoToFront(modelAndView);
             modelAndView.setViewName("index");
         }
         return modelAndView;
@@ -219,7 +222,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    public List<MyItem> countItemOnStock(List<MyItem> myItems1){
+    public List<MyItem> countItemOnStock(List<MyItem> myItems1) {
         List<MyItem> myItems = new ArrayList<>();
         int temp = 0;
         for (MyItem item : myItems1) {
@@ -276,6 +279,16 @@ public class LoginController {
         }
         Collections.reverse(nameList);
         return nameList;
+    }
+
+    public void addInfoToFront(ModelAndView modelAndView) {
+        modelAndView.addObject("totalItemsOnStock", "Liczba przedmiotów w magazynie: " + myItemRepository.countBySellPriceIsNull());
+        double valueOnStock =myItemRepository.getSumValueOfItemsOnStock();
+        double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
+                ,DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
+        DecimalFormat df1=new DecimalFormat("###,###,###.##");
+        modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
+        modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
     }
 
 }
