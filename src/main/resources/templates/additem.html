@@ -34,7 +34,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
     <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css"
+          rel="stylesheet"/>
 
 
     <!-- Main CSS-->
@@ -190,22 +191,16 @@
                         <div class="col-md-12">
                             <div class="overview-wrap">
                                 <h2 class="title-1 m-b-25">Add new item</h2>
-                                <button class="au-btn au-btn-icon au-btn--blue">
-                                    <i class="zmdi zmdi-plus"></i>add item
-                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-9">
-                            <div class="col-md-12">
-                                <br>
-                            </div>
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
                                     <h5>Wybierz towar:</h5>
                                     <div class="col-sm-12">
-                                       <select class="selectpicker" id="itemId" name="itemId" data-live-search="true">
+                                        <select class="selectpicker" id="itemId" name="itemId" data-live-search="true">
                                             <option th:each="item: ${Items}" th:value="${item.id}"
                                                     th:text="${item.name}"></option>
                                         </select>
@@ -213,7 +208,8 @@
                                     <br>
                                     <h5>Wybierz sprzedawcę:</h5>
                                     <div class="col-sm-12">
-                                        <select class="form-control selectpicker" id="sellerId" name="sellerId" data-live-search="true">
+                                        <select class="form-control selectpicker" id="sellerId" name="sellerId"
+                                                data-live-search="true">
                                             <option th:each="seller: ${sellers}" th:value="${seller.id}"
                                                     th:text="${seller.sellerName}"></option>
                                         </select>
@@ -222,7 +218,8 @@
                                     <h5>Cena zakupu:</h5>
                                     <div class="input-group col-sm-12">
                                         <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
-                                        <input class="form-control" name="buyPrice" id="buyPrice" type="number" step="0.01"
+                                        <input class="form-control" name="buyPrice" id="buyPrice" type="number"
+                                               step="0.01"
                                                required>
                                     </div>
                                     <br>
