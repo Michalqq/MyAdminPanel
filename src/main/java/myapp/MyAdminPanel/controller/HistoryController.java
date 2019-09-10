@@ -46,11 +46,12 @@ public class HistoryController {
         modelAndView.setViewName("history");
         return modelAndView;
     }
+
     @RequestMapping(value = "/confirmCashOnDelivery", method = RequestMethod.POST)
     public ModelAndView confirmCashOnDelivery(@RequestParam(value = "id", required = true) int itemId,
-                                              ModelAndView modelAndView){
+                                              ModelAndView modelAndView) {
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
-        if (myItem.isPresent()){
+        if (myItem.isPresent()) {
             dbAction.setDeliveredToPolStatus(myItem.get(), 3);
         }
         modelAndView.setViewName("redirect:/history");
@@ -75,12 +76,13 @@ public class HistoryController {
 
     private void countProfit(List<MyItem> myItems) {
         for (MyItem item : myItems) {
-            if (item.getSellPrice() == null || item.getBuyPrice() == null || item.getBuyPrice()==0) continue;
+            if (item.getSellPrice() == null || item.getBuyPrice() == null || item.getBuyPrice() == 0) continue;
             double profit = Math.round((item.getSellPrice() - item.getBuyPrice()) / (item.getBuyPrice() * 0.01));
             item.setProfit(profit);
         }
     }
-    private List<MyItem> getHistoryByStatus(int status, String startDate, String stopDate, ModelAndView modelAndView){
+
+    private List<MyItem> getHistoryByStatus(int status, String startDate, String stopDate, ModelAndView modelAndView) {
         List<MyItem> myItems;
         if (startDate.equals("")) startDate = this.getYesterDay();
         if (stopDate.equals("")) stopDate = this.getToday();
@@ -88,6 +90,8 @@ public class HistoryController {
             myItems = myItemRepository.findAllByLastActionDateBetween(getFullStartDate(startDate), getFullStopDate(stopDate));
         } else if (status == 0) {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandIsNull(getFullStartDate(startDate), getFullStopDate(stopDate));
+        } else if (status == 5) {
+            myItems = myItemRepository.getAllWhereBuyDateIsBetween(getFullStartDate(startDate), getFullStopDate(stopDate));
         } else {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
         }
