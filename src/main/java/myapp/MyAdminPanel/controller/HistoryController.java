@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.controller;
 
 import myapp.MyAdminPanel.model.Basket;
+import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
@@ -97,6 +98,15 @@ public class HistoryController {
         }
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
+        this.addExtraRowWithTotalSum(myItems);
         return myItems;
+    }
+
+    public void addExtraRowWithTotalSum(List<MyItem> myItem) {
+        myItem.add(new MyItem());
+        MyItem item = new MyItem();
+        item.setName("__TOTAL__");
+        item.setSellPrice(myItem.stream().mapToDouble(x -> x.getSellPrice()).sum());
+        myItem.add(item);
     }
 }
