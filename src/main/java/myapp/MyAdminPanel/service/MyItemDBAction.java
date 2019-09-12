@@ -1,15 +1,18 @@
 package myapp.MyAdminPanel.service;
 
+import lombok.Data;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
+@Data
 public class MyItemDBAction implements DBAction {
     @Autowired
     private MyItemRepository myItemRepository;
@@ -19,9 +22,9 @@ public class MyItemDBAction implements DBAction {
     @Override
     public boolean setCashOnDelivery(MyItem myItem, double cashOnDelivery) {
         if (cashOnDelivery > 0) {
-            myItem.setCashOnDelivery(cashOnDelivery);
+            myItem.setCashOnDelivery(Double.valueOf(cashFormat().format(cashOnDelivery)));
             myItem.setIfCashOnDelivery(1);
-            myItem.setDeliveredToPoland(2);
+            setDeliveredToPolStatus(myItem, 2);
             setLastActionDateNowDate(myItem);
             myItemRepository.save(myItem);
             return true;
@@ -31,7 +34,7 @@ public class MyItemDBAction implements DBAction {
     @Override
     public boolean setSellPrice(MyItem myItem, double sellPrice) {
         if (sellPrice > 0) {
-            myItem.setSellPrice(sellPrice);
+            myItem.setSellPrice(Double.valueOf(cashFormat().format(sellPrice)));
             myItem.setSellDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
             setLastActionDateNowDate(myItem);
             myItemRepository.save(myItem);
@@ -49,7 +52,7 @@ public class MyItemDBAction implements DBAction {
     @Override
     public boolean setBuyPrice(MyItem myItem, double buyPrice, String buyDate) {
         if (buyPrice > 0) {
-            myItem.setBuyPrice(buyPrice);
+            myItem.setBuyPrice(Double.valueOf(cashFormat().format(buyPrice)));
             myItem.setBuyDate(buyDate);
             setLastActionDateNowDate(myItem);
             myItemRepository.save(myItem);
@@ -105,4 +108,7 @@ public class MyItemDBAction implements DBAction {
         return true;
     }
 
+    public static DecimalFormat cashFormat(){
+        return new DecimalFormat("#.##");
+    }
 }

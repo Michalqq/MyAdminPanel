@@ -43,7 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("testtttttttttttttttttttttttt______________________");
         http.
                 authorizeRequests()
                 .antMatchers("/").permitAll()
@@ -59,7 +58,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
-        System.out.println("testtttttttttttttttttttttttt______________________");
     }
 
     @Override

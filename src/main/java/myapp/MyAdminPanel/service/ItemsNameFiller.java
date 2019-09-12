@@ -1,16 +1,21 @@
 package myapp.MyAdminPanel.service;
 
+import lombok.Getter;
+import lombok.Setter;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Setter
+@Getter
 public class ItemsNameFiller {
     @Autowired
     private ItemRepository itemRepository;
@@ -38,5 +43,9 @@ public class ItemsNameFiller {
             myItem.setName(itemMap.get(myItem.getItemId()));
         }
         return itemList;
+    }
+
+    public void setItemMap(Map<Integer, String> itemMap) {
+        this.itemMap = itemMap;
     }
 }
