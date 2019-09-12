@@ -22,7 +22,7 @@ public class MyItemDBAction implements DBAction {
         if (cashOnDelivery > 0) {
             myItem.setCashOnDelivery(Double.valueOf(cashFormat().format(cashOnDelivery)));
             myItem.setIfCashOnDelivery(1);
-            myItem.setDeliveredToPoland(2);
+            setDeliveredToPolStatus(myItem, 2);
             setLastActionDateNowDate(myItem);
             myItemRepository.save(myItem);
             return true;
