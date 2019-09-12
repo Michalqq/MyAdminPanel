@@ -44,4 +44,8 @@ public class ItemsNameFiller {
         }
         return itemList;
     }
+
+    public void setItemMap(Map<Integer, String> itemMap) {
+        this.itemMap = itemMap;
+    }
 }

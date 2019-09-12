@@ -13,7 +13,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,23 +36,22 @@ public class ItemsNameFillerTest {
     @Test
     public void setItemMapTest() {
         ItemsNameFiller itemsNameFiller = new ItemsNameFiller();
-        for (Item item:itemsList()){
+        for (Item item : itemsList()) {
             entityManager.persist(item);
             entityManager.flush();
             entityManager.clear();
         }
-        for (MyItem myItem : myItemList()){
+        for (MyItem myItem : myItemList()) {
             entityManager.persist(myItem);
             entityManager.flush();
             entityManager.clear();
         }
-        //itemsNameFiller.setItemMap();
-        System.out.println("__________________________");
-        //System.out.println(itemRepository.findAll().get(0).getName());
-        //System.out.println(itemsNameFiller.getItemsMap().get(0));
-        System.out.println(myItemRepository.findAll());
-        System.out.println("__________________________");
+
+
+        itemsNameFiller.setItemMap(this.getTestItemMap());
         assertThat(itemsNameFiller.getItemsNames(myItemList()).get(0).getName()).isEqualTo("test0");
+        assertThat(itemsNameFiller.getItemsNames(myItemList()).get(9).getName()).isEqualTo("test9");
+
     }
 
     private List<Item> itemsList() {
@@ -63,20 +64,22 @@ public class ItemsNameFillerTest {
         return itemList;
     }
 
-    private List<MyItem> myItemList(){
+    private List<MyItem> myItemList() {
         List<MyItem> myItemList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             MyItem myItem = new MyItem();
-            myItem.setId(i+1);
-            myItem.setItemId(i+1);
-            myItem.setBuyPrice(0.0);
-            myItem.setDeliveredToPoland(0);
-            myItem.setLastActionDate("2019-09-12 14:19:00");
-            myItem.setBuyDate("2019-09-12");
-            myItem.setSellerId(1);
+            myItem.setId(i + 1);
+            myItem.setItemId(i + 1);
             myItemList.add(myItem);
         }
         return myItemList;
     }
 
+    private Map<Integer, String> getTestItemMap() {
+        Map<Integer, String> itemMap = new HashMap<>();
+        for (Item item : itemRepository.findAll()) {
+            itemMap.put(item.getId(), item.getName());
+        }
+        return itemMap;
+    }
 }
