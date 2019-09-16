@@ -187,8 +187,8 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="overview-wrap">
-                                <i class="fas fa-dollar-sign"></i>
+                            <div class="overview-wrap" style="display:inline">
+                                <i class="fas fa-dollar-sign" th:text="${currencyUSD.rates[0].mid}"></i>
                                 <p th:text="${currencyUSD.rates[0].mid}"></p>
                                 <p th:text="${currencyUSD.code}"></p>
                             </div>
