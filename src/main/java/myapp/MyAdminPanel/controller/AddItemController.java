@@ -49,9 +49,10 @@ public class AddItemController {
     String addNewItem(@RequestParam(value = "itemId", defaultValue = "") int itemId,
                       @RequestParam(value = "buyPrice", defaultValue = "") double buyPrice,
                       @RequestParam(value = "quantity", defaultValue = "") int quantity,
+                      @RequestParam(value = "note", defaultValue = "") String note,
                       @RequestParam(value = "sellerId", defaultValue = "") int sellerId) {
         for (int i = 0; i < quantity; i++) {
-            dbAction.createNewItem(buyPrice / quantity, itemId, sellerId);
+            dbAction.createNewItem(buyPrice / quantity, itemId, sellerId, note);
         }
         return "redirect:/additem";
     }

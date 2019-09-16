@@ -83,7 +83,7 @@ public class MyItemDBAction implements DBAction {
     }
 
     @Override
-    public boolean createNewItem(double price, int itemId, int sellerId) {
+    public boolean createNewItem(double price, int itemId, int sellerId, String note) {
         MyItem myItem = new MyItem();
         myItem.setId((myItemRepository.getMaxId() + 1));
         myItem.setBuyPrice(price);
@@ -91,6 +91,9 @@ public class MyItemDBAction implements DBAction {
         myItem.setSellerId(sellerId);
         myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
         myItem.setLastActionDate(lastActionDate);
+        if (note.length()>1) {
+            myItem.setNotes(note);
+        }
         myItemRepository.save(myItem);
         return true;
     }
