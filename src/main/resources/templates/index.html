@@ -181,9 +181,15 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="overview-wrap">
                                 <h2 class="title-1 m-b-25">My items</h2>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="overview-wrap">
+                                <h5 class="title-1 m-b-25" th:text="${currencyUSD.rates[0].mid}"></h5>
+                                <h5 class="title-1 m-b-25" th:text="${currencyUSD.code}"></h5>
                             </div>
                         </div>
                     </div>
@@ -532,6 +538,7 @@
 
 
     /*]]>*/
+
 
 
 

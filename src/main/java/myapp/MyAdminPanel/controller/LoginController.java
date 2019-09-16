@@ -1,6 +1,7 @@
 package myapp.MyAdminPanel.controller;
 
 import myapp.MyAdminPanel.model.*;
+import myapp.MyAdminPanel.model.Currency;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.*;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.jws.WebParam;
@@ -177,6 +179,7 @@ public class LoginController {
             this.getQuantityOfItems(myItems);
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
+            modelAndView.addObject("currencyUSD", getCurrency("USD"));
             this.chartDataCreator(modelAndView);
             this.addInfoToFront(modelAndView);
             modelAndView.setViewName("index");
@@ -289,6 +292,11 @@ public class LoginController {
         DecimalFormat df1=new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
+    }
+
+    public Currency getCurrency(String code){
+        String apiPath = "http://api.nbp.pl/api/exchangerates/rates/A/" + code + "/?format=json";
+        return new RestTemplate().getForObject(apiPath,Currency.class);
     }
 
 }
