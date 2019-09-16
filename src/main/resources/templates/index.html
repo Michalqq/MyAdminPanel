@@ -187,7 +187,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div th:each="currency: ${currencies}" class="overview-wrap" style="display:inline">
+                            <div th:each="currency: ${currencies}" class="overview-wrap">
                                 <i class="fas fa-dollar-sign" style="display:inline"></i>
                                 <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
                                 <p th:text="${currency.code}" style="display:inline"></p>
