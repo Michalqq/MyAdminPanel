@@ -286,7 +286,7 @@ public class LoginController {
 
     public void addInfoToFront(ModelAndView modelAndView) {
         modelAndView.addObject("totalItemsOnStock", "Liczba przedmiotów w magazynie: " + myItemRepository.countBySellPriceIsNull());
-        double valueOnStock =myItemRepository.getSumValueOfItemsOnStock();
+        double valueOnStock =myItemRepository.getSumBuyPriceWhereSellPriceIsNull();
         double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
                 ,DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
         DecimalFormat df1=new DecimalFormat("###,###,###.##");
