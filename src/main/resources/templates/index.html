@@ -187,11 +187,10 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="overview-wrap" style="display:inline">
-                                <i class="fas fa-dollar-sign" th:text="${currencyUSD.rates[0].mid}"></i>
+                            <div th:each="currency: ${currencies}" class="overview-wrap" style="display:inline">
                                 <i class="fas fa-dollar-sign" style="display:inline"></i>
-                                <p th:text="${currencyUSD.rates[0].mid}" style="display:inline"></p>
-                                <p th:text="${currencyUSD.code}" style="display:inline"></p>
+                                <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
+                                <p th:text="${currency.code}" style="display:inline"></p>
                             </div>
                         </div>
                     </div>

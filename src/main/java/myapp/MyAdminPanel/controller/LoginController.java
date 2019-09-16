@@ -179,7 +179,7 @@ public class LoginController {
             this.getQuantityOfItems(myItems);
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
-            modelAndView.addObject("currencyUSD", getCurrency("USD"));
+            modelAndView.addObject("currencies", getCurrencyList());
             this.chartDataCreator(modelAndView);
             this.addInfoToFront(modelAndView);
             modelAndView.setViewName("index");
@@ -292,6 +292,13 @@ public class LoginController {
         DecimalFormat df1=new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
+    }
+
+    public List<Currency> getCurrencyList(){
+        List<Currency> currencies  = new ArrayList<>();
+        currencies.add(getCurrency("USD"));
+        currencies.add(getCurrency("EUR"));
+        return currencies;
     }
 
     public Currency getCurrency(String code){
