@@ -196,6 +196,7 @@
                                         <th>Ilosc</th>
                                         <th>Cena zakupu</th>
                                         <th>Data zakupu</th>
+                                        <th>Uwagi</th>
                                         <th></th>
                                         <th></th>
                                     </tr>
@@ -207,6 +208,7 @@
                                         <td th:text="${myItem.quantity}"></td>
                                         <td th:text="${myItem.buyPrice}"></td>
                                         <td th:text="${myItem.buyDate}"></td>
+                                        <td th:text="${myItem.notes}"></td>
                                         <td>
                                             <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
                                                 <div class="table-data-feature">
