@@ -30,13 +30,11 @@ public class ItemsNameFillerTest {
     @Autowired
     private ItemRepository itemRepository;
 
-    @Autowired
-    private MyItemRepository myItemRepository;
-
     @Test
     public void setItemMapTest() {
         ItemsNameFiller itemsNameFiller = new ItemsNameFiller();
         for (Item item : itemsList()) {
+            System.out.println(item);
             entityManager.persist(item);
             entityManager.flush();
             entityManager.clear();
@@ -47,11 +45,9 @@ public class ItemsNameFillerTest {
             entityManager.clear();
         }
 
-
         itemsNameFiller.setItemMap(this.getTestItemMap());
         assertThat(itemsNameFiller.getItemsNames(myItemList()).get(0).getName()).isEqualTo("test0");
         assertThat(itemsNameFiller.getItemsNames(myItemList()).get(9).getName()).isEqualTo("test9");
-
     }
 
     private List<Item> itemsList() {

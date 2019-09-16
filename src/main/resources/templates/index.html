@@ -190,12 +190,14 @@
                             <div th:each="currency: ${currencies}">
                                 <div th:if="${currency.code == 'USD'}" >
                                     <i class="fas fa-dollar-sign" style="display:inline"></i>
+                                    <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
+                                    <p th:text="${currency.code}" style="display:inline"></p>
                                 </div>
                                 <div th:if="${currency.code == 'EUR'}" >
                                     <i class="fas fa-euro-sign" style="display:inline"></i>
+                                    <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
+                                    <p th:text="${currency.code}" style="display:inline"></p>
                                 </div>
-                                <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
-                                <p th:text="${currency.code}" style="display:inline"></p>
                             </div>
                         </div>
                     </div>
