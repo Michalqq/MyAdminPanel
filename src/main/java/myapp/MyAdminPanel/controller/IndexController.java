@@ -77,10 +77,10 @@ public class IndexController {
     @RequestMapping(value = {"/edit"}, params = "edit", method = RequestMethod.POST)
     public ModelAndView editItem(ModelAndView modelAndView,
                                  @RequestParam(name = "id", required = true) int itemId) {
-        if (itemId == 0) {
-            modelAndView.setViewName("redirect");
-            return modelAndView;
-        }
+//        if (itemId == 0) {
+//            modelAndView.setViewName("redirect:/index");
+//            return modelAndView;
+//        }
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
             myItem.get().setName(itemsNameFiller.getItemsMap().get(myItem.get().getItemId()));
