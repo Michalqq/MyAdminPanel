@@ -234,8 +234,8 @@
                                             <td style="width:12%" th:text="${myItem.buyDate}"></td>
                                             <td style="width:10%" th:text="${myItem.quantInTransport}"></td>
                                             <td style="width:8%" th:text="${myItem.notes}"></td>
-                                            <td style="width:2%">
-                                                <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post" style="width:20px">
+                                            <td align="center" style="width:2%">
+                                                <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
                                                     <div class="table-data-feature-min">
                                                         <button th:name="edit" class="item"
                                                                 data-toggle="tooltip" data-placement="top" title="Edit">
@@ -244,7 +244,7 @@
                                                     </div>
                                                 </form>
                                             </td>
-                                            <td style="width:3%">
+                                            <td align="center" style="width:3%">
                                                 <form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">
                                                     <div class="table-data-feature-min">
                                                         <button th:name="details" value="details" class="item"
