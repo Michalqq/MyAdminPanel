@@ -148,8 +148,8 @@ public class IndexController {
             if (name != null && !name.equals("")) {
                 myItems = (getByNameContains(myItems, name));
             }
-            myItems = this.checkIfMyItemIsInList(myItems, this.getListWithAllItemEmptyData());
             this.getQuantityOfItems(myItems);
+            myItems = this.checkIfMyItemIsInList(myItems, this.getListWithAllItemEmptyData());
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("currencies", getCurrencyList());
@@ -227,9 +227,9 @@ public class IndexController {
     public List<MyItem> checkIfMyItemIsInList(List<MyItem> myItems, List<MyItem> emptyListWithAllItem) {
         int temp = 0;
         int index = 0;
-        for (MyItem myItem : emptyListWithAllItem) {
-            for (int i = 0; i < myItems.size(); i++) {
-                if (myItems.get(i).getItemId() == myItem.getItemId()) {
+        for (MyItem myItem : myItems) {
+            for (int i = 0; i < emptyListWithAllItem.size(); i++) {
+                if (emptyListWithAllItem.get(i).getItemId() == myItem.getItemId()) {
                     temp = 1;
                     index = i;
                 }
