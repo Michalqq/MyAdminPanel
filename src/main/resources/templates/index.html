@@ -235,7 +235,7 @@
                                             <td style="width:8%" th:text="${myItem.notes}"></td>
                                             <td>
                                                 <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
-                                                    <div class="table-data-feature">
+                                                    <div class="table-data-feature-min">
                                                         <button th:name="edit" class="item"
                                                                 data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="zmdi zmdi-edit"></i>
@@ -245,7 +245,7 @@
                                             </td>
                                             <td>
                                                 <form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">
-                                                    <div class="table-data-feature">
+                                                    <div class="table-data-feature-min">
                                                         <button th:name="details" value="details" class="item"
                                                                 data-toggle="tooltip" data-placement="top" title="Details">
                                                             <i class="zmdi zmdi-view-list-alt"></i>
