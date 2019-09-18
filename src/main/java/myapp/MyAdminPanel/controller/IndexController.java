@@ -143,13 +143,14 @@ public class IndexController {
         if (user == null) modelAndView.setViewName("login");
         else {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
+            myItems.addAll(getListWithAllItemEmptyData());
             myItems = countItemOnStock(myItems);
             myItems = (itemsNameFiller.getItemsNames(myItems));
             if (name != null && !name.equals("")) {
                 myItems = (getByNameContains(myItems, name));
             }
             this.getQuantityOfItems(myItems);
-            myItems = this.checkIfMyItemIsInList(myItems, this.getListWithAllItemEmptyData());
+            //myItems = this.checkIfMyItemIsInList(myItems, this.getListWithAllItemEmptyData());
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("currencies", getCurrencyList());
