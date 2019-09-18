@@ -33,11 +33,11 @@ function iterateTableGetChecked(){
 }
 
 $(document).ready( function () {
-    $('#table_id').DataTable();
+    $('#mainTable').DataTable();
 } );
-window.$ = window.jquery = require('./node_modules/jquery');
-window.dt = require('./node_modules/datatables.net')();
-window.$('#table_id').DataTable();
+//window.$ = window.jquery = require('./node_modules/jquery');
+//window.dt = require('./node_modules/datatables.net')();
+//window.$('#mainTable').DataTable();
 
 (function ($) {
   // USE STRICT
