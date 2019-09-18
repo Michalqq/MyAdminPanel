@@ -352,6 +352,16 @@
 <script src="js/main.js"></script>
 <script src="js/statusInTable.js"></script>
 
+<script th:inline="javascript">
+
+$(document).ready( function () {
+    $('#mainTable').DataTable({
+        "paging":   false,
+        "info":     false
+    });
+} );
+</script>
+
 </body>
 
 </html>

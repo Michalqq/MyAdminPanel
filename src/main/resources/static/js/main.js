@@ -1708,10 +1708,3 @@ function iterateTableGetChecked(){
 $(function () {
   $("select").select2();
 });
-
-$(document).ready( function () {
-    $('#mainTable').DataTable({
-        "paging":   false,
-        "info":     false
-    });
-} );

@@ -23,7 +23,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-public class LoginController {
+public class IndexController {
 
     private UserService userService;
     private MyItemRepository myItemRepository;
@@ -35,7 +35,7 @@ public class LoginController {
     private ItemsNameFiller itemsNameFiller;
 
     @Autowired
-    public LoginController(UserService userService, MyItemRepository myItemRepository, ItemRepository itemRepository,
+    public IndexController(UserService userService, MyItemRepository myItemRepository, ItemRepository itemRepository,
                            Basket basket, DBAction dbAction, CountProfitByMonth countProfitByMonth, CountItemSold countItemSold,
                            ItemsNameFiller itemsNameFiller) {
         this.userService = userService;
@@ -57,34 +57,6 @@ public class LoginController {
     @GetMapping(value = "/chart")
     public ModelAndView chart(ModelAndView modelAndView) {
         modelAndView.setViewName("chart");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registration(ModelAndView modelAndView) {
-        User user = new User();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("register");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult, ModelAndView modelAndView) {
-        User userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            bindingResult
-                    .rejectValue("email", "error.user",
-                            "There is already a user registered with the email provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("register");
-        } else {
-            userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName("register");
-
-        }
         return modelAndView;
     }
 
@@ -176,6 +148,7 @@ public class LoginController {
             if (name != null && !name.equals("")) {
                 myItems = (getByNameContains(myItems, name));
             }
+            myItems = this.checkIfMyItemIsInList(myItems, this.getListWithAllItemEmptyData());
             this.getQuantityOfItems(myItems);
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
@@ -238,6 +211,36 @@ public class LoginController {
         return myItems;
     }
 
+    public List<MyItem> getListWithAllItemEmptyData() {
+        List<MyItem> myItems = new ArrayList<>();
+        List<Item> items = itemRepository.findAll();
+        for (Item item : items) {
+            MyItem myItem = new MyItem();
+            myItem.setItemId(item.getId());
+            myItem.setName(item.getName());
+            myItem.setQuantity(0);
+            myItems.add(myItem);
+        }
+        return myItems;
+    }
+
+    public List<MyItem> checkIfMyItemIsInList(List<MyItem> myItems, List<MyItem> emptyListWithAllItem) {
+        int temp = 0;
+        int index = 0;
+        for (MyItem myItem : emptyListWithAllItem) {
+            for (int i = 0; i < myItems.size(); i++) {
+                if (myItems.get(i).getItemId() == myItem.getItemId()) {
+                    temp = 1;
+                    index = i;
+                }
+            }
+            if (temp == 0) myItems.add(emptyListWithAllItem.get(index));
+            temp = 0;
+            index = 0;
+        }
+        return myItems;
+    }
+
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
             return itemList.stream().filter(x -> x.getName() != null).filter(x -> x.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
@@ -286,24 +289,24 @@ public class LoginController {
 
     public void addInfoToFront(ModelAndView modelAndView) {
         modelAndView.addObject("totalItemsOnStock", "Liczba przedmiotów w magazynie: " + myItemRepository.countBySellPriceIsNull());
-        double valueOnStock =myItemRepository.getSumBuyPriceWhereSellPriceIsNull();
+        double valueOnStock = myItemRepository.getSumBuyPriceWhereSellPriceIsNull();
         double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
-                ,DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
-        DecimalFormat df1=new DecimalFormat("###,###,###.##");
+                , DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
+        DecimalFormat df1 = new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
     }
 
-    public List<Currency> getCurrencyList(){
-        List<Currency> currencies  = new ArrayList<>();
+    public List<Currency> getCurrencyList() {
+        List<Currency> currencies = new ArrayList<>();
         currencies.add(getCurrency("USD"));
         currencies.add(getCurrency("EUR"));
         return currencies;
     }
 
-    public Currency getCurrency(String code){
+    public Currency getCurrency(String code) {
         String apiPath = "http://api.nbp.pl/api/exchangerates/rates/A/" + code + "/?format=json";
-        return new RestTemplate().getForObject(apiPath,Currency.class);
+        return new RestTemplate().getForObject(apiPath, Currency.class);
     }
 
 }
