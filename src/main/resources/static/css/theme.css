@@ -14724,10 +14724,8 @@ label {
     width: 300px;
 }
 
-thead {
-    vertical-align: middle;
-}
 
 table.dataTable tbody td {
-  padding: 5px 2px;
+    padding: 5px 2px;
+    vertical-align: middle;
 }
