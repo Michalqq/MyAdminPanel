@@ -32,9 +32,6 @@ function iterateTableGetChecked(){
     }
 }
 
-$(document).ready( function () {
-    $('#mainTable').DataTable();
-} );
 //window.$ = window.jquery = require('./node_modules/jquery');
 //window.dt = require('./node_modules/datatables.net')();
 //window.$('#mainTable').DataTable();

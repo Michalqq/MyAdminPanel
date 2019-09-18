@@ -537,6 +537,11 @@
 
 <!-- Main JS-->
 <script th:inline="javascript">
+
+$(document).ready( function () {
+    $('#mainTable').DataTable();
+} );
+
      /*<![CDATA[*/
 
         var dataToChart = /*[[${dataToChart}]]*/ '0';
@@ -551,6 +556,7 @@
 
 
     /*]]>*/
+
 
 
 
