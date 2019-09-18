@@ -371,7 +371,7 @@ section {
 }
 
 .login-form .form-group label {
-    display: block;
+    /*display: block;*/
 }
 
 .login-content {
