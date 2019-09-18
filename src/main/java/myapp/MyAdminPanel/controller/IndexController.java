@@ -232,6 +232,7 @@ public class IndexController {
                 if (emptyListWithAllItem.get(i).getItemId() == myItem.getItemId()) {
                     temp = 1;
                     index = i;
+                    System.out.println(emptyListWithAllItem.get(i));
                 }
             }
             if (temp == 0) myItems.add(emptyListWithAllItem.get(index));
