@@ -14723,3 +14723,7 @@ div.searchable {
 label {
     width: 300px;
 }
+
+thead {
+    vertical-align: middle;
+}
