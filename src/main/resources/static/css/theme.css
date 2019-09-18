@@ -371,7 +371,7 @@ section {
 }
 
 .login-form .form-group label {
-    /*display: block;*/
+    display: block;
 }
 
 .login-content {
@@ -14717,5 +14717,9 @@ div.searchable {
 
 .dataTables_length {
     color: red;
+    width: 300px;
+}
+
+label {
     width: 300px;
 }
