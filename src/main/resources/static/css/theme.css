@@ -14727,3 +14727,7 @@ label {
 thead {
     vertical-align: middle;
 }
+
+table.dataTable tbody td {
+  padding: 5px 2px;
+}
