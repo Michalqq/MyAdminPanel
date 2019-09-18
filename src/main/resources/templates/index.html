@@ -217,7 +217,7 @@
                                             <th>Cena zakupu</th>
                                             <th>Ilosc</th>
                                             <th>Data zakupu</th>
-                                            <th>Ile zam.</th>
+                                            <th>Transp.</th>
                                             <th>Uwagi</th>
                                             <th></th>
                                             <th></th>
@@ -231,7 +231,7 @@
                                             <td style="width:15%" th:text="${myItem.buyPrice}"></td>
                                             <td style="width:5%" th:text="${myItem.quantity}"></td>
                                             <td style="width:12%" th:text="${myItem.buyDate}"></td>
-                                            <td style="width:8%" th:text="${myItem.quantInTransport}"></td>
+                                            <td style="width:10%" th:text="${myItem.quantInTransport}"></td>
                                             <td style="width:8%" th:text="${myItem.notes}"></td>
                                             <td>
                                                 <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
