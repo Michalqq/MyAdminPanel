@@ -36,8 +36,6 @@
     <!-- Data Table-->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-
 
 </head>
 
@@ -194,12 +192,12 @@
                         </div>
                         <div class="col-md-6">
                             <div th:each="currency: ${currencies}">
-                                <div th:if="${currency.code == 'USD'}" >
+                                <div th:if="${currency.code == 'USD'}">
                                     <i class="fas fa-dollar-sign" style="display:inline"></i>
                                     <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
                                     <p th:text="${currency.code}" style="display:inline"></p>
                                 </div>
-                                <div th:if="${currency.code == 'EUR'}" >
+                                <div th:if="${currency.code == 'EUR'}">
                                     <i class="fas fa-euro-sign" style="display:inline"></i>
                                     <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
                                     <p th:text="${currency.code}" style="display:inline"></p>
@@ -533,8 +531,9 @@
 <script src="vendor/circle-progress/circle-progress.min.js"></script>
 <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="vendor/select2/select2.min.js">
-</script>
+<script src="vendor/select2/select2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
 
 <!-- Main JS-->
 <script th:inline="javascript">
@@ -552,6 +551,7 @@
 
 
     /*]]>*/
+
 
 
 
