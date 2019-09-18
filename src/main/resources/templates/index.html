@@ -541,7 +541,9 @@
 <script th:inline="javascript">
 
 $(document).ready( function () {
-    $('#mainTable').DataTable();
+    $('#mainTable').DataTable({
+    "sDom": 'tl'
+    });
 } );
 
      /*<![CDATA[*/
