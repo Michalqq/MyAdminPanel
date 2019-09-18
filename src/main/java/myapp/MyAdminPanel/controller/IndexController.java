@@ -77,6 +77,10 @@ public class IndexController {
     @RequestMapping(value = {"/edit"}, params = "edit", method = RequestMethod.POST)
     public ModelAndView editItem(ModelAndView modelAndView,
                                  @RequestParam(name = "id", required = true) int itemId) {
+        if (itemId == 0) {
+            modelAndView.setViewName("redirect");
+            return modelAndView;
+        }
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
             myItem.get().setName(itemsNameFiller.getItemsMap().get(myItem.get().getItemId()));
@@ -150,7 +154,6 @@ public class IndexController {
                 myItems = (getByNameContains(myItems, name));
             }
             this.getQuantityOfItems(myItems);
-            //myItems = this.checkIfMyItemIsInList(myItems, this.getListWithAllItemEmptyData());
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("currencies", getCurrencyList());
@@ -217,6 +220,7 @@ public class IndexController {
         List<Item> items = itemRepository.findAll();
         for (Item item : items) {
             MyItem myItem = new MyItem();
+            myItem.setId(0);
             myItem.setItemId(item.getId());
             myItem.setName(item.getName());
             myItem.setQuantity(0);
@@ -225,23 +229,23 @@ public class IndexController {
         return myItems;
     }
 
-    public List<MyItem> checkIfMyItemIsInList(List<MyItem> myItems, List<MyItem> emptyListWithAllItem) {
-        int temp = 0;
-        int index = 0;
-        for (MyItem myItem : myItems) {
-            for (int i = 0; i < emptyListWithAllItem.size(); i++) {
-                if (emptyListWithAllItem.get(i).getItemId() == myItem.getItemId()) {
-                    temp = 1;
-                    index = i;
-                    System.out.println(emptyListWithAllItem.get(i));
-                }
-            }
-            if (temp == 0) myItems.add(emptyListWithAllItem.get(index));
-            temp = 0;
-            index = 0;
-        }
-        return myItems;
-    }
+//    public List<MyItem> checkIfMyItemIsInList(List<MyItem> myItems, List<MyItem> emptyListWithAllItem) {
+//        int temp = 0;
+//        int index = 0;
+//        for (MyItem myItem : myItems) {
+//            for (int i = 0; i < emptyListWithAllItem.size(); i++) {
+//                if (emptyListWithAllItem.get(i).getItemId() == myItem.getItemId()) {
+//                    temp = 1;
+//                    index = i;
+//                    System.out.println(emptyListWithAllItem.get(i));
+//                }
+//            }
+//            if (temp == 0) myItems.add(emptyListWithAllItem.get(index));
+//            temp = 0;
+//            index = 0;
+//        }
+//        return myItems;
+//    }
 
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
