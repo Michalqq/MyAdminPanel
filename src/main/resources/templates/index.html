@@ -542,7 +542,9 @@
 
 $(document).ready( function () {
     $('#mainTable').DataTable({
-    "dom": '<"top"i>rt<"bottom"flp><"clear">'
+        "paging":   false,
+        "ordering": false,
+        "info":     false
     });
 } );
 
