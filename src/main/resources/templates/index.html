@@ -228,13 +228,13 @@
                                         <tr th:each="myItem: ${myItems}" class="null"
                                             onclick="changeRowColorOnTable(this)">
                                             <td style="display:none" th:text="${myItem.id}">
-                                            <td style="width:60%" th:text="${myItem.name}"></td>
+                                            <td th:text="${myItem.name}"></td>
                                             <td style="width:15%" th:text="${myItem.buyPrice}"></td>
                                             <td style="width:5%" th:text="${myItem.quantity}"></td>
                                             <td style="width:12%" th:text="${myItem.buyDate}"></td>
                                             <td style="width:10%" th:text="${myItem.quantInTransport}"></td>
                                             <td style="width:8%" th:text="${myItem.notes}"></td>
-                                            <td>
+                                            <td style="width:2%">
                                                 <form th:action="@{/edit?id=} + ${{myItem.id}}" method="post">
                                                     <div class="table-data-feature-min">
                                                         <button th:name="edit" class="item"
@@ -244,7 +244,7 @@
                                                     </div>
                                                 </form>
                                             </td>
-                                            <td>
+                                            <td style="width:3%">
                                                 <form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">
                                                     <div class="table-data-feature-min">
                                                         <button th:name="details" value="details" class="item"
