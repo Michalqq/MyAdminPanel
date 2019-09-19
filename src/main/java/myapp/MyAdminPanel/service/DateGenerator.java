@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,5 +33,13 @@ public class DateGenerator {
             dateList.add(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now().minusDays(i)));
         }
         return dateList;
+    }
+    public List<String> getNameOfLastMonth(int quantityOfMonth) {
+        List<String> nameList = new ArrayList<>();
+        for (int i = 0; i < quantityOfMonth; i++) {
+            nameList.add(DateGenerator.getMonthName(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+        }
+        Collections.reverse(nameList);
+        return nameList;
     }
 }

@@ -7,6 +7,9 @@ import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.CountItemSold;
+import myapp.MyAdminPanel.service.DateGenerator;
+import myapp.MyAdminPanel.service.ProfitCounter;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +31,20 @@ public class ReportController {
     private ItemRepository itemRepository;
     private ItemToReport itemToReport;
     private Basket basket;
+    private ProfitCounter profitCounter;
+    private DateGenerator dateGenerator;
+    private CountItemSold countItemSold;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket,
+                            ProfitCounter profitCounter, DateGenerator dateGenerator, CountItemSold countItemSold) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.itemToReport = itemToReport;
         this.basket = basket;
+        this.profitCounter = profitCounter;
+        this.dateGenerator = dateGenerator;
+        this.countItemSold = countItemSold;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -47,6 +57,7 @@ public class ReportController {
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
         basket.addInfoAboutBasketSize(modelAndView);
+        this.chartDataCreator(modelAndView);
         modelAndView.setViewName("report");
         return modelAndView;
     }
@@ -96,5 +107,28 @@ public class ReportController {
 
     private String getToday() {
         return DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now());
+    }
+
+
+
+    public ModelAndView chartDataCreator(ModelAndView modelAndView) {
+        modelAndView.addObject("dataToChart", profitCounter.getProfitLastMonth(12));
+        modelAndView.addObject("monthNameToChart", dateGenerator.getNameOfLastMonth(12));
+        modelAndView.addObject("dataToItemSold", profitCounter.getSoldItemByLastMonth(12));
+        modelAndView.addObject("totalProfit", profitCounter.getProfitLastMonth(12).stream().mapToInt(Integer::intValue).sum());
+        modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
+        this.getSoldSumByLastDays(modelAndView, 90);
+        return modelAndView;
+    }
+
+    public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
+        List<String> dataByDay = DateGenerator.getLastDate(90);
+        List<Double> soldByDayList = countItemSold.getLastSoldSumData(90, dataByDay);
+        Collections.reverse(soldByDayList);
+        Collections.reverse(dataByDay);
+        modelAndView.addObject("dataToEarningByDays", soldByDayList);
+        modelAndView.addObject("labelToEarningByDays", dataByDay);
+        modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
+        return modelAndView;
     }
 }
