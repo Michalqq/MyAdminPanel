@@ -222,13 +222,11 @@
                                        id="mainTable">
                                     <thead class="thead-dark">
                                     <tr>
+                                        <th style="display:none"></th>
                                         <th style="width=30%">Name</th>
                                         <th>Total</th>
                                         <th>Ilosc</th>
                                         <th>Average</th>
-                                        <!--<th>Ile zam.</th>-->
-                                        <!--<th></th>-->
-                                        <!--<th></th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -239,29 +237,6 @@
                                         <td style="width:15%" th:text="${myItem.sellPrice}"></td>
                                         <td style="width:5%" th:text="${myItem.quantity}"></td>
                                         <td th:text="${myItem.average}"></td>
-                                        <!--<td style="width:5%" th:text="${myItem.quantity}"></td>-->
-                                        <!--<td style="width:12%" th:text="${myItem.buyDate}"></td>-->
-                                        <!--<td style="width:8%" th:text="${myItem.quantInTransport}"></td>-->
-                                        <!--<td>-->
-                                            <!--<form th:action="@{/edit?id=} + ${{myItem.itemId}}" method="post">-->
-                                                <!--<div class="table-data-feature">-->
-                                                    <!--<button th:name="edit" class="item"-->
-                                                            <!--data-toggle="tooltip" data-placement="top" title="Edit">-->
-                                                        <!--<i class="zmdi zmdi-edit"></i>-->
-                                                    <!--</button>-->
-                                                <!--</div>-->
-                                            <!--</form>-->
-                                        <!--</td>-->
-                                        <!--<td>-->
-                                        <!--<form th:action="@{/details?id=} + ${{myItem.itemId}}" method="post">-->
-                                        <!--<div class="table-data-feature">-->
-                                        <!--<button th:name="details" value="details" class="item"-->
-                                        <!--data-toggle="tooltip" data-placement="top" title="Details">-->
-                                        <!--<i class="zmdi zmdi-view-list-alt"></i>-->
-                                        <!--</button>-->
-                                        <!--</div>-->
-                                        <!--</form>-->
-                                        <!--</td>-->
                                     </tr>
                                     </tbody>
                                 </table>
@@ -466,11 +441,20 @@
 <script src="vendor/circle-progress/circle-progress.min.js"></script>
 <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="vendor/select2/select2.min.js">
-</script>
+<script src="vendor/select2/select2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="assets/plugins/DataTables-1.10.18/dataTables.bootstrap4.min.js"></script>
 
 <!-- Main JS-->
 <script th:inline="javascript">
+
+$(document).ready( function () {
+    $('#mainTable').DataTable({
+        "paging":   false,
+        "info":     false
+    });
+} );
+
      /*<![CDATA[*/
 
         var dataToChart = /*[[${dataToChart}]]*/ '0';
