@@ -140,7 +140,7 @@ public class IndexController {
             }
         }
         basket.addInfoAboutBasketSize(modelAndView);
-        modelAndView.setViewName("redirect:/index");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
