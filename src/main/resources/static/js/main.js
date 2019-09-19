@@ -286,6 +286,68 @@ function iterateTableGetChecked(){
       });
     }
 
+    //WidgetChart 5
+    var ctx = document.getElementById("widgetChart5");
+    if (ctx) {
+      ctx.height = 250;
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labelToEarningByDays,
+          type: 'bar',
+          datasets: [{
+            data: dataToEarningByDays,
+            label: 'Dataset',
+            backgroundColor: 'rgba(0,0,0,.65)',
+            borderColor: 'rgba(255,255,255,.55)',
+          },]
+        },
+        options: {
+
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            titleFontSize: 12,
+            titleFontColor: '#000',
+            bodyFontColor: '#000',
+            backgroundColor: '#fff',
+            titleFontFamily: 'Montserrat',
+            bodyFontFamily: 'Montserrat',
+            cornerRadius: 3,
+            intersect: false,
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+            }],
+            yAxes: [{
+              display: true,
+              ticks: {
+                display: true,
+              }
+            }]
+          },
+          title: {
+            display: false,
+          },
+          elements: {
+            line: {
+              borderWidth: 1
+            },
+            point: {
+              radius: 4,
+              hitRadius: 10,
+              hoverRadius: 4
+            }
+          }
+        }
+      });
+    }
+
     // Recent Report
     const brandProduct = 'rgba(0,181,233,0.8)'
     const brandService = 'rgba(0,173,95,0.8)'

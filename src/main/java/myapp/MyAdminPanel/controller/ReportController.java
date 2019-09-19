@@ -122,8 +122,8 @@ public class ReportController {
     }
 
     public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
-        List<String> dataByDay = DateGenerator.getLastDate(90);
-        List<Double> soldByDayList = countItemSold.getLastSoldSumData(90, dataByDay);
+        List<String> dataByDay = DateGenerator.getLastDate(120);
+        List<Double> soldByDayList = countItemSold.getLastSoldSumData(120, dataByDay);
         Collections.reverse(soldByDayList);
         Collections.reverse(dataByDay);
         modelAndView.addObject("dataToEarningByDays", soldByDayList);
