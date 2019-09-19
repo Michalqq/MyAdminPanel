@@ -192,6 +192,7 @@
                                 <table class="table table-condensed-12 table-bordered table-striped table-sm" id="mainTable">
                                     <thead class="thead-dark">
                                     <tr>
+                                        <th style="display:none"></th>
                                         <th>Nazwa</th>
                                         <th>Ilosc</th>
                                         <th>Cena zakupu</th>
@@ -296,9 +297,19 @@
 <script src="vendor/circle-progress/circle-progress.min.js"></script>
 <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
 <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-<script src="vendor/select2/select2.min.js">
-</script>
+<script src="vendor/select2/select2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script src="assets/plugins/DataTables-1.10.18/dataTables.bootstrap4.min.js"></script>
 
+<script th:inline="javascript">
+
+$(document).ready( function () {
+    $('#mainTable').DataTable({
+        "paging":   false,
+        "info":     false
+    });
+} );
+</script>
 <!-- Main JS-->
 <script src="js/main.js"></script>
 
