@@ -1,6 +1,5 @@
 package myapp.MyAdminPanel.controller;
 
-import lombok.extern.log4j.Log4j2;
 import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.ItemToReport;
@@ -8,10 +7,6 @@ import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import myapp.MyAdminPanel.service.ChartDataGenerator;
-import myapp.MyAdminPanel.service.CountItemSold;
-import myapp.MyAdminPanel.service.DateGenerator;
-import myapp.MyAdminPanel.service.ProfitCounter;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,26 +22,17 @@ import java.util.List;
 
 @Controller
 public class ReportController {
-
     private MyItemRepository myItemRepository;
     private ItemRepository itemRepository;
-    private ItemToReport itemToReport;
     private Basket basket;
-    private ProfitCounter profitCounter;
-    private DateGenerator dateGenerator;
-    private CountItemSold countItemSold;
     private ChartDataGenerator chartDataGenerator;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket,
-                            ProfitCounter profitCounter, DateGenerator dateGenerator, CountItemSold countItemSold, ChartDataGenerator chartDataGenerator) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, Basket basket,
+                            ChartDataGenerator chartDataGenerator) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
-        this.itemToReport = itemToReport;
         this.basket = basket;
-        this.profitCounter = profitCounter;
-        this.dateGenerator = dateGenerator;
-        this.countItemSold = countItemSold;
         this.chartDataGenerator = chartDataGenerator;
     }
 

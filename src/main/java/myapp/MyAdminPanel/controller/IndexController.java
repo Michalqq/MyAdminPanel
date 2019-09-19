@@ -30,26 +30,19 @@ public class IndexController {
     private ItemRepository itemRepository;
     private Basket basket;
     private DBAction dbAction;
-    private CountProfitByMonth countProfitByMonth;
-    private CountItemSold countItemSold;
     private ItemsNameFiller itemsNameFiller;
-    private ProfitCounter profitCounter;
-    private DateGenerator dateGenerator;
+    private ChartDataGenerator chartDataGenerator;
 
     @Autowired
     public IndexController(UserService userService, MyItemRepository myItemRepository, ItemRepository itemRepository,
-                           Basket basket, DBAction dbAction, CountProfitByMonth countProfitByMonth, CountItemSold countItemSold,
-                           ItemsNameFiller itemsNameFiller, ProfitCounter profitCounter, DateGenerator dateGenerator) {
+                           Basket basket, DBAction dbAction, ItemsNameFiller itemsNameFiller, ChartDataGenerator chartDataGenerator) {
         this.userService = userService;
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.basket = basket;
         this.dbAction = dbAction;
-        this.countProfitByMonth = countProfitByMonth;
-        this.countItemSold = countItemSold;
         this.itemsNameFiller = itemsNameFiller;
-        this.profitCounter = profitCounter;
-        this.dateGenerator = dateGenerator;
+        this.chartDataGenerator = chartDataGenerator;
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
@@ -161,7 +154,7 @@ public class IndexController {
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
             modelAndView.addObject("currencies", getCurrencyList());
-            this.chartDataCreator(modelAndView);
+            chartDataGenerator.chartDataCreator(modelAndView, 6, 30);
             this.addInfoToFront(modelAndView);
             modelAndView.setViewName("index");
         }
@@ -182,27 +175,6 @@ public class IndexController {
         modelAndView.addObject("myItems", myItems);
         basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("delivery");
-        return modelAndView;
-    }
-
-    public ModelAndView chartDataCreator(ModelAndView modelAndView) {
-        modelAndView.addObject("dataToChart", profitCounter.getProfitLastMonth(6));
-        modelAndView.addObject("monthNameToChart", dateGenerator.getNameOfLastMonth(6));
-        modelAndView.addObject("dataToItemSold", profitCounter.getSoldItemByLastMonth(6));
-        modelAndView.addObject("totalProfit", profitCounter.getProfitLastMonth(6).stream().mapToInt(Integer::intValue).sum());
-        modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
-        this.getSoldSumByLastDays(modelAndView, 30);
-        return modelAndView;
-    }
-
-    public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
-        List<String> dataByDay = DateGenerator.getLastDate(30);
-        List<Double> soldByDayList = countItemSold.getLastSoldSumData(30, dataByDay);
-        Collections.reverse(soldByDayList);
-        Collections.reverse(dataByDay);
-        modelAndView.addObject("dataToEarningByDays", soldByDayList);
-        modelAndView.addObject("labelToEarningByDays", dataByDay);
-        modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
         return modelAndView;
     }
 
