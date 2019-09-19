@@ -112,25 +112,30 @@ public class IndexController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/edit"}, params = "delete", method = RequestMethod.POST)
-    public ModelAndView editItemDelete(ModelAndView modelAndView,
+    @RequestMapping(value = {"/edit"}, params = "delete" , method = RequestMethod.POST)
+    public void editItemDelete(ModelAndView modelAndView,
                                        @RequestParam(name = "id", required = true) int itemId) {
-        Optional<MyItem> myItem = myItemRepository.findById(itemId);
-        if (myItem.isPresent()) {
-            myItemRepository.delete(myItem.get());
-        }
-        basket.addInfoAboutBasketSize(modelAndView);
-        modelAndView.setViewName("redirect:/index");
-        return modelAndView;
+        this.edit(modelAndView, 0, itemId);
     }
 
     @RequestMapping(value = {"/edit"}, params = "restore", method = RequestMethod.POST)
-    public ModelAndView restoreToShop(ModelAndView modelAndView,
+    public void restoreToShop(ModelAndView modelAndView,
                                       @RequestParam(name = "id", required = true) int itemId) {
+        this.edit(modelAndView, 1, itemId);
+    }
+
+    public ModelAndView edit(ModelAndView modelAndView, int param, int itemId){
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
-            dbAction.clearSellPriceAndDate(myItem.get());
-            dbAction.setNote(myItem.get(), "towar po zwrocie");
+            switch(param) {
+                case 0:
+                    myItemRepository.delete(myItem.get());
+                    break;
+                case 1:
+                    dbAction.clearSellPriceAndDate(myItem.get());
+                    dbAction.setNote(myItem.get(), "towar po zwrocie");
+                    break;
+            }
         }
         basket.addInfoAboutBasketSize(modelAndView);
         modelAndView.setViewName("redirect:/index");
@@ -145,11 +150,7 @@ public class IndexController {
         else {
             List<MyItem> myItems = myItemRepository.findItemsOnStockGroupByItemId(1);
             myItems.addAll(getListWithAllItemEmptyData());
-            myItems = countItemOnStock(myItems);
-            myItems = (itemsNameFiller.getItemsNames(myItems));
-            if (name != null && !name.equals("")) {
-                myItems = (getByNameContains(myItems, name));
-            }
+            myItems = this.getMyItemsListWithName(myItems, name);
             this.getQuantityOfItems(myItems);
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.addObject("myItems", myItems);
@@ -164,11 +165,7 @@ public class IndexController {
     @RequestMapping(value = {"/delivery"}, method = RequestMethod.GET)
     public ModelAndView delivery(ModelAndView modelAndView, @RequestParam(value = "searchItem", required = false, defaultValue = "") String name) {
         List<MyItem> myItems = myItemRepository.findItemsInTransport();
-        myItems = countItemOnStock(myItems);
-        myItems = itemsNameFiller.getItemsNames(myItems);
-        if (name != null && !name.equals("")) {
-            myItems = getByNameContains(myItems, name);
-        }
+        myItems = this.getMyItemsListWithName(myItems, name);
         for (MyItem myItem : myItems) {
             myItem.setQuantity(myItemRepository.countItemIdBySellPriceIsNullAndDeliveredToPolandIsNullAndItemId(myItem.getItemId()));
         }
@@ -241,6 +238,15 @@ public class IndexController {
     public Currency getCurrency(String code) {
         String apiPath = "http://api.nbp.pl/api/exchangerates/rates/A/" + code + "/?format=json";
         return new RestTemplate().getForObject(apiPath, Currency.class);
+    }
+
+    public List<MyItem> getMyItemsListWithName(List<MyItem> myItems, String name){
+        myItems = countItemOnStock(myItems);
+        myItems = (itemsNameFiller.getItemsNames(myItems));
+        if (name != null && !name.equals("")) {
+            myItems = (getByNameContains(myItems, name));
+        }
+        return myItems;
     }
 
 }
