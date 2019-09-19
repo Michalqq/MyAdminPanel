@@ -9,13 +9,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
-import javax.validation.Valid;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -113,15 +110,15 @@ public class IndexController {
     }
 
     @RequestMapping(value = {"/edit"}, params = "delete" , method = RequestMethod.POST)
-    public void editItemDelete(ModelAndView modelAndView,
+    public ModelAndView editItemDelete(ModelAndView modelAndView,
                                        @RequestParam(name = "id", required = true) int itemId) {
-        this.edit(modelAndView, 0, itemId);
+        return this.edit(modelAndView, 0, itemId);
     }
 
     @RequestMapping(value = {"/edit"}, params = "restore", method = RequestMethod.POST)
-    public void restoreToShop(ModelAndView modelAndView,
-                                      @RequestParam(name = "id", required = true) int itemId) {
-        this.edit(modelAndView, 1, itemId);
+    public ModelAndView restoreToShop(ModelAndView modelAndView,
+                               @RequestParam(name = "id", required = true) int itemId) {
+        return this.edit(modelAndView, 1, itemId);
     }
 
     public ModelAndView edit(ModelAndView modelAndView, int param, int itemId){
@@ -140,7 +137,7 @@ public class IndexController {
             }
         }
         basket.addInfoAboutBasketSize(modelAndView);
-        modelAndView.setViewName("index");
+        modelAndView.setViewName("redirect:/index");
         return modelAndView;
     }
 
