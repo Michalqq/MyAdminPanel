@@ -30,6 +30,8 @@
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
+    <!-- Data Table-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all">
 
@@ -104,7 +106,7 @@
                             <i class="fas fa-truck"></i>In delivery</a>
                     </li>
                     <li>
-                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}" /></a>
+                        <a href="basket"><i class="fas fa-shopping-basket"></i><span th:text="${basketsize}"/></a>
                     </li>
                     <li>
                         <a href="history">
@@ -189,7 +191,8 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="table-responsive table--no-card m-b-20">
-                                <table class="table table-condensed-12 table-bordered table-striped table-sm" id="mainTable">
+                                <table class="table table-condensed-12 table-bordered table-striped table-sm"
+                                       id="mainTable">
                                     <thead class="thead-dark">
                                     <tr>
                                         <th style="display:none"></th>
@@ -231,7 +234,6 @@
                                             </form>
                                         </td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -250,7 +252,8 @@
                                     </div>
                                     <br>
                                     <div class="input-footer">
-                                        <button name="confirmDelivery" value="confirmDelivery" type="submit" class="btn btn-primary btn-md">
+                                        <button name="confirmDelivery" value="confirmDelivery" type="submit"
+                                                class="btn btn-primary btn-md">
                                             <i class="fas fa-check-circle"></i>Confirm Delivery
                                         </button>
                                     </div>
@@ -309,6 +312,8 @@ $(document).ready( function () {
         "info":     false
     });
 } );
+
+
 </script>
 <!-- Main JS-->
 <script src="js/main.js"></script>
