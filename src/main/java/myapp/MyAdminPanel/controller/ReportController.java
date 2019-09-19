@@ -7,6 +7,7 @@ import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.ChartDataGenerator;
 import myapp.MyAdminPanel.service.CountItemSold;
 import myapp.MyAdminPanel.service.DateGenerator;
 import myapp.MyAdminPanel.service.ProfitCounter;
@@ -34,10 +35,11 @@ public class ReportController {
     private ProfitCounter profitCounter;
     private DateGenerator dateGenerator;
     private CountItemSold countItemSold;
+    private ChartDataGenerator chartDataGenerator;
 
     @Autowired
     public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket,
-                            ProfitCounter profitCounter, DateGenerator dateGenerator, CountItemSold countItemSold) {
+                            ProfitCounter profitCounter, DateGenerator dateGenerator, CountItemSold countItemSold, ChartDataGenerator chartDataGenerator) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.itemToReport = itemToReport;
@@ -45,6 +47,7 @@ public class ReportController {
         this.profitCounter = profitCounter;
         this.dateGenerator = dateGenerator;
         this.countItemSold = countItemSold;
+        this.chartDataGenerator = chartDataGenerator;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -57,7 +60,7 @@ public class ReportController {
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
         basket.addInfoAboutBasketSize(modelAndView);
-        this.chartDataCreator(modelAndView);
+        chartDataGenerator.chartDataCreator(modelAndView, 12, 120);
         modelAndView.setViewName("report");
         return modelAndView;
     }
@@ -109,26 +112,4 @@ public class ReportController {
         return DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now());
     }
 
-
-
-    public ModelAndView chartDataCreator(ModelAndView modelAndView) {
-        modelAndView.addObject("dataToChart", profitCounter.getProfitLastMonth(12));
-        modelAndView.addObject("monthNameToChart", dateGenerator.getNameOfLastMonth(12));
-        modelAndView.addObject("dataToItemSold", profitCounter.getSoldItemByLastMonth(12));
-        modelAndView.addObject("totalProfit", profitCounter.getProfitLastMonth(12).stream().mapToInt(Integer::intValue).sum());
-        modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
-        this.getSoldSumByLastDays(modelAndView, 90);
-        return modelAndView;
-    }
-
-    public ModelAndView getSoldSumByLastDays(ModelAndView modelAndView, int quantityOfDay) {
-        List<String> dataByDay = DateGenerator.getLastDate(120);
-        List<Double> soldByDayList = countItemSold.getLastSoldSumData(120, dataByDay);
-        Collections.reverse(soldByDayList);
-        Collections.reverse(dataByDay);
-        modelAndView.addObject("dataToEarningByDays", soldByDayList);
-        modelAndView.addObject("labelToEarningByDays", dataByDay);
-        modelAndView.addObject("totalEarningLastDays", soldByDayList.stream().mapToDouble(Double::intValue).sum());
-        return modelAndView;
-    }
 }
