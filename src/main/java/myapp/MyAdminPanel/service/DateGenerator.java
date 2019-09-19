@@ -1,5 +1,7 @@
 package myapp.MyAdminPanel.service;
 
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -11,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+@Service
 public class DateGenerator {
 
     public static String getLastDayOfMonth(String month) {
