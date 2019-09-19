@@ -129,9 +129,11 @@ public class IndexController {
         if (myItem.isPresent()) {
             switch(param) {
                 case 0:
+                    System.out.println("111111111111111111");
                     myItemRepository.delete(myItem.get());
                     break;
                 case 1:
+                    System.out.println("22222222222222222");
                     dbAction.clearSellPriceAndDate(myItem.get());
                     dbAction.setNote(myItem.get(), "towar po zwrocie");
                     break;
@@ -201,7 +203,6 @@ public class IndexController {
         }
         return myItems;
     }
-
 
     public static List<MyItem> getByNameContains(List<MyItem> itemList, String name) {
         if (name != null) {
