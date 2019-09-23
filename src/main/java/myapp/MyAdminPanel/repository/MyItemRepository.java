@@ -30,6 +30,8 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "FROM MyItem WHERE buyDate BETWEEN :startDate  AND :stopDate ")
     List<MyItem> getAllWhereBuyDateIsBetween(String startDate, String stopDate);
 
+    int countByDeliveredToPolandIs2();
+
     int countBySellPriceIsNotNull();
 
     int countBySellPriceIsNotNullAndSellDateIsBetween(String startDate, String stopDate);

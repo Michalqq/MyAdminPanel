@@ -220,9 +220,10 @@ public class IndexController {
         double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
                 , DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
         DecimalFormat df1 = new DecimalFormat("###,###,###.##");
-        modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
-        modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
+        modelAndView.addObject("totalValueOnStock", df1.format(valueOnStock) + " PLN");
+        modelAndView.addObject("totalMonthlyExpenses", df1.format(monthlyExpenses) + " PLN");
         modelAndView.addObject("cashOnDelivery", df1.format(myItemRepository.getSumCashOnDeliveryWhereStatusIsInDelivery()) + " PLN");
+        modelAndView.addObject("countItemsWithCashOnDelivery", df1.format(myItemRepository.countByDeliveredToPolandIs2()));
     }
 
     public List<Currency> getCurrencyList() {
