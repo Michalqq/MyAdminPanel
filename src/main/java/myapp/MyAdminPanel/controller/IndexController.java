@@ -126,11 +126,9 @@ public class IndexController {
         if (myItem.isPresent()) {
             switch(param) {
                 case 0:
-                    System.out.println("111111111111111111");
                     myItemRepository.delete(myItem.get());
                     break;
                 case 1:
-                    System.out.println("22222222222222222");
                     dbAction.clearSellPriceAndDate(myItem.get());
                     dbAction.setNote(myItem.get(), "towar po zwrocie");
                     break;
@@ -224,6 +222,7 @@ public class IndexController {
         DecimalFormat df1 = new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
+        modelAndView.addObject("cashOnDelivery", df1.format(myItemRepository.getSumCashOnDeliveryWhereStatusIs2()) + " PLN");
     }
 
     public List<Currency> getCurrencyList() {

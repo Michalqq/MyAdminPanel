@@ -24,6 +24,9 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "SELECT COALESCE(SUM(buyPrice),0) FROM MyItem WHERE buyDate BETWEEN :startDate  AND :stopDate ")
     Double sumBuyPriceWhereBuyDateIsBetween(String startDate, String stopDate);
 
+    @Query(value = "SELECT COALESCE(SUM(cash_on_delivery),0) FROM MyItem WHERE if_cash_on_delivery = 1 AND delivered_to_Poland = 2 ")
+    Double getSumCashOnDeliveryWhereStatusIs2();
+
     @Query(value = "FROM MyItem WHERE buyDate BETWEEN :startDate  AND :stopDate ")
     List<MyItem> getAllWhereBuyDateIsBetween(String startDate, String stopDate);
 

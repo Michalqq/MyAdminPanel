@@ -379,6 +379,18 @@
 
                             <div class="overview-item overview-item--c4">
                                 <div class="col-sm-12 col-lg-12">
+                                    <table class="table table-condensed-12 table-bordered table-striped table-sm">
+                                        <tbody>
+                                        <tr>
+                                            <td> Liczba przedmiotów na magazynie</td>
+                                            <td th:text="${totalItemsOnStock}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td> Pobrania w doręczeniu [PLN]</td>
+                                            <td th:text="${cashOnDelivery}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                     <p th:text="${totalItemsOnStock}"></p>
                                     <p th:text="${totalValueOnStock}"></p>
                                     <p th:text="${totalMonthlyExpenses}"></p>
