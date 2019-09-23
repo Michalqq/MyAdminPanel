@@ -1,5 +1,6 @@
 package myapp.MyAdminPanel.service;
 
+import lombok.Data;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.MyItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Service
+@Data
 public class MyItemDBAction implements DBAction {
     @Autowired
     private MyItemRepository myItemRepository;
