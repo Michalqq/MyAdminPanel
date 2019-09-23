@@ -222,7 +222,7 @@ public class IndexController {
         DecimalFormat df1 = new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", "Wartość magazynu: " + df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", "Wydatki w tym miesiącu: " + df1.format(monthlyExpenses) + " PLN");
-        modelAndView.addObject("cashOnDelivery", df1.format(myItemRepository.getSumCashOnDeliveryWhereStatusIs2()) + " PLN");
+        modelAndView.addObject("cashOnDelivery", df1.format(myItemRepository.getSumCashOnDeliveryWhereStatusIsInDelivery()) + " PLN");
     }
 
     public List<Currency> getCurrencyList() {
