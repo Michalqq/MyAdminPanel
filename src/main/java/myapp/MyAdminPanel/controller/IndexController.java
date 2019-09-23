@@ -223,7 +223,7 @@ public class IndexController {
         modelAndView.addObject("totalValueOnStock", df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", df1.format(monthlyExpenses) + " PLN");
         modelAndView.addObject("cashOnDelivery", df1.format(myItemRepository.getSumCashOnDeliveryWhereStatusIsInDelivery()) + " PLN");
-        modelAndView.addObject("countItemsWithCashOnDelivery", df1.format(myItemRepository.countByDeliveredToPolandIs2()));
+        modelAndView.addObject("countItemsWithCashOnDelivery", df1.format(myItemRepository.countByDeliveredToPolandIs(2)));
     }
 
     public List<Currency> getCurrencyList() {
