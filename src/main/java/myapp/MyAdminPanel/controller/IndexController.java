@@ -215,7 +215,7 @@ public class IndexController {
     }
 
     public void addInfoToFront(ModelAndView modelAndView) {
-        modelAndView.addObject("totalItemsOnStock", "Liczba przedmiotów w magazynie: " + myItemRepository.countBySellPriceIsNull());
+        modelAndView.addObject("totalItemsOnStock", myItemRepository.countBySellPriceIsNull());
         double valueOnStock = myItemRepository.getSumBuyPriceWhereSellPriceIsNull();
         double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
                 , DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
@@ -223,7 +223,7 @@ public class IndexController {
         modelAndView.addObject("totalValueOnStock", df1.format(valueOnStock) + " PLN");
         modelAndView.addObject("totalMonthlyExpenses", df1.format(monthlyExpenses) + " PLN");
         modelAndView.addObject("cashOnDelivery", df1.format(myItemRepository.getSumCashOnDeliveryWhereStatusIsInDelivery()) + " PLN");
-        modelAndView.addObject("countItemsWithCashOnDelivery", df1.format(myItemRepository.countByDeliveredToPolandIs(2)));
+        modelAndView.addObject("countItemsWithCashOnDelivery", myItemRepository.countByDeliveredToPolandIs(2));
     }
 
     public List<Currency> getCurrencyList() {
