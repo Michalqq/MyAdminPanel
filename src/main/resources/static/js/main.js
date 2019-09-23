@@ -1,6 +1,7 @@
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
     if (x.className.includes('null')){
+        alert(x.style);
         alert('test');
     }
     if (x.className == 'null') {
