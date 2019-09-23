@@ -380,19 +380,11 @@
                             <div class="overview-item overview-item--c4">
                                 <div class="col-sm-12 col-lg-12">
                                     <table class="table table-condensed-14 table-bordered table-striped table-sm"
-                                           style="background-color:rgba(0, 0, 0, 0.5)">
-                                        <tbody style="background-color:rgba(0, 0, 0, 0.5)">
-                                        <tr style="background-color:rgba(0, 0, 0, 0.5)">
+                                           >
+                                        <tbody>
+                                        <tr>
                                             <td> Liczba przedmiotów na magazynie:</td>
                                             <td th:text="${totalItemsOnStock}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td> Pobrania w doręczeniu [PLN]</td>
-                                            <td th:text="${cashOnDelivery}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td> Ilość przesyłek pobraniowych</td>
-                                            <td th:text="${countItemsWithCashOnDelivery}"></td>
                                         </tr>
                                         <tr>
                                             <td> Wartość magazynu:</td>
@@ -402,6 +394,15 @@
                                             <td> Wydatki w tym miesiącu:</td>
                                             <td th:text="${totalMonthlyExpenses}"></td>
                                         </tr>
+                                        <tr>
+                                            <td> Pobrania w doręczeniu [PLN]</td>
+                                            <td th:text="${cashOnDelivery}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td> Ilość przesyłek pobraniowych</td>
+                                            <td th:text="${countItemsWithCashOnDelivery}"></td>
+                                        </tr>
+
                                         </tbody>
                                     </table>
                                     <br>
