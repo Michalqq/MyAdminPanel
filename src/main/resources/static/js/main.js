@@ -4,8 +4,7 @@ function changeRowColorOnTable(x){
         iterateTableAndUncheck();
     }
     alert(x.style.backgroundColor);
-    alert(x.classList.contains('checkedInTable'));
-    if (x.style.backgroundColor.contains('rgb')) {
+    if (x.style.backgroundColor.includes('rgb')) {
         x.style.backgroundColor = '#7dfe83';
     } else {
         x.style.backgroundColor = '#ffffff';
@@ -26,7 +25,7 @@ function iterateTableGetChecked(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		if (row.style.backgroundColor == "rgb"  & row.className != 'header'){
+		if (row.style.backgroundColor.includes('rgb')  & row.className != 'header'){
             document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
         }
     }
