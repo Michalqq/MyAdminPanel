@@ -10,12 +10,12 @@ function changeRowColorOnTable(x){
 //        x.style = 'background-color:#63ff8d';
 //    }
     if (x.classList.contains('checkedInTable')) {
-        x.className.replace('checkedInTable', 'uncheckedInTable');
-        alert(x.className.includes('checkedInTable'));
+        x.className.classList.add('uncheckedInTable');
+        x.className.classList.remove('checkedInTable');
     }
     else if (x.classList.contains('uncheckedInTable')) {
-        x.className.replace('uncheckedInTable', 'checkedInTable');
-        alert(x.className.includes('checkedInTable'));
+        x.className.classList.add('checkedInTable');
+        x.className.classList.remove('uncheckedInTable');
     }
     iterateTableGetChecked();
 }
