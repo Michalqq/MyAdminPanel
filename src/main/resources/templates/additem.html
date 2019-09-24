@@ -217,22 +217,19 @@
                                     <br>
                                     <h5>Cena zakupu:</h5>
                                     <div class="input-group col-sm-12">
-                                        <div class="col-sm-4">
-                                            <span class="input-group-addon"><i class="far fa-money-bill-alt"></i></span>
-                                            <input class="form-control" name="buyPrice" id="buyPrice" type="number"
-                                                   step="0.01"
-                                                   required>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <select class="selectpicker" id="currency" name="currency" onclick="currencyLoader()">
-                                                <option value="PLN" selected>PLN</option>
-                                                <option value="EUR">EUR</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <input class="form-control" name="currencyInput" id="currencyInput" type="number"
-                                                   step="0.01" style="visibility:hidden">
-                                        </div>
+                                        <span class="input-group-addon"><i class="far fa-money-bill-alt"></i></span>
+                                        <input class="form-control" name="buyPrice" id="buyPrice" type="number"
+                                               step="0.01"
+                                               required>
+                                        <select class="selectpicker" id="currency" name="currency"
+                                                onchange="currencyLoader()">
+                                            <option value="PLN" selected>PLN</option>
+                                            <option value="EUR">EUR</option>
+                                        </select>
+                                        <input class="form-control" name="currencyInput" id="currencyInput"
+                                               type="number"
+                                               step="0.01" style="visibility:hidden">
+
                                     </div>
                                     <br>
                                     <h5>Ilość:</h5>

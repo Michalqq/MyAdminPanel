@@ -29,6 +29,7 @@ function iterateTableGetChecked(){
     }
 }
 function currencyLoader(){
+    alert('test');
 	var optionSelected = document.getElementById("currency");
 	var optionSelected_value = optionSelected.options[optionSelected.selectedIndex].value;
     if (optionSelected_value == "EUR") {
