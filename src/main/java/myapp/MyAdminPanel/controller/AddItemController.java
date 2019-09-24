@@ -59,11 +59,11 @@ public class AddItemController {
             if (!itemRepository.findById(newItemId).isPresent()) {
                 itemRepository.save(new Item(newItemId, newItemName));
             } else {
-                getAddItem(new ModelAndView().addObject("SellInfo", "Wybrane ID jest zajęte"));
+                getDefaultPage(new ModelAndView().addObject("SellInfo", "Wybrane ID jest zajęte"));
                 return;
             }
         }
-        getAddItem(new ModelAndView());
+        getDefaultPage(new ModelAndView());
     }
 
     public ModelAndView getDefaultPage(ModelAndView modelAndView){
