@@ -1,13 +1,13 @@
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
-    if (!x.style.backgroundColor.includes('rgb')) {
+    if (!x.style.backgroundColor.includes('rgb(255, 255, 255)')) {
         iterateTableAndUncheck();
     }
     alert(x.style.backgroundColor);
-    if (x.style.backgroundColor.includes('rgb')) {
-        x.style.backgroundColor = '#7dfe83';
-    } else {
+    if (x.style.backgroundColor.includes('rgb(255, 255, 255)')) {
         x.style.backgroundColor = '#ffffff';
+    } else {
+        x.style.backgroundColor = '#7dfe83';
     }
     iterateTableGetChecked();
 }
@@ -16,7 +16,7 @@ function iterateTableAndUncheck(){
     for (let row of table.rows)
     {
 		//if (row.className != 'null' & row.className != 'header'){
-		if (row.style.backgroundColor == "rgb" & row.className != 'header'){
+		if (row.style.backgroundColor.includes('rgb(125, 254, 131)') & row.className != 'header'){
             x.style.backgroundColor = '#ffffff';
         }
     }
@@ -25,7 +25,7 @@ function iterateTableGetChecked(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		if (row.style.backgroundColor.includes('rgb')  & row.className != 'header'){
+		if (row.style.backgroundColor.includes('rgb(125, 254, 131)')  & row.className != 'header'){
             document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
         }
     }
