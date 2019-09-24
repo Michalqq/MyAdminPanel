@@ -3,7 +3,6 @@ function changeRowColorOnTable(x){
     if (!x.style.backgroundColor.includes('rgb(255, 255, 255)')) {
         iterateTableAndUncheck();
     }
-    alert(x.style.backgroundColor);
     if (x.style.backgroundColor.includes('rgb(125, 254, 131)') || x.style.backgroundColor == "") {
         x.style.backgroundColor = '#7dfe83';
     } else {
@@ -15,7 +14,6 @@ function iterateTableAndUncheck(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		//if (row.className != 'null' & row.className != 'header'){
 		if (row.style.backgroundColor.includes('rgb(125, 254, 131)') & row.className != 'header'){
             row.style.backgroundColor = '#ffffff';
         }
