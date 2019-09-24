@@ -9,11 +9,11 @@ function changeRowColorOnTable(x){
 //    }else {
 //        x.style = 'background-color:#63ff8d';
 //    }
-    if (x.hasClass('checkedInTable')) {
+    if (x.classList.contains('checkedInTable')) {
         x.className.replace('checkedInTable', 'uncheckedInTable');
         alert(x.className.includes('checkedInTable'));
     }
-    else if (x.hasClass('uncheckedInTable')) {
+    else if (x.classList.contains('uncheckedInTable')) {
         x.className.replace('uncheckedInTable', 'checkedInTable');
         alert(x.className.includes('checkedInTable'));
     }
