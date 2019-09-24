@@ -1,17 +1,13 @@
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
-    if (x.className.includes('null')){
-        alert('test');
-    }
+    alert(x.style.backgroundColor);
         alert(x.style.backgroundColor);
-    if (x.className == 'null') {
+    if (x.className.includes('null') && x.style.backgroundColor.includes('rgb')) {
         iterateTableAndUncheck();
     }
-    if (x.className != 'null'){
-        x.style = 'background-color: ' + x.className;
-        x.className = 'null'
+    if (!x.style.backgroundColor.includes('rgb')){
+        x.style = 'background-color:#FFFFFF';
     }else {
-        x.className = x.style.backgroundColor;
         x.style = 'background-color:#63ff8d';
     }
     iterateTableGetChecked();
@@ -22,7 +18,6 @@ function iterateTableAndUncheck(){
     {
 		if (row.className != 'null' & row.className != 'header'){
             row.style = 'background-color:#FFFFFF'
-            row.className = 'null'
         }
     }
 }
