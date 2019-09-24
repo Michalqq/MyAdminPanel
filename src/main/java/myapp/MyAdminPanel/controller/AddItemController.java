@@ -52,13 +52,13 @@ public class AddItemController {
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    String addNewItem(@RequestParam(value = "itemId", defaultValue = "") int itemId,
-                      @RequestParam(value = "buyPrice", defaultValue = "") double buyPrice,
-                      @RequestParam(value = "quantity", defaultValue = "") int quantity,
+    String addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
+                      @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
+                      @RequestParam(value = "quantity", defaultValue = "0") int quantity,
                       @RequestParam(value = "note", defaultValue = "") String note,
-                      @RequestParam(value = "sellerId", defaultValue = "") int sellerId,
+                      @RequestParam(value = "sellerId", defaultValue = "0") int sellerId,
                       @RequestParam(value = "action", required = true) String actionValue,
-                      @RequestParam(value = "newItemId", defaultValue = "") int newItemId,
+                      @RequestParam(value = "newItemId", defaultValue = "0") int newItemId,
                       @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
         if (actionValue.equals("addItem")) {
             for (int i = 0; i < quantity; i++) {
