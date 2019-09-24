@@ -42,10 +42,10 @@ public class AddItemController {
         modelAndView.addObject("Items", items);
         List<Seller> sellers = sellersRepository.findAll();
         modelAndView.addObject("sellers", sellers);
-        //modelAndView.addObject("newItems", this.itemList(200));
-        List<Item> tempItems = new ArrayList<>();
-        tempItems.add(new Item(1, "  "));
-        modelAndView.addObject("newItems", tempItems);
+        modelAndView.addObject("newItems", this.itemList(200));
+//        List<Item> tempItems = new ArrayList<>();
+//        tempItems.add(new Item(1, "  "));
+//        modelAndView.addObject("newItems", tempItems);
         modelAndView.setViewName("additem");
         basket.addInfoAboutBasketSize(modelAndView);
         return modelAndView;
