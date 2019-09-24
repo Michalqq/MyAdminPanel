@@ -10,10 +10,12 @@ function changeRowColorOnTable(x){
 //        x.style = 'background-color:#63ff8d';
 //    }
     if (x.classList.contains('checkedInTable')) {
+        alert('test2');
         x.classList.add('uncheckedInTable');
         x.classList.remove('checkedInTable');
     }
     else if (x.classList.contains('uncheckedInTable')) {
+        alert('test');
         x.classList.add('checkedInTable');
         x.classList.remove('uncheckedInTable');
     }
