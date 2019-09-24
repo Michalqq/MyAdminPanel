@@ -52,7 +52,7 @@ public class AddItemController {
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    String addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
+    void addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
                       @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
                       @RequestParam(value = "quantity", defaultValue = "0") int quantity,
                       @RequestParam(value = "note", defaultValue = "") String note,
@@ -70,10 +70,10 @@ public class AddItemController {
                 itemRepository.save(new Item(newItemId, newItemName));
             } else {
                 getAddItem(new ModelAndView().addObject("SellInfo", "Wybrane ID jest zajęte"));
-                return "";
+                return;
             }
         }
-        return "redirect:/additem";
+        getAddItem(new ModelAndView());
     }
 
     public List<Item> itemList(int maxId){
