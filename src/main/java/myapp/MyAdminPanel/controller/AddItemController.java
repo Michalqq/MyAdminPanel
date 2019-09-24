@@ -36,7 +36,7 @@ public class AddItemController {
     @Autowired
     private DBAction dbAction;
 
-    @RequestMapping("/additem")
+    @RequestMapping(value = "/additem", method = RequestMethod.GET)
     ModelAndView getAddItem(ModelAndView modelAndView) {
         List<Item> items = itemRepository.findAll();
         modelAndView.addObject("Items", items);
@@ -53,13 +53,13 @@ public class AddItemController {
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
     void addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
-                      @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
-                      @RequestParam(value = "quantity", defaultValue = "0") int quantity,
-                      @RequestParam(value = "note", defaultValue = "") String note,
-                      @RequestParam(value = "sellerId", defaultValue = "0") int sellerId,
-                      @RequestParam(value = "action", required = true) String actionValue,
-                      @RequestParam(value = "newItemId", defaultValue = "0") int newItemId,
-                      @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
+                    @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
+                    @RequestParam(value = "quantity", defaultValue = "0") int quantity,
+                    @RequestParam(value = "note", defaultValue = "") String note,
+                    @RequestParam(value = "sellerId", defaultValue = "0") int sellerId,
+                    @RequestParam(value = "action", required = true) String actionValue,
+                    @RequestParam(value = "newItemId", defaultValue = "0") int newItemId,
+                    @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
         if (actionValue.equals("addItem")) {
             for (int i = 0; i < quantity; i++) {
                 dbAction.createNewItem(buyPrice / quantity, itemId, sellerId, note);
@@ -76,7 +76,7 @@ public class AddItemController {
         getAddItem(new ModelAndView());
     }
 
-    public List<Item> itemList(int maxId){
+    public List<Item> itemList(int maxId) {
         List<Integer> newIdList = new ArrayList<>();
         for (int i = 1; i < maxId; i++) {
             newIdList.add(i);
