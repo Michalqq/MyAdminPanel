@@ -72,7 +72,7 @@ public class AddItemController {
                 itemRepository.save(new Item(newItemId, newItemName));
             } else {
                 String info = "IDDD";
-                return ("/additem?info=" + info);
+                return ("redirect:/additem?info=" + info);
             }
         }
         return ("/additem");
