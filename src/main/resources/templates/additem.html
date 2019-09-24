@@ -265,7 +265,7 @@
                                         <select class="form-control selectpicker" id="newItemId" name="newItemId"
                                                 data-live-search="true">
                                             <option th:each="newItem: ${newItems}" th:value="${newItem.id}"
-                                                    th:text="'${newItem.id}' + ' - ' + '${newItem.sellerName}'"></option>
+                                                    th:text="${newItem.id} + ' - ' + ${newItem.sellerName}"></option>
                                         </select>
                                     </div>
                                     <br>
