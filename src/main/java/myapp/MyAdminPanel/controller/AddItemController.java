@@ -38,17 +38,7 @@ public class AddItemController {
 
     @RequestMapping(value = "/additem", method = RequestMethod.GET)
     ModelAndView getAddItem(ModelAndView modelAndView) {
-        List<Item> items = itemRepository.findAll();
-        modelAndView.addObject("Items", items);
-        List<Seller> sellers = sellersRepository.findAll();
-        modelAndView.addObject("sellers", sellers);
-        modelAndView.addObject("newItems", this.itemList(200));
-//        List<Item> tempItems = new ArrayList<>();
-//        tempItems.add(new Item(1, "  "));
-//        modelAndView.addObject("newItems", tempItems);
-        modelAndView.setViewName("additem");
-        basket.addInfoAboutBasketSize(modelAndView);
-        return modelAndView;
+        return getDefaultPage(modelAndView);
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
@@ -74,6 +64,20 @@ public class AddItemController {
             }
         }
         getAddItem(new ModelAndView());
+    }
+
+    public ModelAndView getDefaultPage(ModelAndView modelAndView){
+        List<Item> items = itemRepository.findAll();
+        modelAndView.addObject("Items", items);
+        List<Seller> sellers = sellersRepository.findAll();
+        modelAndView.addObject("sellers", sellers);
+        modelAndView.addObject("newItems", this.itemList(200));
+//        List<Item> tempItems = new ArrayList<>();
+//        tempItems.add(new Item(1, "  "));
+//        modelAndView.addObject("newItems", tempItems);
+        modelAndView.setViewName("additem");
+        basket.addInfoAboutBasketSize(modelAndView);
+        return modelAndView;
     }
 
     public List<Item> itemList(int maxId) {
