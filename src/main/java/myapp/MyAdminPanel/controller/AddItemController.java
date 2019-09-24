@@ -56,6 +56,7 @@ public class AddItemController {
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
     String addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
                       @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
+                      @RequestParam(value = "currencyInput", defaultValue = "1.0") double currencyExchange,
                       @RequestParam(value = "quantity", defaultValue = "0") int quantity,
                       @RequestParam(value = "note", defaultValue = "") String note,
                       @RequestParam(value = "sellerId", defaultValue = "0") int sellerId,
@@ -64,7 +65,7 @@ public class AddItemController {
                       @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
         if (actionValue.equals("addItem")) {
             for (int i = 0; i < quantity; i++) {
-                dbAction.createNewItem(buyPrice / quantity, itemId, sellerId, note);
+                dbAction.createNewItem((buyPrice*currencyExchange) / quantity, itemId, sellerId, note);
             }
         }
         if (actionValue.equals("addNewItem")) {

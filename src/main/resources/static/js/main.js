@@ -29,12 +29,11 @@ function iterateTableGetChecked(){
     }
 }
 function currencyLoader(){
-    alert('test');
 	var optionSelected = document.getElementById("currency");
 	var optionSelected_value = optionSelected.options[optionSelected.selectedIndex].value;
     if (optionSelected_value == "EUR") {
         document.getElementById("currencyInput").style.visibility = "visible";
-        document.getElementById("currencyInput").attributes.required = "required"
+        document.getElementById("currencyInput").required = true;
     } else {
         document.getElementById("currencyInput").style.visibility = "hidden";
     }
