@@ -6,13 +6,13 @@ function changeRowColorOnTable(x){
     alert(x.classList.contains('checkedInTable'));
     if (x.classList.contains('checkedInTable')) {
         alert('test2');
-        x.classList.add('uncheckedInTable');
-        x.classList.remove('checkedInTable');
+        //x.classList.add('uncheckedInTable');
+        //x.classList.remove('checkedInTable');
     }
     else if (x.classList.contains('uncheckedInTable')) {
         alert('test');
-        x.classList.add('checkedInTable');
-        x.classList.remove('uncheckedInTable');
+       // x.classList.add('checkedInTable');
+       // x.classList.remove('uncheckedInTable');
     }
     iterateTableGetChecked();
 }
