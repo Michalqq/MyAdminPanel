@@ -71,7 +71,8 @@ public class AddItemController {
             if (!itemRepository.findById(newItemId).isPresent()) {
                 itemRepository.save(new Item(newItemId, newItemName));
             } else {
-                return ("/additem?info=To%id%jest%już%używane");
+                String info = "To id jest używane";
+                return ("/additem?info=" + info);
             }
         }
         return ("/additem");

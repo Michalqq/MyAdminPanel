@@ -2,8 +2,8 @@ function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
     if (x.className.includes('null')){
         alert('test');
-        alert(x.style.backgroundColor);
     }
+        alert(x.style.backgroundColor);
     if (x.className == 'null') {
         iterateTableAndUncheck();
     }
