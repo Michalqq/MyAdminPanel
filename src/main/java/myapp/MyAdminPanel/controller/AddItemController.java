@@ -37,19 +37,31 @@ public class AddItemController {
     private DBAction dbAction;
 
     @RequestMapping(value = "/additem", method = RequestMethod.GET)
-    ModelAndView getAddItem(ModelAndView modelAndView) {
-        return getDefaultPage(modelAndView);
+    ModelAndView getAddItem(ModelAndView modelAndView,
+                            @RequestParam(value = "info", defaultValue = "") String info) {
+        List<Item> items = itemRepository.findAll();
+        modelAndView.addObject("Items", items);
+        List<Seller> sellers = sellersRepository.findAll();
+        modelAndView.addObject("sellers", sellers);
+        modelAndView.addObject("addInfo", info);
+        modelAndView.addObject("newItems", this.itemList(200));
+//        List<Item> tempItems = new ArrayList<>();
+//        tempItems.add(new Item(1, "  "));
+//        modelAndView.addObject("newItems", tempItems);
+        modelAndView.setViewName("additem");
+        basket.addInfoAboutBasketSize(modelAndView);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/additem", method = RequestMethod.POST)
-    void addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
-                    @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
-                    @RequestParam(value = "quantity", defaultValue = "0") int quantity,
-                    @RequestParam(value = "note", defaultValue = "") String note,
-                    @RequestParam(value = "sellerId", defaultValue = "0") int sellerId,
-                    @RequestParam(value = "action", required = true) String actionValue,
-                    @RequestParam(value = "newItemId", defaultValue = "0") int newItemId,
-                    @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
+    String addNewItem(@RequestParam(value = "itemId", defaultValue = "0") int itemId,
+                      @RequestParam(value = "buyPrice", defaultValue = "0.0") double buyPrice,
+                      @RequestParam(value = "quantity", defaultValue = "0") int quantity,
+                      @RequestParam(value = "note", defaultValue = "") String note,
+                      @RequestParam(value = "sellerId", defaultValue = "0") int sellerId,
+                      @RequestParam(value = "action", required = true) String actionValue,
+                      @RequestParam(value = "newItemId", defaultValue = "0") int newItemId,
+                      @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
         if (actionValue.equals("addItem")) {
             for (int i = 0; i < quantity; i++) {
                 dbAction.createNewItem(buyPrice / quantity, itemId, sellerId, note);
@@ -59,25 +71,10 @@ public class AddItemController {
             if (!itemRepository.findById(newItemId).isPresent()) {
                 itemRepository.save(new Item(newItemId, newItemName));
             } else {
-                getDefaultPage(new ModelAndView().addObject("SellInfo", "Wybrane ID jest zajęte"));
-                return;
+                return ("/additem?info=To%id%jest%już%używane");
             }
         }
-        getDefaultPage(new ModelAndView());
-    }
-
-    public ModelAndView getDefaultPage(ModelAndView modelAndView){
-        List<Item> items = itemRepository.findAll();
-        modelAndView.addObject("Items", items);
-        List<Seller> sellers = sellersRepository.findAll();
-        modelAndView.addObject("sellers", sellers);
-        modelAndView.addObject("newItems", this.itemList(200));
-//        List<Item> tempItems = new ArrayList<>();
-//        tempItems.add(new Item(1, "  "));
-//        modelAndView.addObject("newItems", tempItems);
-        modelAndView.setViewName("additem");
-        basket.addInfoAboutBasketSize(modelAndView);
-        return modelAndView;
+        return ("/additem");
     }
 
     public List<Item> itemList(int maxId) {
@@ -89,7 +86,7 @@ public class AddItemController {
         for (Integer id : newIdList) {
             Optional<Item> item = itemRepository.findById(id);
             if (item.isPresent()) itemList.add(item.get());
-            else itemList.add(new Item(id, "    "));
+            else itemList.add(new Item(id, " "));
         }
         return itemList;
     }
