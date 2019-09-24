@@ -4,10 +4,10 @@ function changeRowColorOnTable(x){
         iterateTableAndUncheck();
     }
     alert(x.style.backgroundColor);
-    if (x.style.backgroundColor.includes('rgb(255, 255, 255)')) {
-        x.style.backgroundColor = '#ffffff';
-    } else {
+    if (x.style.backgroundColor.includes('rgb(125, 254, 131)') || x.style.backgroundColor == "") {
         x.style.backgroundColor = '#7dfe83';
+    } else {
+        x.style.backgroundColor = '#ffffff';
     }
     iterateTableGetChecked();
 }
