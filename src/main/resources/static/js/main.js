@@ -3,6 +3,7 @@ function changeRowColorOnTable(x){
     if (x.classList.contains('checkedInTable')) {
         iterateTableAndUncheck();
     }
+    alert(x.classList.contains('checkedInTable'));
     if (x.classList.contains('checkedInTable')) {
         alert('test2');
         x.classList.add('uncheckedInTable');
