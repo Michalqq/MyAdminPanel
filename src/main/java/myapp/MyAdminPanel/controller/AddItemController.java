@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AddItemController {
@@ -40,6 +42,7 @@ public class AddItemController {
         modelAndView.addObject("Items", items);
         List<Seller> sellers = sellersRepository.findAll();
         modelAndView.addObject("sellers", sellers);
+        modelAndView.addObject("newItems", this.itemList(200));
         modelAndView.setViewName("additem");
         basket.addInfoAboutBasketSize(modelAndView);
         return modelAndView;
@@ -50,11 +53,37 @@ public class AddItemController {
                       @RequestParam(value = "buyPrice", defaultValue = "") double buyPrice,
                       @RequestParam(value = "quantity", defaultValue = "") int quantity,
                       @RequestParam(value = "note", defaultValue = "") String note,
-                      @RequestParam(value = "sellerId", defaultValue = "") int sellerId) {
-        for (int i = 0; i < quantity; i++) {
-            dbAction.createNewItem(buyPrice / quantity, itemId, sellerId, note);
+                      @RequestParam(value = "sellerId", defaultValue = "") int sellerId,
+                      @RequestParam(value = "action", required = true) String actionValue,
+                      @RequestParam(value = "newItemId", defaultValue = "") int newItemId,
+                      @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
+        if (actionValue.equals("addItem")) {
+            for (int i = 0; i < quantity; i++) {
+                dbAction.createNewItem(buyPrice / quantity, itemId, sellerId, note);
+            }
+        }
+        if (actionValue.equals("addNewItem")) {
+            if (!itemRepository.findById(newItemId).isPresent()) {
+                itemRepository.save(new Item(newItemId, newItemName));
+            } else {
+                getAddItem(new ModelAndView().addObject("SellInfo", "Wybrane ID jest zajęte"));
+                return "";
+            }
         }
         return "redirect:/additem";
     }
 
+    public List<Item> itemList(int maxId){
+        List<Integer> newIdList = new ArrayList<>();
+        for (int i = 1; i < maxId; i++) {
+            newIdList.add(i);
+        }
+        List<Item> itemList = new ArrayList<>();
+        for (Integer id : newIdList) {
+            Optional<Item> item = itemRepository.findById(id);
+            if (item.isPresent()) itemList.add(item.get());
+            else itemList.add(new Item(id, "    "));
+        }
+        return itemList;
+    }
 }
