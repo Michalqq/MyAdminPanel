@@ -28,6 +28,17 @@ function iterateTableGetChecked(){
         }
     }
 }
+function currencyLoader(){
+	var optionSelected = document.getElementById("currency");
+	var optionSelected_value = optionSelected.options[optionSelected.selectedIndex].value;
+    if (optionSelected_value == "EUR") {
+        document.getElementById("currencyInput").style.visibility = "visible";
+        document.getElementById("currencyInput").attributes.required = "required"
+    } else {
+        document.getElementById("currencyInput").style.visibility = "hidden";
+    }
+
+}
 
 //window.$ = window.jquery = require('./node_modules/jquery');
 //window.dt = require('./node_modules/datatables.net')();
