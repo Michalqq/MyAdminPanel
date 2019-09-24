@@ -72,11 +72,12 @@ public class AddItemController {
             if (!itemRepository.findById(newItemId).isPresent()) {
                 itemRepository.save(new Item(newItemId, newItemName));
             } else {
-                String info = "IDDD";
+                String info = "To ID już istnieje";
                 return ("redirect:/additem?info=" + info);
             }
         }
-        return ("/additem");
+        String info = "Dodano " + itemRepository.findById(itemId).get().getName();
+        return ("redirect:/additem?info=" + info);
     }
 
     public List<Item> itemList(int maxId) {
