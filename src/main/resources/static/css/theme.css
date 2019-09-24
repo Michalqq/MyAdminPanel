@@ -14731,9 +14731,9 @@ table.dataTable tbody td {
 }
 
 .checkedInTable {
-    background-color: #63ff8d;
+    background-color: #63ff8d !important;
 }
 
 .uncheckedInTable {
-    background-color: #FFFFFF;
+    background-color: #FFFFFF !important;
 }

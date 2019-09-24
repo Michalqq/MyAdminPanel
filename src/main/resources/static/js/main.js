@@ -1,14 +1,8 @@
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
-        alert(x.style.backgroundColor);
     if (x.classList.contains('checkedInTable')) {
         iterateTableAndUncheck();
     }
-//    if (!x.style.backgroundColor.includes('rgb')){
-//        x.style = 'background-color:#FFFFFF';
-//    }else {
-//        x.style = 'background-color:#63ff8d';
-//    }
     if (x.classList.contains('checkedInTable')) {
         alert('test2');
         x.classList.add('uncheckedInTable');
