@@ -6,7 +6,7 @@ function changeRowColorOnTable(x){
     alert(x.style.backgroundColor);
     alert(x.classList.contains('checkedInTable'));
     if (x.style.backgroundColor.contains('rgb')) {
-        x.style.backgroundColor = '#7dfe83':
+        x.style.backgroundColor = '#7dfe83';
     } else {
         x.style.backgroundColor = '#ffffff';
     }
