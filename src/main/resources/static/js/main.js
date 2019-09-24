@@ -11,8 +11,8 @@ function changeRowColorOnTable(x){
     }
     else if (x.classList.contains('uncheckedInTable')) {
         alert('test');
-       // x.classList.add('checkedInTable');
-       // x.classList.remove('uncheckedInTable');
+        x.classList.add('checkedInTable');
+        x.classList.remove('uncheckedInTable');
     }
     iterateTableGetChecked();
 }
