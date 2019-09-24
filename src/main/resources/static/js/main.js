@@ -17,7 +17,7 @@ function iterateTableAndUncheck(){
     {
 		//if (row.className != 'null' & row.className != 'header'){
 		if (row.style.backgroundColor.includes('rgb(125, 254, 131)') & row.className != 'header'){
-            x.style.backgroundColor = '#ffffff';
+            row.style.backgroundColor = '#ffffff';
         }
     }
 }
