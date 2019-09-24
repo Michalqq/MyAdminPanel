@@ -1,6 +1,6 @@
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
-    if (!x.style.backgroundColor.contains('rgb')) {
+    if (!x.style.backgroundColor.includes('rgb')) {
         iterateTableAndUncheck();
     }
     alert(x.style.backgroundColor);
