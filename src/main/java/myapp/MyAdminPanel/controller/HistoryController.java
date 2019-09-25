@@ -9,9 +9,11 @@ import myapp.MyAdminPanel.service.DBAction;
 import myapp.MyAdminPanel.service.ItemsNameFiller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -21,16 +23,12 @@ public class HistoryController {
 
     @Autowired
     private MyItemRepository myItemRepository;
-
     @Autowired
     private ItemRepository itemRepository;
-
     @Autowired
     private Basket basket;
-
     @Autowired
     private DBAction dbAction;
-
     @Autowired
     private ItemsNameFiller itemsNameFiller;
 
@@ -50,12 +48,13 @@ public class HistoryController {
 
     @RequestMapping(value = "/confirmCashOnDelivery", method = RequestMethod.POST)
     public ModelAndView confirmCashOnDelivery(@RequestParam(value = "id", required = true) int itemId,
-                                              ModelAndView modelAndView) {
+                                              ModelAndView modelAndView, HttpServletRequest request) {
         Optional<MyItem> myItem = myItemRepository.findById(itemId);
         if (myItem.isPresent()) {
             dbAction.setDeliveredToPolStatus(myItem.get(), 3);
         }
-        modelAndView.setViewName("redirect:/history");
+        String referer = request.getHeader("Referer");
+        modelAndView.setViewName("redirect:" + referer);
         return modelAndView;
     }
 
