@@ -14731,9 +14731,9 @@ table.dataTable tbody td {
 }
 
 .checkedRow {
-    background-color: red !important;
+    background-color: #7dfe83 !important;
 }
 
 .uncheckedRow {
-    background-color: "#ffffff" !important;
+    background-color: #ffffff !important;
 }
