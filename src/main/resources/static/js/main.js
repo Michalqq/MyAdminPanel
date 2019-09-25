@@ -34,12 +34,10 @@ function changeRowColorOnTable(x){
         iterateTableAndUncheck();
     }
     if (x.classList.contains('checkedRow')) {
-alert('test1');
         x.classList.add('uncheckedRow');
         x.classList.remove('checkedRow');
     }
     else if (x.classList.contains('uncheckedRow')) {
-alert('test2');
         x.classList.add('checkedRow');
         x.classList.remove('uncheckedRow');
      }
