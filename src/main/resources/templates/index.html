@@ -203,20 +203,20 @@
                                 <h2 class="title-1 m-b-25">My items</h2>
                             </div>
                         </div>
-                        <div class="col-md-6 header-mobile">
-                            <div th:each="currency: ${currencies}">
-                                <div th:if="${currency.code == 'USD'}">
-                                    <i class="fas fa-dollar-sign" style="display:inline"></i>
-                                    <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
-                                    <p th:text="${currency.code}" style="display:inline"></p>
-                                </div>
-                                <div th:if="${currency.code == 'EUR'}">
-                                    <i class="fas fa-euro-sign" style="display:inline"></i>
-                                    <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
-                                    <p th:text="${currency.code}" style="display:inline"></p>
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="col-md-6 header-mobile">-->
+                            <!--<div th:each="currency: ${currencies}">-->
+                                <!--<div th:if="${currency.code == 'USD'}">-->
+                                    <!--<i class="fas fa-dollar-sign" style="display:inline"></i>-->
+                                    <!--<p th:text="${currency.rates[0].mid}" style="display:inline"></p>-->
+                                    <!--<p th:text="${currency.code}" style="display:inline"></p>-->
+                                <!--</div>-->
+                                <!--<div th:if="${currency.code == 'EUR'}">-->
+                                    <!--<i class="fas fa-euro-sign" style="display:inline"></i>-->
+                                    <!--<p th:text="${currency.rates[0].mid}" style="display:inline"></p>-->
+                                    <!--<p th:text="${currency.code}" style="display:inline"></p>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </div>
                     <div class="row">
                         <div class="col-lg-8">
@@ -274,12 +274,6 @@
                         <div class="col-lg-4">
                             <div class="col-md-12">
                             </div>
-                            <!--<div class="overview-wrap">-->
-                            <!--<button href="additem" class="au-btn au-btn-icon au-btn&#45;&#45;blue">-->
-                            <!--<i class="zmdi zmdi-plus"></i>add item-->
-                            <!--</button>-->
-                            <!--</div>-->
-                            <!--<br>-->
                             <div class="overview-item overview-item--c1">
                                 <form action="/sell#" modelAttribute="myItemList" method="POST">
                                     <div class="input-group col-sm-12">
