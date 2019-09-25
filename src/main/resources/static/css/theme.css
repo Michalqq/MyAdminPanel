@@ -14729,3 +14729,11 @@ table.dataTable tbody td {
     padding: 5px 2px;
     vertical-align: middle;
 }
+
+.checkedRow {
+    background-color: "#7dfe83" !important;
+}
+
+.uncheckedRow {
+    background-color: "#ffffff" !important;
+}

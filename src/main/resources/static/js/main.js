@@ -1,21 +1,56 @@
+//function changeRowColorOnTable(x){
+//    document.getElementById('checkedItemId').value = "";
+//    if (!x.style.backgroundColor.includes('rgb(255, 255, 255)')) {
+//        iterateTableAndUncheck();
+//    }
+//    if (x.style.backgroundColor.includes('rgb(125, 254, 131)') || x.style.backgroundColor == "") {
+//        x.style.backgroundColor = '#7dfe83';
+//    } else {
+//        x.style.backgroundColor = '#ffffff';
+//    }
+//    iterateTableGetChecked();
+//}
+//function iterateTableAndUncheck(){
+//    let table = document.getElementById('mainTable');
+//    for (let row of table.rows)
+//    {
+//		if (row.style.backgroundColor.includes('rgb(125, 254, 131)') & row.className != 'header'){
+//            row.style.backgroundColor = '#ffffff';
+//        }
+//    }
+//}
+//function iterateTableGetChecked(){
+//    let table = document.getElementById('mainTable');
+//    for (let row of table.rows)
+//    {
+//		if (row.style.backgroundColor.includes('rgb(125, 254, 131)')  & row.className != 'header'){
+//            document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
+//        }
+//    }
+//}
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
-    if (!x.style.backgroundColor.includes('rgb(255, 255, 255)')) {
+    if (x.classList.contains('checkedRow')){
         iterateTableAndUncheck();
     }
-    if (x.style.backgroundColor.includes('rgb(125, 254, 131)') || x.style.backgroundColor == "") {
-        x.style.backgroundColor = '#7dfe83';
-    } else {
-        x.style.backgroundColor = '#ffffff';
+    if (x.classList.contains('checkedRow')) {
+        row.classList.add('uncheckedRow');
+        row.classList.remove('checkedRow');
     }
+     if (x.classList.contains('uncheckedRow')) {
+        row.classList.add('checkedRow');
+        row.classList.remove('uncheckedRow');
+     }
+
     iterateTableGetChecked();
 }
 function iterateTableAndUncheck(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		if (row.style.backgroundColor.includes('rgb(125, 254, 131)') & row.className != 'header'){
-            row.style.backgroundColor = '#ffffff';
+		if (row.classList.contains('checkedRow') & row.className != 'header'){
+            row.classList.add('uncheckedRow');
+            row.classList.remove('checkedRow');
         }
     }
 }
@@ -23,7 +58,7 @@ function iterateTableGetChecked(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		if (row.style.backgroundColor.includes('rgb(125, 254, 131)')  & row.className != 'header'){
+		if (row.classList.contains('checkedRow') & row.className != 'header'){
             document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
         }
     }
