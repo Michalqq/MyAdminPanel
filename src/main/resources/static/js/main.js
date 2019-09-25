@@ -29,9 +29,9 @@
 //    }
 //}
 function changeRowColorOnTable(x){
-alert('test');
     document.getElementById('checkedItemId').value = "";
     if (x.classList.contains('uncheckedRow')){
+alert('test');
         iterateTableAndUncheck();
     }
     if (x.classList.contains('checkedRow')) {
