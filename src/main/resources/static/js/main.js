@@ -34,14 +34,13 @@ function changeRowColorOnTable(x){
         iterateTableAndUncheck();
     }
     if (x.classList.contains('checkedRow')) {
-        row.classList.add('uncheckedRow');
-        row.classList.remove('checkedRow');
+        x.classList.add('uncheckedRow');
+        x.classList.remove('checkedRow');
     }
      if (x.classList.contains('uncheckedRow')) {
-        row.classList.add('checkedRow');
-        row.classList.remove('uncheckedRow');
+        x.classList.add('checkedRow');
+        x.classList.remove('uncheckedRow');
      }
-
     iterateTableGetChecked();
 }
 function iterateTableAndUncheck(){
