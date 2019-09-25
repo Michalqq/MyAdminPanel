@@ -125,6 +125,18 @@
                 </ul>
             </nav>
         </div>
+        <div th:each="currency: ${currencies}">
+            <div th:if="${currency.code == 'USD'}">
+                <i class="fas fa-dollar-sign" style="display:inline"></i>
+                <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
+                <p th:text="${currency.code}" style="display:inline"></p>
+            </div>
+            <div th:if="${currency.code == 'EUR'}">
+                <i class="fas fa-euro-sign" style="display:inline"></i>
+                <p th:text="${currency.rates[0].mid}" style="display:inline"></p>
+                <p th:text="${currency.code}" style="display:inline"></p>
+            </div>
+        </div>
     </aside>
 
     <!-- END MENU SIDEBAR-->
@@ -190,7 +202,7 @@
                                 <h2 class="title-1 m-b-25">My items</h2>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 header-mobile-inner">
                             <div th:each="currency: ${currencies}">
                                 <div th:if="${currency.code == 'USD'}">
                                     <i class="fas fa-dollar-sign" style="display:inline"></i>
@@ -380,7 +392,7 @@
                             <div class="overview-item overview-item--c4">
                                 <div class="col-sm-12 col-lg-12">
                                     <table class="table table-condensed-14 table-bordered table-striped table-sm"
-                                           >
+                                    >
                                         <tbody>
                                         <tr>
                                             <td> Liczba przedmiotów na magazynie:</td>
@@ -479,6 +491,7 @@ $(document).ready( function () {
 
 
     /*]]>*/
+
 
 
 
