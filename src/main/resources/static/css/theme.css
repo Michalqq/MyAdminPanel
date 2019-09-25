@@ -14726,7 +14726,7 @@ label {
 
 
 table.dataTable tbody td {
-    padding: 5px 2px;
+    padding: 5px 5px !important;
     vertical-align: middle;
 }
 
