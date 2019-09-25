@@ -31,14 +31,15 @@
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
     if (x.classList.contains('uncheckedRow')){
-alert('test');
         iterateTableAndUncheck();
     }
     if (x.classList.contains('checkedRow')) {
+alert('test1');
         x.classList.add('uncheckedRow');
         x.classList.remove('checkedRow');
     }
      if (x.classList.contains('uncheckedRow')) {
+alert('test2');
         x.classList.add('checkedRow');
         x.classList.remove('uncheckedRow');
      }
@@ -59,6 +60,7 @@ function iterateTableGetChecked(){
     for (let row of table.rows)
     {
 		if (row.classList.contains('checkedRow') & row.className != 'header'){
+alert('test3');
             document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
         }
     }
