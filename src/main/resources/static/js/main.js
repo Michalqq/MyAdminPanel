@@ -41,6 +41,7 @@ function currencyLoader(){
         document.getElementById("currencyInput").required = true;
     } else {
         document.getElementById("currencyInput").style.visibility = "hidden";
+        document.getElementById("currencyInput").required = false;
     }
 
 }

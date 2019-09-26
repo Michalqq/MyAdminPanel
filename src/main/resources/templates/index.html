@@ -409,7 +409,10 @@
                                             <td> Ilość przesyłek pobraniowych</td>
                                             <td th:text="${countItemsWithCashOnDelivery}"></td>
                                         </tr>
-
+                                        <tr>
+                                            <td> Ilość przesyłek w transp. do PL</td>
+                                            <td th:text="${countItemsWithCashOnDelivery}"></td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                     <br>
@@ -482,6 +485,7 @@ $(document).ready( function () {
         var labelToEarningByDays = /*[[${labelToEarningByDays}]]*/ '0';
         var cashOnDelivery = /*[[${cashOnDelivery}]]*/ '0';
         var countItemsWithCashOnDelivery = /*[[${countItemsWithCashOnDelivery}]]*/ '0';
+        var countItemsInDeliveryToPL = /*[[${countItemsInDeliveryToPL}]]*/ '0';
 
 
 

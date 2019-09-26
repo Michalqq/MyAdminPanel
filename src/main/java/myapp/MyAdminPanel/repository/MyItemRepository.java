@@ -32,6 +32,8 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     int countByDeliveredToPolandIs(int deliveredToPoland);
 
+    int countByDeliveredToPolandIsNull();
+
     int countBySellPriceIsNotNull();
 
     int countBySellPriceIsNotNullAndSellDateIsBetween(String startDate, String stopDate);
