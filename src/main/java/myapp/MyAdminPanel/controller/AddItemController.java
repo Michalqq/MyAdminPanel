@@ -69,12 +69,15 @@ public class AddItemController {
             }
         }
         if (actionValue.equals("addNewItem")) {
+
+            String info = "";
             if (!itemRepository.findById(newItemId).isPresent()) {
                 itemRepository.save(new Item(newItemId, newItemName));
+                info = "Added new item: " + newItemName;
             } else {
-                String info = "This ID is used already";
-                return ("redirect:/additem?info=" + info);
+                info = "This ID is used already";
             }
+            return ("redirect:/additem?info=" + info);
         }
         String info = "Added: " + itemRepository.findById(itemId).get().getName() + ", quantity: " + quantity;
         return ("redirect:/additem?info=" + info);
