@@ -189,7 +189,6 @@ public class IndexController {
         List<MyItem> myItems = new ArrayList<>();
         List<Item> items = itemRepository.findAll();
         for (Item item : items) {
-            System.out.println(item.getName() + " " + item.getId());
             MyItem myItem = new MyItem();
             myItem.setId(0);
             myItem.setItemId(item.getId());
