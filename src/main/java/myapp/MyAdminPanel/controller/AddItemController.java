@@ -21,20 +21,21 @@ import java.util.Optional;
 @Controller
 public class AddItemController {
 
-    @Autowired
     private MyItemRepository myItemRepository;
-
-    @Autowired
     private ItemRepository itemRepository;
-
-    @Autowired
     private SellersRepository sellersRepository;
-
-    @Autowired
     private Basket basket;
+    private DBAction dbAction;
 
     @Autowired
-    private DBAction dbAction;
+    public AddItemController(MyItemRepository myItemRepository, ItemRepository itemRepository, SellersRepository sellersRepository,
+                             Basket basket, DBAction dbAction){
+        this.myItemRepository = myItemRepository;
+        this.itemRepository = itemRepository;
+        this.sellersRepository = sellersRepository;
+        this.basket = basket;
+        this.dbAction = dbAction;
+    }
 
     @RequestMapping(value = "/additem", method = RequestMethod.GET)
     ModelAndView getAddItem(ModelAndView modelAndView,
@@ -45,9 +46,6 @@ public class AddItemController {
         modelAndView.addObject("sellers", sellers);
         modelAndView.addObject("addInfo", info);
         modelAndView.addObject("newItems", this.itemList(200));
-//        List<Item> tempItems = new ArrayList<>();
-//        tempItems.add(new Item(1, "  "));
-//        modelAndView.addObject("newItems", tempItems);
         modelAndView.setViewName("additem");
         basket.addInfoAboutBasketSize(modelAndView);
         return modelAndView;
@@ -69,7 +67,6 @@ public class AddItemController {
             }
         }
         if (actionValue.equals("addNewItem")) {
-
             String info = "";
             if (!itemRepository.findById(newItemId).isPresent()) {
                 itemRepository.save(new Item(newItemId, newItemName));
