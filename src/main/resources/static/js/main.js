@@ -289,7 +289,7 @@ function currencyLoader(){
               barPercentage: 0.65
             }],
             yAxes: [{
-              display: true
+              display: true,
               ticks: {
                 beginAtZero: true,
               }
