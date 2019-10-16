@@ -34,7 +34,6 @@ public class ItemsNameFillerTest {
     public void setItemMapTest() {
         ItemsNameFiller itemsNameFiller = new ItemsNameFiller();
         for (Item item : itemsList()) {
-            System.out.println(item);
             entityManager.persist(item);
             entityManager.flush();
             entityManager.clear();
