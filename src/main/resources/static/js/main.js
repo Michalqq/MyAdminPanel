@@ -292,6 +292,7 @@ function currencyLoader(){
               display: true,
               ticks: {
                 beginAtZero: true,
+                display: false,
               }
             }]
           }
