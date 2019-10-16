@@ -294,9 +294,9 @@ function currencyLoader(){
             }],
             yAxes: [{
               display: true
-            },
-            ticks: {
+              ticks: {
                 beginAtZero: true,
+              }
             }]
           }
         }
