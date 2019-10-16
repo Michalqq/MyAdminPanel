@@ -1,24 +1,26 @@
+
 function changeRowColorOnTable(x){
     document.getElementById('checkedItemId').value = "";
-    if (x.className == 'null') {
+    if (x.classList.contains('uncheckedRow')){
         iterateTableAndUncheck();
     }
-    if (x.className != 'null'){
-        x.style = 'background-color: ' + x.className;
-        x.className = 'null'
-    }else {
-        x.className = x.style.backgroundColor;
-        x.style = 'background-color:#63ff8d';
+    if (x.classList.contains('checkedRow')) {
+        x.classList.add('uncheckedRow');
+        x.classList.remove('checkedRow');
     }
+    else if (x.classList.contains('uncheckedRow')) {
+        x.classList.add('checkedRow');
+        x.classList.remove('uncheckedRow');
+     }
     iterateTableGetChecked();
 }
 function iterateTableAndUncheck(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		if (row.className != 'null' & row.className != 'header'){
-            row.style = 'background-color:#FFFFFF'
-            row.className = 'null'
+		if (row.classList.contains('checkedRow') & row.className != 'header'){
+            row.classList.add('uncheckedRow');
+            row.classList.remove('checkedRow');
         }
     }
 }
@@ -26,11 +28,27 @@ function iterateTableGetChecked(){
     let table = document.getElementById('mainTable');
     for (let row of table.rows)
     {
-		if (row.className != 'null' & row.className != 'header'){
+		if (row.classList.contains('checkedRow') & row.className != 'header'){
             document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
         }
     }
 }
+function currencyLoader(){
+	var optionSelected = document.getElementById("currency");
+	var optionSelected_value = optionSelected.options[optionSelected.selectedIndex].value;
+    if (optionSelected_value == "EUR") {
+        document.getElementById("currencyInput").style.visibility = "visible";
+        document.getElementById("currencyInput").required = true;
+    } else {
+        document.getElementById("currencyInput").style.visibility = "hidden";
+        document.getElementById("currencyInput").required = false;
+    }
+
+}
+
+//window.$ = window.jquery = require('./node_modules/jquery');
+//window.dt = require('./node_modules/datatables.net')();
+//window.$('#mainTable').DataTable();
 
 (function ($) {
   // USE STRICT
@@ -179,7 +197,7 @@ function iterateTableGetChecked(){
     //WidgetChart 3
     var ctx = document.getElementById("widgetChart3");
     if (ctx) {
-      ctx.height = 130;
+      ctx.height = 150;
       var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -276,11 +294,15 @@ function iterateTableGetChecked(){
             }],
             yAxes: [{
               display: true
+              ticks: {
+                beginAtZero: true,
+              }
             }]
           }
         }
       });
     }
+
 
     // Recent Report
     const brandProduct = 'rgba(0,181,233,0.8)'

@@ -1,13 +1,12 @@
 package myapp.MyAdminPanel.controller;
 
-import lombok.extern.log4j.Log4j2;
 import myapp.MyAdminPanel.model.Basket;
 import myapp.MyAdminPanel.model.Item;
 import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
-import org.slf4j.LoggerFactory;
+import myapp.MyAdminPanel.service.ChartDataGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,18 +22,18 @@ import java.util.List;
 
 @Controller
 public class ReportController {
-
     private MyItemRepository myItemRepository;
     private ItemRepository itemRepository;
-    private ItemToReport itemToReport;
     private Basket basket;
+    private ChartDataGenerator chartDataGenerator;
 
     @Autowired
-    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, ItemToReport itemToReport, Basket basket) {
+    public ReportController(MyItemRepository myItemRepository, ItemRepository itemRepository, Basket basket,
+                            ChartDataGenerator chartDataGenerator) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
-        this.itemToReport = itemToReport;
         this.basket = basket;
+        this.chartDataGenerator = chartDataGenerator;
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
@@ -47,6 +46,7 @@ public class ReportController {
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
         basket.addInfoAboutBasketSize(modelAndView);
+        chartDataGenerator.chartDataCreator(modelAndView, 12, 120);
         modelAndView.setViewName("report");
         return modelAndView;
     }
@@ -97,4 +97,5 @@ public class ReportController {
     private String getToday() {
         return DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now());
     }
+
 }

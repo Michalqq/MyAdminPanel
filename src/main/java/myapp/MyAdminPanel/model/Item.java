@@ -4,10 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "item")
-public class Item {
+public class Item implements Comparable<Item>{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -35,5 +35,10 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int compareTo(Item o) {
+        return getId().compareTo(o.getId());
     }
 }

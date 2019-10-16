@@ -18,13 +18,21 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     int countBySellPriceIsNull();
 
     @Query (value = "SELECT COALESCE(SUM(buyPrice),0) FROM MyItem WHERE sellPrice IS NULL")
-    double getSumValueOfItemsOnStock();
+    //double getSumValueOfItemsOnStock();
+    double getSumBuyPriceWhereSellPriceIsNull();
 
     @Query(value = "SELECT COALESCE(SUM(buyPrice),0) FROM MyItem WHERE buyDate BETWEEN :startDate  AND :stopDate ")
     Double sumBuyPriceWhereBuyDateIsBetween(String startDate, String stopDate);
 
+    @Query(value = "SELECT COALESCE(SUM(cashOnDelivery),0) FROM MyItem WHERE ifCashOnDelivery = 1 AND deliveredToPoland = 2 ")
+    Double getSumCashOnDeliveryWhereStatusIsInDelivery();
+
     @Query(value = "FROM MyItem WHERE buyDate BETWEEN :startDate  AND :stopDate ")
     List<MyItem> getAllWhereBuyDateIsBetween(String startDate, String stopDate);
+
+    int countByDeliveredToPolandIs(int deliveredToPoland);
+
+    int countByDeliveredToPolandIsNull();
 
     int countBySellPriceIsNotNull();
 

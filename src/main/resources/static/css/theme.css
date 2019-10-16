@@ -14714,3 +14714,30 @@ div.searchable {
 .rowYellow {
     background-color: "#FFF0CA";
 }
+
+.dataTables_length {
+    width: 300px;
+    display: inline;
+}
+
+label {
+    width: 300px;
+}
+
+
+table.dataTable tbody td {
+    padding: 5px 5px !important;
+    vertical-align: middle;
+}
+
+.checkedRow {
+    background-color: #7dfe83 !important;
+}
+
+.uncheckedRow {
+    background-color: #ffffff !important;
+}
+
+.padding5 {
+    padding: 5px 5px !important;
+}

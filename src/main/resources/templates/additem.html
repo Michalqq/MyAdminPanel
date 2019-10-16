@@ -195,7 +195,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-9">
+                        <div class="col-lg-6">
                             <div class="overview-item overview-item--c1">
                                 <form action="" method="POST">
                                     <h5>Wybierz towar:</h5>
@@ -217,30 +217,72 @@
                                     <br>
                                     <h5>Cena zakupu:</h5>
                                     <div class="input-group col-sm-12">
-                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <span class="input-group-addon"><i class="far fa-money-bill-alt"></i></span>
                                         <input class="form-control" name="buyPrice" id="buyPrice" type="number"
                                                step="0.01"
                                                required>
+                                        <select class="selectpicker" id="currency" name="currency"
+                                                onchange="currencyLoader()">
+                                            <option value="PLN" selected>PLN</option>
+                                            <option value="EUR">EUR</option>
+                                        </select>
+                                        <input class="form-control" name="currencyInput" id="currencyInput"
+                                               type="number"
+                                               step="0.01" style="visibility:hidden">
                                     </div>
                                     <br>
                                     <h5>Ilość:</h5>
                                     <div class="input-group col-sm-12">
-                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <span class="input-group-addon"><i class="fas fa-list-ol"></i></span>
                                         <input class="form-control" name="quantity" id="quantity" type="number" min="1"
                                                required>
                                     </div>
                                     <br>
+                                    <h5>Uwagi:</h5>
                                     <div class="input-group col-sm-12">
-                                        <button name="addItem" value="addItem" type="submit"
+                                        <span class="input-group-addon"><i class="far fa-comment-alt"></i></span>
+                                        <input class="form-control" name="note" id="note" type="text">
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <button name="action" value="addItem" type="submit"
                                                 class="btn btn-primary btn-md">
                                             <i class="fas fa-check-circle"></i>Add
                                         </button>
                                     </div>
-                                    <br>
                                     <div class="col-sm-12">
-                                        <h4 class="control-label mb-1" th:text="${SellInfo}"></h4>
+                                        <h4 class="control-label mb-1" th:text="${addInfo}"></h4>
                                     </div>
-
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="overview-item overview-item--c1">
+                                <form action="" method="POST">
+                                    <h5>Wprowadź nazwę towaru:</h5>
+                                    <div class="input-group col-sm-12">
+                                        <span class="input-group-addon"><i class="fas fa-dolly"></i></span>
+                                        <input class="form-control" name="itemName" id="itemName" type="text"
+                                               required>
+                                    </div>
+                                    <br>
+                                    <h5>Wprowadź id towaru:</h5>
+                                    <div class="col-sm-12">
+                                        <select class="form-control selectpicker" id="newItemId" name="newItemId"
+                                                data-live-search="true">
+                                            <option th:each="newItem: ${newItems}" th:value="${newItem.id}"
+                                                    th:text="${newItem.id} + ' - ' + ${newItem.name}"></option>
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <div class="input-group col-sm-12">
+                                        <button name="action" value="addNewItem" type="submit"
+                                                class="btn btn-primary btn-md">
+                                            <i class="fas fa-check-circle"></i>Add new item
+                                        </button>
+                                    </div>
+                                    <br>
                                 </form>
                             </div>
                         </div>

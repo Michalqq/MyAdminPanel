@@ -17,7 +17,7 @@ public interface DBAction {
 
     boolean createNewItem();
 
-    boolean createNewItem(double price, int itemId, int sellerId);
+    boolean createNewItem(double price, int itemId, int sellerId, String note);
 
     boolean clearSellPriceAndDate(MyItem myItem);
 
