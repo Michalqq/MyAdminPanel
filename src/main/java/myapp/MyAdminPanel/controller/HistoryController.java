@@ -5,6 +5,7 @@ import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.CountProfitForMyItems;
 import myapp.MyAdminPanel.service.DBAction;
 import myapp.MyAdminPanel.service.ItemsNameFiller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,23 @@ import java.util.*;
 @Controller
 public class HistoryController {
 
-    @Autowired
     private MyItemRepository myItemRepository;
-    @Autowired
     private ItemRepository itemRepository;
-    @Autowired
     private Basket basket;
-    @Autowired
     private DBAction dbAction;
-    @Autowired
     private ItemsNameFiller itemsNameFiller;
+    private CountProfitForMyItems countProfitForMyItems;
+
+    @Autowired
+    public HistoryController(MyItemRepository myItemRepository, ItemRepository itemRepository, Basket basket,
+                             DBAction dbAction, ItemsNameFiller itemsNameFiller, CountProfitForMyItems countProfitForMyItems){
+        this.myItemRepository = myItemRepository;
+        this.itemsNameFiller = itemsNameFiller;
+        this.itemRepository = itemRepository;
+        this.basket = basket;
+        this.dbAction = dbAction;
+        this.countProfitForMyItems = countProfitForMyItems;
+    }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
@@ -38,7 +46,7 @@ public class HistoryController {
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
                                    ModelAndView modelAndView) {
         List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
-        this.countProfit(myItems);
+        myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
         basket.addInfoAboutBasketSize(modelAndView);
@@ -72,14 +80,6 @@ public class HistoryController {
 
     private String getFullStartDate(String date) {
         return date += " 00:00:01";
-    }
-
-    private void countProfit(List<MyItem> myItems) {
-        for (MyItem item : myItems) {
-            if (item.getSellPrice() == null || item.getBuyPrice() == null || item.getBuyPrice() == 0) continue;
-            double profit = Math.round((item.getSellPrice() - item.getBuyPrice()) / (item.getBuyPrice() * 0.01));
-            item.setProfit(profit);
-        }
     }
 
     private List<MyItem> getHistoryByStatus(int status, String startDate, String stopDate, ModelAndView modelAndView) {
