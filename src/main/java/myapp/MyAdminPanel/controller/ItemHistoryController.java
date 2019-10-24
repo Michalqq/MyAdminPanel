@@ -27,7 +27,7 @@ public class ItemHistoryController {
     }
 
     @RequestMapping(value = {"/itemhistory"}, params = "itemHistory", method = RequestMethod.POST)
-    public ModelAndView addToBasket(@RequestParam(name = "checkedItemId", defaultValue = "0") int itemId,
+    public ModelAndView showItemHistory(@RequestParam(name = "checkedItemId1", defaultValue = "0") int itemId,
                                     ModelAndView modelAndView, HttpServletRequest request) {
         if (itemId == 0) {
             String referer = request.getHeader("Referer");
