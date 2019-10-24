@@ -20,7 +20,7 @@ public class ItemHistoryController {
         this.basket = basket;
     }
 
-    @RequestMapping(value = {"/sell"}, params = "itemHistory", method = RequestMethod.POST)
+    @RequestMapping(value = {"/itemhistory"}, params = "itemHistory", method = RequestMethod.POST)
     public ModelAndView addToBasket(@RequestParam(name = "checkedItemId") int itemId,
                                     ModelAndView modelAndView) {
         modelAndView.setViewName("itemhistory");
