@@ -46,10 +46,6 @@ function currencyLoader(){
 
 }
 
-//window.$ = window.jquery = require('./node_modules/jquery');
-//window.dt = require('./node_modules/datatables.net')();
-//window.$('#mainTable').DataTable();
-
 (function ($) {
   // USE STRICT
   "use strict";
@@ -293,9 +289,10 @@ function currencyLoader(){
               barPercentage: 0.65
             }],
             yAxes: [{
-              display: true
+              display: true,
               ticks: {
                 beginAtZero: true,
+                display: false,
               }
             }]
           }
