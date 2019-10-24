@@ -320,16 +320,18 @@
                                     <br>
                                 </form>
                                 <div class="text-right col-sm-6 col-md-12" style="margin-top: -45px">
-                                    <form action="/itemhistory" method="POST">
-                                        <button name="itemHistory" value="itemHistory" type="submit"
-                                                class="btn btn-light btn-md">
-                                            <i class="fas fa-history"></i> Item history
-                                        </button>
-                                    </form>
                                     <form action="/basket" method="POST">
                                         <button name="clearBasket" value="clearBasket" type="submit"
                                                 class="btn btn-warning btn-md">
                                             <i class="fas fa-minus-circle"></i> Delete basket
+                                        </button>
+                                    </form>
+                                    <br>
+                                    <form action="/itemhistory" method="POST">
+                                        <input id="checkedItemId1" name="checkedItemId1" hidden required>
+                                        <button name="itemHistory" value="itemHistory" type="submit"
+                                                class="btn btn-light btn-md">
+                                            <i class="fas fa-history"></i> Item history
                                         </button>
                                     </form>
                                 </div>

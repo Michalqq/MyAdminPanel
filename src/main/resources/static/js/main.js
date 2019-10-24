@@ -30,6 +30,7 @@ function iterateTableGetChecked(){
     {
 		if (row.classList.contains('checkedRow') & row.className != 'header'){
             document.getElementById('checkedItemId').value = row.cells[0].innerHTML;
+            document.getElementById('checkedItemId1').value = row.cells[0].innerHTML;
         }
     }
 }
