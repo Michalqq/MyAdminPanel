@@ -57,7 +57,6 @@ public class HistoryController {
         List<MyItem> myItems = myItemRepository.findAllByDeliveredToPoland(2);
         this.setDataToView(modelAndView, myItems);
         this.setDate(modelAndView, startDate, stopDate);
-        modelAndView.setViewName("redirect:/history");
         return modelAndView;
     }
 
