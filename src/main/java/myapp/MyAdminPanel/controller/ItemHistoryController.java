@@ -33,15 +33,15 @@ public class ItemHistoryController {
     }
 
     @RequestMapping(value = {"/itemhistory"}, params = "itemHistory", method = RequestMethod.POST)
-    public ModelAndView showItemHistory(@RequestParam(name = "checkedItemId1", defaultValue = "0") int itemId,
+    public ModelAndView showItemHistory(@RequestParam(name = "checkedName", defaultValue = "") String name,
                                         ModelAndView modelAndView, HttpServletRequest request) {
-        if (itemId == 0) {
+        if (name.equals("")) {
             String referer = request.getHeader("Referer");
             modelAndView.setViewName("redirect:" + referer);
         } else {
-            List<MyItem> items = myItemRepository.findAllByItemId(itemId);
+            List<MyItem> items = myItemRepository.findAllByItemId(itemRepository.findByName(name).getId());
             items = countProfitForMyItems.countProfit(items);
-            modelAndView.addObject("itemName", itemRepository.findById(itemId).get().getName());
+            modelAndView.addObject("itemName", name);
             modelAndView.addObject("items", items);
             basket.addInfoAboutBasketSize(modelAndView);
             modelAndView.setViewName("itemhistory");

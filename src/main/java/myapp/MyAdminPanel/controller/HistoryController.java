@@ -40,12 +40,23 @@ public class HistoryController {
         this.countProfitForMyItems = countProfitForMyItems;
     }
 
-    @RequestMapping(value = "/history", method = RequestMethod.GET)
+    @RequestMapping(value = "/history", params = "confirmDate", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
                                    @RequestParam(value = "startDate", defaultValue = "") String startDate,
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
                                    ModelAndView modelAndView) {
         List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
+        myItems = countProfitForMyItems.countProfit(myItems);
+        itemsNameFiller.getItemsNames(myItems);
+        modelAndView.addObject("myItems", myItems);
+        basket.addInfoAboutBasketSize(modelAndView);
+        modelAndView.setViewName("history");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/history", params = "showPobrania", method = RequestMethod.GET)
+    public ModelAndView getPobrania(ModelAndView modelAndView){
+        List<MyItem> myItems = myItemRepository.findAllByDeliveredToPoland(2);
         myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);

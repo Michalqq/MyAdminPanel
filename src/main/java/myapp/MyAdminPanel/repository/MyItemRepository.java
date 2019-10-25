@@ -102,4 +102,8 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     List<MyItem> findAllByItemId(int itemId);
 
+    List<MyItem> findAllByDeliveredToPoland(int deliveredToPoland);
+
+
+
 }
