@@ -46,23 +46,26 @@ public class HistoryController {
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
                                    ModelAndView modelAndView) {
         List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
-        myItems = countProfitForMyItems.countProfit(myItems);
-        itemsNameFiller.getItemsNames(myItems);
-        modelAndView.addObject("myItems", myItems);
-        basket.addInfoAboutBasketSize(modelAndView);
-        modelAndView.setViewName("history");
+        this.setDataToView(modelAndView, myItems);
         return modelAndView;
     }
 
     @RequestMapping(value="/history", params = "showPobrania", method = RequestMethod.GET)
-    public ModelAndView getPobrania(ModelAndView modelAndView){
+    public ModelAndView getPobrania(ModelAndView modelAndView,
+                                    @RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate){
         List<MyItem> myItems = myItemRepository.findAllByDeliveredToPoland(2);
+        this.setDataToView(modelAndView, myItems);
+        this.setDate(modelAndView, startDate, stopDate);
+        modelAndView.setViewName("redirect:/history");
+        return modelAndView;
+    }
+
+    private void setDataToView(ModelAndView modelAndView, List<MyItem> myItems){
         myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
         basket.addInfoAboutBasketSize(modelAndView);
-        modelAndView.setViewName("redirect:/history");
-        return modelAndView;
     }
 
     @RequestMapping(value = "/confirmCashOnDelivery", method = RequestMethod.POST)
@@ -106,9 +109,14 @@ public class HistoryController {
         } else {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
         }
+
+        modelAndView.addObject("totalBuyPrice", Math.round(myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum()));
+        this.setDate(modelAndView, startDate, stopDate);
+        return myItems;
+    }
+
+    private void setDate(ModelAndView modelAndView, String startDate, String stopDate){
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
-        modelAndView.addObject("totalBuyPrice", Math.round(myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum()));
-        return myItems;
     }
 }
