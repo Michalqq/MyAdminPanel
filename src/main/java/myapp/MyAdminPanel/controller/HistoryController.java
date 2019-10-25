@@ -46,12 +46,12 @@ public class HistoryController {
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
                                    @RequestParam(value = "showPobrania", defaultValue = "") String test,
                                    ModelAndView modelAndView) {
-        System.out.println(test);
         List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
         myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
-        basket.addInfoAboutBasketSize(modelAndView);
+        //basket.addInfoAboutBasketSize(modelAndView);
+        modelAndView.addObject("basketsize", test);
         modelAndView.setViewName("history");
         return modelAndView;
     }
