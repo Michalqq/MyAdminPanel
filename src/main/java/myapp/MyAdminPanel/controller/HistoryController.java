@@ -44,7 +44,9 @@ public class HistoryController {
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
                                    @RequestParam(value = "startDate", defaultValue = "") String startDate,
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
+                                   @RequestParam(value = "showPobrania", defaultValue = "") String test,
                                    ModelAndView modelAndView) {
+        System.out.println(test);
         List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
         myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
