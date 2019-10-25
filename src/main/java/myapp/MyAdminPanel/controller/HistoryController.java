@@ -40,7 +40,7 @@ public class HistoryController {
         this.countProfitForMyItems = countProfitForMyItems;
     }
 
-    @RequestMapping(value = "/history", params = "confirmDate", method = RequestMethod.GET)
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
                                    @RequestParam(value = "startDate", defaultValue = "") String startDate,
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
