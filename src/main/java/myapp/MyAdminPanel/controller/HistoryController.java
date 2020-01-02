@@ -5,6 +5,7 @@ import myapp.MyAdminPanel.model.ItemToReport;
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.ItemRepository;
 import myapp.MyAdminPanel.repository.MyItemRepository;
+import myapp.MyAdminPanel.service.CountProfitForMyItems;
 import myapp.MyAdminPanel.service.DBAction;
 import myapp.MyAdminPanel.service.ItemsNameFiller;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,23 @@ import java.util.*;
 @Controller
 public class HistoryController {
 
-    @Autowired
     private MyItemRepository myItemRepository;
-    @Autowired
     private ItemRepository itemRepository;
-    @Autowired
     private Basket basket;
-    @Autowired
     private DBAction dbAction;
-    @Autowired
     private ItemsNameFiller itemsNameFiller;
+    private CountProfitForMyItems countProfitForMyItems;
+
+    @Autowired
+    public HistoryController(MyItemRepository myItemRepository, ItemRepository itemRepository, Basket basket,
+                             DBAction dbAction, ItemsNameFiller itemsNameFiller, CountProfitForMyItems countProfitForMyItems){
+        this.myItemRepository = myItemRepository;
+        this.itemsNameFiller = itemsNameFiller;
+        this.itemRepository = itemRepository;
+        this.basket = basket;
+        this.dbAction = dbAction;
+        this.countProfitForMyItems = countProfitForMyItems;
+    }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ModelAndView getHistory(@RequestParam(value = "histStatus", defaultValue = "4") int status,
@@ -38,12 +46,25 @@ public class HistoryController {
                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate,
                                    ModelAndView modelAndView) {
         List<MyItem> myItems = getHistoryByStatus(status, startDate, stopDate, modelAndView);
-        this.countProfit(myItems);
+        this.setDataToView(modelAndView, myItems);
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/history", params = "showPobrania", method = RequestMethod.GET)
+    public ModelAndView getPobrania(ModelAndView modelAndView,
+                                    @RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate){
+        List<MyItem> myItems = myItemRepository.findAllByDeliveredToPoland(2);
+        this.setDataToView(modelAndView, myItems);
+        this.setDate(modelAndView, startDate, stopDate);
+        return modelAndView;
+    }
+
+    private void setDataToView(ModelAndView modelAndView, List<MyItem> myItems){
+        myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
         basket.addInfoAboutBasketSize(modelAndView);
-        modelAndView.setViewName("history");
-        return modelAndView;
     }
 
     @RequestMapping(value = "/confirmCashOnDelivery", method = RequestMethod.POST)
@@ -74,14 +95,6 @@ public class HistoryController {
         return date += " 00:00:01";
     }
 
-    private void countProfit(List<MyItem> myItems) {
-        for (MyItem item : myItems) {
-            if (item.getSellPrice() == null || item.getBuyPrice() == null || item.getBuyPrice() == 0) continue;
-            double profit = Math.round((item.getSellPrice() - item.getBuyPrice()) / (item.getBuyPrice() * 0.01));
-            item.setProfit(profit);
-        }
-    }
-
     private List<MyItem> getHistoryByStatus(int status, String startDate, String stopDate, ModelAndView modelAndView) {
         List<MyItem> myItems;
         if (startDate.equals("")) startDate = this.getYesterDay();
@@ -95,9 +108,14 @@ public class HistoryController {
         } else {
             myItems = myItemRepository.findAllByLastActionDateBetweenAndDeliveredToPolandEquals(getFullStartDate(startDate), getFullStopDate(stopDate), status);
         }
+
+        modelAndView.addObject("totalBuyPrice", Math.round(myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum()));
+        this.setDate(modelAndView, startDate, stopDate);
+        return myItems;
+    }
+
+    private void setDate(ModelAndView modelAndView, String startDate, String stopDate){
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
-        modelAndView.addObject("totalBuyPrice", Math.round(myItems.stream().mapToDouble(x -> x.getBuyPrice()).sum()));
-        return myItems;
     }
 }

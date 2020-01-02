@@ -100,4 +100,10 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     MyItem save(MyItem myItem);
 
+    List<MyItem> findAllByItemId(int itemId);
+
+    List<MyItem> findAllByDeliveredToPoland(int deliveredToPoland);
+
+
+
 }
