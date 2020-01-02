@@ -217,7 +217,9 @@ public class IndexController {
     public void addInfoToFront(ModelAndView modelAndView) {
         modelAndView.addObject("totalItemsOnStock", myItemRepository.countBySellPriceIsNull());
         double valueOnStock = myItemRepository.getSumBuyPriceWhereSellPriceIsNull();
-        double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now()))
+        String month = DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth());
+        String year = DateTimeFormatter.ofPattern("YYYY").format(LocalDate.now());
+        double monthlyExpenses = myItemRepository.sumBuyPriceWhereBuyDateIsBetween(DateGenerator.getFirstDayOfMonth(month, year)
                 , DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
         DecimalFormat df1 = new DecimalFormat("###,###,###.##");
         modelAndView.addObject("totalValueOnStock", df1.format(valueOnStock) + " PLN");

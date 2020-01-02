@@ -21,7 +21,9 @@ public class ProfitCounter {
     public List<Integer> getProfitLastMonth(int quantityOfMonth) {
         List<Integer> profitList = new ArrayList<>();
         for (int i = 0; i < quantityOfMonth; i++) {
-            profitList.add(countProfitByMonth.getProfit(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+            String month = DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i));
+            String year = DateTimeFormatter.ofPattern("YYYY").format(LocalDate.now().minusMonths(i));
+            profitList.add(countProfitByMonth.getProfit(month, year));
         }
         Collections.reverse(profitList);
         return profitList;
@@ -34,7 +36,9 @@ public class ProfitCounter {
             return soldItem;
         }
         for (int i = 0; i < quantityOfMonth; i++) {
-            soldItem.add(countItemSold.countItemSoldByMonth(DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i))));
+            String month = DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i));
+            String year = DateTimeFormatter.ofPattern("YYYY").format(LocalDate.now().minusMonths(i));
+            soldItem.add(countItemSold.countItemSoldByMonth(month, year));
         }
         Collections.reverse(soldItem);
         return soldItem;

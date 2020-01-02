@@ -19,9 +19,9 @@ public class CountItemSold {
     @Autowired
     private MyItemRepository myItemRepository;
 
-    public int countItemSoldByMonth(String month) {
-        String startDate = DateGenerator.getFirstDayOfMonth(month);
-        String stopDate = DateGenerator.getLastDayOfMonth(month);
+    public int countItemSoldByMonth(String month, String year) {
+        String startDate = DateGenerator.getFirstDayOfMonth(month, year);
+        String stopDate = DateGenerator.getLastDayOfMonth(month, year);
         return myItemRepository.countBySellPriceIsNotNullAndSellDateIsBetween(startDate, stopDate);
     }
 

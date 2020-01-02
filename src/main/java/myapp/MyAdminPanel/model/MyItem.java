@@ -67,7 +67,6 @@ public class MyItem {
     @Column(name = "seller_ID")
     private int sellerId;
 
-
     public MyItem(Integer itemId) {
         this.itemId = itemId;
     }

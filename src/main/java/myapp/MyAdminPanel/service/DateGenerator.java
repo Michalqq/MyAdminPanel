@@ -16,8 +16,8 @@ import java.util.Locale;
 @Service
 public class DateGenerator {
 
-    public static String getLastDayOfMonth(String month) {
-        String date = "1/" + month + "/" + LocalDate.now().getYear();
+    public static String getLastDayOfMonth(String month, String year) {
+        String date = "1/" + month + "/" + year;
         LocalDate lastDayOfMonth = LocalDate.parse(date, DateTimeFormatter.ofPattern("d/MM/yyyy")).with(TemporalAdjusters.lastDayOfMonth());
         return lastDayOfMonth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
@@ -26,8 +26,8 @@ public class DateGenerator {
         return Month.of(Integer.parseInt(month)).getDisplayName(TextStyle.FULL_STANDALONE, Locale.forLanguageTag("pl-PL"));
     }
 
-    public static String getFirstDayOfMonth(String month) {
-        return LocalDate.now().getYear() + "-" + month + "-01";
+    public static String getFirstDayOfMonth(String month, String year) {
+        return year + "-" + month + "-01";
     }
 
     public static List<String> getLastDate(int quantityOfDays){
