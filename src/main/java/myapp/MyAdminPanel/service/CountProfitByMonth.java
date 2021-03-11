@@ -23,7 +23,7 @@ public class CountProfitByMonth {
         return this.countProfitByDate(startDate, stopDate);
     }
 
-    private int countProfitByDate(String startDate, String stopDate){
+    private int countProfitByDate(String startDate, String stopDate) {
         int profit, tempValue = 0;
         profit = (myItemRepository.getSellPriceSumWhereSellDateBetween(startDate, stopDate));
         tempValue = (myItemRepository.getBuyPriceSumWhereSellDateBetween(startDate, stopDate));

@@ -1,5 +1,9 @@
 # CoolAdmin Bootstrap 4.1 Admin Dashboard Template
-**CoolAdmin** is a responsive Bootstrap 4.1 admin template. It provides you with a collection of ready to use code snippets and utilities, custom pages, loads of charts, 4 different dashboard variations, a collection of applications and some useful widgets. Preview of this awesome admin template available here: https://colorlib.com/polygon/cooladmin/index.html
+
+**CoolAdmin** is a responsive Bootstrap 4.1 admin template. It provides you with a collection of ready to use code
+snippets and utilities, custom pages, loads of charts, 4 different dashboard variations, a collection of applications
+and some useful widgets. Preview of this awesome admin template available
+here: https://colorlib.com/polygon/cooladmin/index.html
 
 # Preview
 
@@ -10,6 +14,7 @@
 ### Demo Site: [[Here]](https://colorlib.com/polygon/cooladmin/index.html)
 
 ### TOC
+
 - [Built With](#built-with)
 - [Changelog](#changelog)
 - [Authors](#authors)
@@ -39,12 +44,17 @@
 - [WOW](https://github.com/matthieua/WOW)
 
 ### Changelog
+
 #### V 1.0.0
+
 Initial Release
+
 ### Authors
+
 [Colorlib](https://colorlib.com)
 
 ### More info
+
 - [Bootstrap dashboards](https://colorlib.com/wp/free-bootstrap-admin-dashboard-templates/)
 - [Angular dashboards](https://colorlib.com/wp/angularjs-admin-templates/)
 - [Free Admin Dashboards](https://colorlib.com/wp/free-html5-admin-dashboard-templates/)
@@ -53,4 +63,6 @@ Initial Release
 
 ### License
 
-CoolAdmin is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the final products. But you always need to state that Colorlib is the original author of this template.
+CoolAdmin is licensed under The MIT License (MIT). Which means that you can use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the final products. But you always need to state that Colorlib is the
+original author of this template.

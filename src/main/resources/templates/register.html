@@ -36,100 +36,101 @@
 </head>
 
 <body class="animsition">
-    <div class="page-wrapper">
-        <div class="page-content--bge5">
-            <div class="container">
-                <div class="login-wrap">
-                    <div class="login-content">
-                        <div class="login-logo">
-                            <a href="#">
-                                <img src="images/icon/logo.png" alt="CoolAdmin">
-                            </a>
-                        </div>
-                        <div class="login-form">
+<div class="page-wrapper">
+    <div class="page-content--bge5">
+        <div class="container">
+            <div class="login-wrap">
+                <div class="login-content">
+                    <div class="login-logo">
+                        <a href="#">
+                            <img src="images/icon/logo.png" alt="CoolAdmin">
+                        </a>
+                    </div>
+                    <div class="login-form">
 
-                            <form autocomplete="off" action="#" th:action="@{/registration}"
-                                  th:object="${user}" method="post" class="form-horizontal"
-                                  role="form">
-                                <div class="form-group">
-                                    <div class="col-sm-9">
-                                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                                               class="validation-message"></label>
-                                        <br>
-                                        <input class="au-input au-input--full" th:field="*{name}" type="text" name="username" placeholder="Name">
-                                    </div>
+                        <form autocomplete="off" action="#" th:action="@{/registration}"
+                              th:object="${user}" method="post" class="form-horizontal"
+                              role="form">
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                           class="validation-message"></label>
+                                    <br>
+                                    <input class="au-input au-input--full" th:field="*{name}" type="text"
+                                           name="username" placeholder="Name">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <div class="col-sm-9">
-                                        <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                                  class="validation-message"></label>
-                                        <br>
-                                        <input type="text" th:field="*{lastName}"
-                                               placeholder="Last Name" class="au-input au-input--full" />
-                                    </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                           class="validation-message"></label>
+                                    <br>
+                                    <input type="text" th:field="*{lastName}"
+                                           placeholder="Last Name" class="au-input au-input--full"/>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-9">
-                                        <label
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label
                                             th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                                             class="validation-message"></label>
-                                        <br>
-                                        <input type="text" th:field="*{email}" placeholder="Email"
-                                               class="au-input au-input--full" />
-                                    </div>
+                                    <br>
+                                    <input type="text" th:field="*{email}" placeholder="Email"
+                                           class="au-input au-input--full"/>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-9">
-                                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-                                                class="validation-message"></label>
-                                        <br>
-                                        <input type="password" th:field="*{password}"
-                                               placeholder="Password" class="au-input au-input--full" />
-                                    </div>
-                                </div>
-
-                                <span th:utext="${successMessage}"></span>
-
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
-                            </form>
-                            <div class="register-link">
-                                <p>
-                                    Already have account?
-                                    <a href="/login">Sign In</a>
-                                </p>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-9">
+                                    <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                           class="validation-message"></label>
+                                    <br>
+                                    <input type="password" th:field="*{password}"
+                                           placeholder="Password" class="au-input au-input--full"/>
+                                </div>
+                            </div>
+
+                            <span th:utext="${successMessage}"></span>
+
+                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
+                        </form>
+                        <div class="register-link">
+                            <p>
+                                Already have account?
+                                <a href="/login">Sign In</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Jquery JS-->
-    <script src="vendor/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap JS-->
-    <script src="vendor/bootstrap-4.1/popper.min.js"></script>
-    <script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    <!-- Vendor JS       -->
-    <script src="vendor/slick/slick.min.js">
-    </script>
-    <script src="vendor/wow/wow.min.js"></script>
-    <script src="vendor/animsition/animsition.min.js"></script>
-    <script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
-    <script src="vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="vendor/counter-up/jquery.counterup.min.js">
-    </script>
-    <script src="vendor/circle-progress/circle-progress.min.js"></script>
-    <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="vendor/select2/select2.min.js">
-    </script>
+</div>
 
-    <!-- Main JS-->
-    <script src="js/main.js"></script>
+<!-- Jquery JS-->
+<script src="vendor/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap JS-->
+<script src="vendor/bootstrap-4.1/popper.min.js"></script>
+<script src="vendor/bootstrap-4.1/bootstrap.min.js"></script>
+<!-- Vendor JS       -->
+<script src="vendor/slick/slick.min.js">
+</script>
+<script src="vendor/wow/wow.min.js"></script>
+<script src="vendor/animsition/animsition.min.js"></script>
+<script src="vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+</script>
+<script src="vendor/counter-up/jquery.waypoints.min.js"></script>
+<script src="vendor/counter-up/jquery.counterup.min.js">
+</script>
+<script src="vendor/circle-progress/circle-progress.min.js"></script>
+<script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="vendor/chartjs/Chart.bundle.min.js"></script>
+<script src="vendor/select2/select2.min.js">
+</script>
+
+<!-- Main JS-->
+<script src="js/main.js"></script>
 
 </body>
 

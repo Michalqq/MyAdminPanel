@@ -17,8 +17,8 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     int countBySellPriceIsNull();
 
-    @Query (value = "SELECT COALESCE(SUM(buyPrice),0) FROM MyItem WHERE sellPrice IS NULL")
-    //double getSumValueOfItemsOnStock();
+    @Query(value = "SELECT COALESCE(SUM(buyPrice),0) FROM MyItem WHERE sellPrice IS NULL")
+        //double getSumValueOfItemsOnStock();
     double getSumBuyPriceWhereSellPriceIsNull();
 
     @Query(value = "SELECT COALESCE(SUM(buyPrice),0) FROM MyItem WHERE buyDate BETWEEN :startDate  AND :stopDate ")
@@ -52,7 +52,7 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     @Query(value = "FROM MyItem " +
             "WHERE deliveredToPoland = 1 AND sellPrice IS NULL AND itemId = :itemId " +
             "ORDER BY lastActionDate ASC")
-    List<MyItem> findItemInStockByItemId(@Param ("itemId") int itemId);
+    List<MyItem> findItemInStockByItemId(@Param("itemId") int itemId);
 
     @Query(value = "FROM MyItem " +
             "WHERE lastActionDate BETWEEN :startDate AND :stopDate and deliveredToPoland = :deliveryStatus" +
@@ -75,12 +75,12 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
 
     @Query(value = "FROM MyItem " +
             "WHERE sellPrice is null AND deliveredToPoland = :deliveredToPoland")
-           //"GROUP BY MyItem.itemId")
+        //"GROUP BY MyItem.itemId")
     List<MyItem> findItemsOnStockGroupByItemId(@Param("deliveredToPoland") int deliveredToPoland);
 
     @Query(value = "FROM MyItem " +
             "WHERE sellPrice is null AND deliveredToPoland is null")
-            //"GROUP BY itemId")
+        //"GROUP BY itemId")
     List<MyItem> findItemsInTransport();
 
     int countItemIdBySellPriceIsNullAndDeliveredToPolandIsAndItemId(@Param("deliveryToPoland") int deliveryToPoland, @Param("itemId") int itemId);
@@ -103,7 +103,6 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findAllByItemId(int itemId);
 
     List<MyItem> findAllByDeliveredToPoland(int deliveredToPoland);
-
 
 
 }

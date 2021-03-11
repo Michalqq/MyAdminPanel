@@ -22,17 +22,18 @@ public class ItemToReport implements Comparable<ItemToReport> {
         setAverageAutomatickly();
     }
 
-    public void setQuantity(int quantity){
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
         setAverageAutomatickly();
     }
+
     @Override
     public int compareTo(ItemToReport o) {
         return getSellPrice().compareTo(o.getSellPrice());
     }
 
-    public void setAverageAutomatickly(){
-        if (this.quantity > 0 && this.sellPrice>0){
+    public void setAverageAutomatickly() {
+        if (this.quantity > 0 && this.sellPrice > 0) {
             this.average = Math.round(this.sellPrice / this.quantity);
         }
     }

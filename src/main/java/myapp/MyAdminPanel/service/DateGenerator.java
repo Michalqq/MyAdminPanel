@@ -30,13 +30,14 @@ public class DateGenerator {
         return year + "-" + month + "-01";
     }
 
-    public static List<String> getLastDate(int quantityOfDays){
+    public static List<String> getLastDate(int quantityOfDays) {
         List<String> dateList = new ArrayList<>();
         for (int i = 0; i < quantityOfDays; i++) {
             dateList.add(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDateTime.now().minusDays(i)));
         }
         return dateList;
     }
+
     public List<String> getNameOfLastMonth(int quantityOfMonth) {
         List<String> nameList = new ArrayList<>();
         for (int i = 0; i < quantityOfMonth; i++) {

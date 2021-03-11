@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MyAdminPanelApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyAdminPanelApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MyAdminPanelApplication.class, args);
+    }
 
 }

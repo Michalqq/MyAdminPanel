@@ -29,7 +29,7 @@ public class AddItemController {
 
     @Autowired
     public AddItemController(MyItemRepository myItemRepository, ItemRepository itemRepository, SellersRepository sellersRepository,
-                             Basket basket, DBAction dbAction){
+                             Basket basket, DBAction dbAction) {
         this.myItemRepository = myItemRepository;
         this.itemRepository = itemRepository;
         this.sellersRepository = sellersRepository;
@@ -63,7 +63,7 @@ public class AddItemController {
                       @RequestParam(value = "itemName", defaultValue = "") String newItemName) {
         if (actionValue.equals("addItem")) {
             for (int i = 0; i < quantity; i++) {
-                dbAction.createNewItem((buyPrice*currencyExchange) / quantity, itemId, sellerId, note);
+                dbAction.createNewItem((buyPrice * currencyExchange) / quantity, itemId, sellerId, note);
             }
         }
         if (actionValue.equals("addNewItem")) {

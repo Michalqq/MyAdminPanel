@@ -93,7 +93,7 @@ public class MyItemDBAction implements DBAction {
         myItem.setSellerId(sellerId);
         myItem.setBuyDate(DateTimeFormatter.ofPattern("yyy-MM-dd").format(LocalDate.now()));
         myItem.setLastActionDate(lastActionDate);
-        if (note.length()>1) {
+        if (note.length() > 1) {
             myItem.setNotes(note);
         }
         myItemRepository.save(myItem);
@@ -111,7 +111,7 @@ public class MyItemDBAction implements DBAction {
         return true;
     }
 
-    public static DecimalFormat cashFormat(){
+    public static DecimalFormat cashFormat() {
         return new DecimalFormat("#.##");
     }
 }

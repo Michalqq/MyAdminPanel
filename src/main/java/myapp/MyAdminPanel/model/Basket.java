@@ -26,7 +26,7 @@ public class Basket {
         this.myItemList.add(myItem);
     }
 
-    public void addInfoAboutBasketSize(ModelAndView modelAndView){
+    public void addInfoAboutBasketSize(ModelAndView modelAndView) {
         modelAndView.addObject("basketsize", "Basket (" + this.getMyItemList().size() + ")");
     }
 }

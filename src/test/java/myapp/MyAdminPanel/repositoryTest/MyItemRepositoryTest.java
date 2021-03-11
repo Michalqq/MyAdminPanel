@@ -25,17 +25,17 @@ public class MyItemRepositoryTest { //todo
     private TestEntityManager entityManager;
 
     @Test
-    public void repositoryTest(){
+    public void repositoryTest() {
         createTestDB();
         List<MyItem> myItems = myItemRepository.findAll();
         assertThat(myItems.get(0).getId()).isEqualTo(1);
         assertThat(myItems.get(0).getBuyPrice()).isEqualTo(10);
         assertThat(myItems.size()).isEqualTo(1);
-        int sumSellPrice = myItemRepository.getSellPriceSumWhereSellDateBetween("2019-09-01","2019-09-30");
+        int sumSellPrice = myItemRepository.getSellPriceSumWhereSellDateBetween("2019-09-01", "2019-09-30");
         assertThat(sumSellPrice).isEqualTo(20);
     }
 
-    public void createTestDB(){
+    public void createTestDB() {
         MyItem myitem = new MyItem();
         myitem.setId(1);
         myitem.setItemId(1);

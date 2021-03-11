@@ -28,7 +28,7 @@ public class ItemRepositoryTest {
     @Test
     public void whenFindByName_thenReturnItem() {
 
-        Item item = new Item(1,"testName");
+        Item item = new Item(1, "testName");
         testEntityManager.persist(item);
         testEntityManager.flush();
 

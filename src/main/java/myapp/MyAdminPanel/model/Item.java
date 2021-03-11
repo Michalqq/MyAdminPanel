@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "item")
-public class Item implements Comparable<Item>{
+public class Item implements Comparable<Item> {
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +14,8 @@ public class Item implements Comparable<Item>{
     @Column(name = "name")
     private String name;
 
-    public Item(){}
+    public Item() {
+    }
 
     public Item(Integer id, String name) {
         this.id = id;

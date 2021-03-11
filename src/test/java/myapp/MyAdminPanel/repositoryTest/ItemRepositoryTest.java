@@ -34,6 +34,7 @@ public class ItemRepositoryTest {
         assertThat(found.getName()).isEqualTo(item.getName());
 
     }
+
     @Test
     public void findByIdLessThanTest() {
         Item item = new Item();
@@ -45,7 +46,7 @@ public class ItemRepositoryTest {
         entityManager.flush();
 
         List<Item> found = itemRepository.findByIdLessThan(item2.getId());
-        List<Item> found2 = itemRepository.findByIdLessThan(item2.getId()+1);
+        List<Item> found2 = itemRepository.findByIdLessThan(item2.getId() + 1);
 
         assertThat(found.size()).isEqualTo(1);
         assertThat(found2.size()).isEqualTo(2);

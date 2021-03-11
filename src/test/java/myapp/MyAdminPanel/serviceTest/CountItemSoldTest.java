@@ -33,7 +33,7 @@ public class CountItemSoldTest {
         countItemSold.setMyItemRepository(myItemRepository);
         assertEquals(countItemSold.countItemSoldByMonth("01", "2019"), 4);
         assertEquals(countItemSold.countItemSoldByMonth("02", "2019"), 0);
-        assertEquals(countItemSold.countItemSoldByMonth("08","2019"), 2);
+        assertEquals(countItemSold.countItemSoldByMonth("08", "2019"), 2);
         assertEquals(countItemSold.countItemSoldByMonth("09", "2019"), 3);
     }
 

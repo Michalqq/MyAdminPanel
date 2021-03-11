@@ -31,7 +31,7 @@ public class HistoryController {
 
     @Autowired
     public HistoryController(MyItemRepository myItemRepository, ItemRepository itemRepository, Basket basket,
-                             DBAction dbAction, ItemsNameFiller itemsNameFiller, CountProfitForMyItems countProfitForMyItems){
+                             DBAction dbAction, ItemsNameFiller itemsNameFiller, CountProfitForMyItems countProfitForMyItems) {
         this.myItemRepository = myItemRepository;
         this.itemsNameFiller = itemsNameFiller;
         this.itemRepository = itemRepository;
@@ -50,17 +50,17 @@ public class HistoryController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/history", params = "showPobrania", method = RequestMethod.GET)
+    @RequestMapping(value = "/history", params = "showPobrania", method = RequestMethod.GET)
     public ModelAndView getPobrania(ModelAndView modelAndView,
                                     @RequestParam(value = "startDate", defaultValue = "") String startDate,
-                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate){
+                                    @RequestParam(value = "stopDate", defaultValue = "") String stopDate) {
         List<MyItem> myItems = myItemRepository.findAllByDeliveredToPoland(2);
         this.setDataToView(modelAndView, myItems);
         this.setDate(modelAndView, startDate, stopDate);
         return modelAndView;
     }
 
-    private void setDataToView(ModelAndView modelAndView, List<MyItem> myItems){
+    private void setDataToView(ModelAndView modelAndView, List<MyItem> myItems) {
         myItems = countProfitForMyItems.countProfit(myItems);
         itemsNameFiller.getItemsNames(myItems);
         modelAndView.addObject("myItems", myItems);
@@ -114,7 +114,7 @@ public class HistoryController {
         return myItems;
     }
 
-    private void setDate(ModelAndView modelAndView, String startDate, String stopDate){
+    private void setDate(ModelAndView modelAndView, String startDate, String stopDate) {
         modelAndView.addObject("startDate", startDate);
         modelAndView.addObject("stopDate", stopDate);
     }

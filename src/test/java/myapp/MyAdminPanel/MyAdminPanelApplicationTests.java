@@ -12,13 +12,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MyAdminPanelApplicationTests {
 
 
-	@Test
-	public void contextLoads() {
+    @Test
+    public void contextLoads() {
 //		ItemsNameFillerTest itemsNameFillerTest = new ItemsNameFillerTest();
 //		itemsNameFillerTest.setItemMapTest();
 //
 //		TestDateGenerator testDateGenerator = new TestDateGenerator();
 //		testDateGenerator.testGetLastDateOfMonth();
-	}
+    }
 
 }
