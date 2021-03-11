@@ -63,7 +63,6 @@ public class ItemsNameFillerTest {
         List<MyItem> myItemList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             MyItem myItem = new MyItem();
-            myItem.setId(i + 1);
             myItem.setItemId(i + 1);
             myItemList.add(myItem);
         }

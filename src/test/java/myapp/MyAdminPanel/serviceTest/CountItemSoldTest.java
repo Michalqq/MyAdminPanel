@@ -31,27 +31,24 @@ public class CountItemSoldTest {
         myItemRepositoryFiller();
         CountItemSold countItemSold = new CountItemSold();
         countItemSold.setMyItemRepository(myItemRepository);
-        assertEquals(countItemSold.countItemSoldByMonth("01", "2019"), 4);
-        assertEquals(countItemSold.countItemSoldByMonth("02", "2019"), 0);
-        assertEquals(countItemSold.countItemSoldByMonth("08", "2019"), 2);
-        assertEquals(countItemSold.countItemSoldByMonth("09", "2019"), 3);
+        assertEquals( 4,countItemSold.countItemSoldByMonth("01", "2019"));
+        assertEquals( 0,countItemSold.countItemSoldByMonth("02", "2019"));
+        assertEquals(2,countItemSold.countItemSoldByMonth("08", "2019"));
+        assertEquals( 3,countItemSold.countItemSoldByMonth("09", "2019"));
     }
 
     public void myItemRepositoryFiller() {
-        String actualYear = String.valueOf(LocalDate.now().getYear());
         List<String> sellData = Arrays.asList("09-12", "09-02", "09-10",
                 "08-01", "08-31",
                 "01-01", "01-02", "01-10", "01-30",
                 "05-05");
         for (int i = 0; i < 10; i++) {
             MyItem myItem = new MyItem();
-            myItem.setId(i + 1);
-            myItem.setSellDate(actualYear + "-" + sellData.get(i));
+            myItem.setSellDate("2019-" + sellData.get(i));
             myItem.setSellPrice(10.0);
             entityManager.persist(myItem);
             entityManager.flush();
             entityManager.clear();
         }
     }
-
 }

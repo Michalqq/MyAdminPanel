@@ -19,7 +19,9 @@ import java.util.List;
 public class MyItem {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id",unique=true, nullable = false)
     private Integer id;
 
     @Transient
