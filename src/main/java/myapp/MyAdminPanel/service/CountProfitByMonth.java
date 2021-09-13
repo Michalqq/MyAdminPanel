@@ -17,14 +17,14 @@ public class CountProfitByMonth {
     @Autowired
     private MyItemRepository myItemRepository;
 
-    public int getProfit(String month, String year) {
+    public double getProfit(String month, String year) {
         String startDate = DateGenerator.getFirstDayOfMonth(month, year);
         String stopDate = DateGenerator.getLastDayOfMonth(month, year);
         return this.countProfitByDate(startDate, stopDate);
     }
 
-    private int countProfitByDate(String startDate, String stopDate) {
-        int profit, tempValue = 0;
+    private double countProfitByDate(String startDate, String stopDate) {
+        double profit, tempValue = 0;
         profit = (myItemRepository.getSellPriceSumWhereSellDateBetween(startDate, stopDate));
         tempValue = (myItemRepository.getBuyPriceSumWhereSellDateBetween(startDate, stopDate));
         return profit - tempValue;

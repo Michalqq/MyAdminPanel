@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findBySellPriceIsNull();
@@ -91,10 +90,10 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     int getMaxId();
 
     @Query(value = "SELECT COALESCE(SUM(sellPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
-    int getSellPriceSumWhereSellDateBetween(String startDate, String stopDate);
+    double getSellPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
     @Query(value = "SELECT COALESCE(SUM(buyPrice), 0) FROM MyItem WHERE sellDate BETWEEN :startDate AND :stopDate")
-    int getBuyPriceSumWhereSellDateBetween(String startDate, String stopDate);
+    double getBuyPriceSumWhereSellDateBetween(String startDate, String stopDate);
 
     Optional<MyItem> findById(Integer ID);
 
@@ -103,6 +102,5 @@ public interface MyItemRepository extends JpaRepository<MyItem, Integer> {
     List<MyItem> findAllByItemId(int itemId);
 
     List<MyItem> findAllByDeliveredToPoland(int deliveredToPoland);
-
 
 }

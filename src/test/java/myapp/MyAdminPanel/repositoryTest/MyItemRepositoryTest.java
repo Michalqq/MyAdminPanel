@@ -2,7 +2,6 @@ package myapp.MyAdminPanel.repositoryTest;
 
 import myapp.MyAdminPanel.model.MyItem;
 import myapp.MyAdminPanel.repository.MyItemRepository;
-import myapp.MyAdminPanel.service.DBAction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +31,8 @@ public class MyItemRepositoryTest { //todo
         assertThat(myItems.get(0).getId()).isEqualTo(myItemRepository.getMaxId());
         assertThat(myItems.get(0).getBuyPrice()).isEqualTo(10);
         assertThat(myItems.size()).isEqualTo(1);
-        int sumSellPrice = myItemRepository.getSellPriceSumWhereSellDateBetween("2019-09-01", "2019-09-30");
-        assertEquals(20,sumSellPrice);
+        double sumSellPrice = myItemRepository.getSellPriceSumWhereSellDateBetween("2019-09-01", "2019-09-30");
+        assertEquals(20, sumSellPrice);
     }
 
     public void createTestDB() {

@@ -23,12 +23,11 @@ public class ChartDataGenerator {
     @Autowired
     private CountItemSold countItemSold;
 
-
     public ModelAndView chartDataCreator(ModelAndView modelAndView, int quantityOfMonth, int quantityOfDay) {
         modelAndView.addObject("dataToChart", profitCounter.getProfitLastMonth(quantityOfMonth));
         modelAndView.addObject("monthNameToChart", dateGenerator.getNameOfLastMonth(quantityOfMonth));
         modelAndView.addObject("dataToItemSold", profitCounter.getSoldItemByLastMonth(quantityOfMonth));
-        modelAndView.addObject("totalProfit", profitCounter.getProfitLastMonth(quantityOfMonth).stream().mapToInt(Integer::intValue).sum());
+        modelAndView.addObject("totalProfit", profitCounter.getProfitLastMonth(quantityOfMonth).stream().mapToDouble(Double::doubleValue).sum());
         modelAndView.addObject("totalItemSold", myItemRepository.countBySellPriceIsNotNull());
         this.getSoldSumByLastDays(modelAndView, quantityOfDay);
         return modelAndView;

@@ -18,8 +18,8 @@ public class ProfitCounter {
     @Autowired
     private CountItemSold countItemSold;
 
-    public List<Integer> getProfitLastMonth(int quantityOfMonth) {
-        List<Integer> profitList = new ArrayList<>();
+    public List<Double> getProfitLastMonth(int quantityOfMonth) {
+        List<Double> profitList = new ArrayList<>();
         for (int i = 0; i < quantityOfMonth; i++) {
             String month = DateTimeFormatter.ofPattern("MM").format(LocalDate.now().getMonth().minus(i));
             String year = DateTimeFormatter.ofPattern("YYYY").format(LocalDate.now().minusMonths(i));
